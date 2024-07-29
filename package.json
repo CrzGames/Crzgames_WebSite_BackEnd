@@ -67,7 +67,7 @@
     "@types/proxy-addr": "^2.0.3",
     "@types/source-map-support": "^0.5.10",
     "@types/uuid": "^10.0.0",
-    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/eslint-plugin": "^7.17.0",
     "@typescript-eslint/parser": "^7.16.1",
     "adonis-preset-ts": "^2.1.0",
     "eslint": "^8.57.0",
