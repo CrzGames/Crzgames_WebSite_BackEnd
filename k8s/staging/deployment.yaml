@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: staging-crzgames-website-backend-deployment
+  namespace: staging-crzgames-website-backend
+  labels:
+    app: staging-crzgames-website-backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: staging-crzgames-website-backend
+  template:
+    metadata:
+      labels:
+        app: staging-crzgames-website-backend
+    spec:
+      containers:
+        - name: staging-crzgames-website-backend
+          image: corentin35/crzgames-website-backend:staging-${TAG_VERSION}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3333
+          env:
+            - name: PORT
+              value: '3333'
+          resources:
+            requests:
+              cpu: '300m'
+              memory: '400Mi'
+            limits:
+              cpu: '600m'
+              memory: '800Mi'
+      imagePullSecrets:
+        - name: regcred

@@ -1,0 +1,37 @@
+#components:
+#  schemas:
+#    Publish_post_request:
+#      type: object
+#      properties:
+#        subject:
+#          type: string
+#          example: 'subject'
+#        message:
+#          type: string
+#          example: 'message'
+#    Publish_post_return:
+#      type: object
+#      properties:
+#        subject:
+#          type: string
+#          example: 'subject'
+#        message:
+#          type: string
+#          example: 'message'
+#
+#    Subscribe_post_request:
+#      type: object
+#      properties:
+#        subject:
+#        type: string
+#        example: 'subject'
+#
+#    Subscribe_post_return:
+#      type: object
+#      properties:
+#        subject:
+#          type: string
+#          example: 'subject'
+#        message:
+#          type: string
+#          example: 'message'

@@ -1,0 +1,152 @@
+components:
+  schemas:
+    Game_post_request:
+      type: object
+      properties:
+        title:
+          type: string
+          example: 'Dofus'
+        price:
+          type: number
+          example: 40
+        requirementSystemMinimal:
+          type: string
+          example: 'Windows Vista'
+        requirementSystemRecommended:
+          type: string
+          example: 'Windows 8'
+        gameTrailer:
+          type: string
+          example: 'https://www.youtube.com/watch?v=sV8FSbkeUow'
+        gamePicture:
+          type: string
+          example: 'https://static.ankama.com/ankama/cms/images/273/2017/10/03/764177.png'
+        gameLogo:
+          type: string
+          example: 'https://www.afbshop.fr/media/image/89/96/41/Dofus.png'
+        categoryIds:
+          type: array
+          items:
+            type: number
+            example: [ 1, 2 ]
+        platformIds:
+          type: array
+          items:
+            type: number
+            example: [ 5, 7 ]
+        binaries:
+          type: array
+          items:
+            type: object
+            properties:
+              path:
+                type: string
+                example: 'https://exampleurltobinary.bzh'
+              platformId:
+                type: number
+                example: 1
+
+    Game_get_return:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        title:
+          type: string
+          example: 'Dofus'
+        price:
+          type: number
+          example: 40
+        requirement_system_minimal:
+          type: string
+          example: 'Windows Vista'
+        requirement_system_recommended:
+          type: string
+          example: 'Windows 8'
+        game_trailer:
+          type: string
+          example: 'https://www.youtube.com/watch?v=sV8FSbkeUow'
+        game_picture:
+          type: string
+          example: 'https://static.ankama.com/ankama/cms/images/273/2017/10/03/764177.png'
+        game_logo:
+          type: string
+          example: 'https://www.afbshop.fr/media/image/89/96/41/Dofus.png'
+        created_at:
+          type: string
+          example: '2020-04-20T14:00:00.000Z'
+        updated_at:
+          type: string
+          example: '2020-04-20T14:00:00.000Z'
+        platforms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Game_get_platforms_return'
+        binaries:
+          type: array
+          items:
+            $ref: '#/components/schemas/Game_get_binaries_return'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Game_get_categories_return'
+
+
+
+    Game_get_categories_return:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: 'MMORPG'
+        createdAt:
+          type: string
+          example: '2020-04-20T14:00:00.000Z'
+        updatedAt:
+          type: string
+          example: '2020-04-20T14:00:00.000Z'
+
+    Game_get_platforms_return:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: 'Windows'
+        createdAt:
+          type: string
+          example: '2020-04-20T14:00:00.000Z'
+        updatedAt:
+          type: string
+          example: '2020-04-20T14:00:00.000Z'
+
+    Game_get_binaries_return:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        path:
+          type: string
+          example: 'https://exampleurltobinary.bzh'
+        platform:
+          type: object
+          properties:
+            id:
+              type: number
+              example: 1
+            name:
+              type: string
+              example: 'Windows'
+        createdAt:
+          type: string
+          example: '2020-04-20T14:00:00.000Z'
+        updatedAt:
+          type: string
+          example: '2020-04-20T14:00:00.000Z'

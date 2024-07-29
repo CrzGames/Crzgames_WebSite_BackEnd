@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: prod-api-crzcommon-cert
+  namespace: prod-crzgames-website-backend
+spec:
+  secretName: prod-api-crzcommon-tls
+  dnsNames:
+    - api.crzcommon.com
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer

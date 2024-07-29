@@ -1,0 +1,101 @@
+paths:
+  /game:
+    post:
+      tags:
+        - Game
+      description: Create a new game
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Game_post_request'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game_get_return'
+
+  /games:
+    get:
+      tags:
+        - Game
+      description: Get all games
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game_get_return'
+
+  /game/{id}:
+    get:
+      tags:
+        - Game
+      description: Get a game by id
+      parameters:
+        - name: id
+          in: path
+          description: id of game
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+        Game_get_return    application/json:
+              schema:
+                $ref: '#/components/schemas/Game_get_return'
+        '404':
+          description: Game not found
+
+    put:
+      tags:
+        - Game
+      description: Update a game by id
+      parameters:
+        - name: id
+          in: path
+          description: id of game to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Game_post_request'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game_get_return'
+        '404':
+          description: Game not found
+
+    delete:
+      tags:
+        - Game
+      description: Delete a game by id
+      parameters:
+        - name: id
+          in: path
+          description: id of game to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Successful operation
+        '404':
+          description: Game not found

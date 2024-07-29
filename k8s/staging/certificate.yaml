@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: staging-api-crzcommon-cert
+  namespace: staging-crzgames-website-backend
+spec:
+  secretName: staging-api-crzcommon-tls
+  dnsNames:
+    - staging.api.crzcommon.com
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer

@@ -1,0 +1,99 @@
+components:
+  schemas:
+    User_get_return:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        username:
+          type: string
+          example: 'admin'
+        email:
+          type: string
+          example: 'user@email.com'
+        roles_id:
+          type: number
+          example: 1
+        ip_address:
+          type: string
+          example: '0.0.0.0'
+        ip_region:
+          type: string
+          example: 'France'
+        is_active:
+          type: number
+          example: 1
+        active_code:
+          type: number
+          example: 123456
+        stripe_customer_id:
+          type: string
+          example: 'cus_123456789'
+        created_at:
+          type: string
+          example: '2020-04-20T14:00:00.000Z'
+        updated_at:
+          type: string
+          example: '2020-04-20T14:00:00.000Z'
+
+    DecodeTokenUser:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        username:
+          type: string
+          example: 'admin'
+        email:
+          type: string
+          example: 'user@email.com'
+        roles_id:
+          type: number
+          example: 1
+        ip_address:
+          type: string
+          example: '0.0.0.0'
+        ip_region:
+          type: string
+          example: 'France'
+        is_active:
+          type: number
+          example: 1
+        active_code:
+          type: number
+          example: 123456
+        stripe_customer_id:
+          type: string
+          example: 'cus_123456789'
+        created_at:
+          type: string
+          example: '2020-04-20T14:00:00.000Z'
+        updated_at:
+          type: string
+          example: '2020-04-20T14:00:00.000Z'
+        role:
+          type: object
+          properties:
+            id:
+              type: number
+              example: 1
+            name:
+              type: string
+              example: 'admin'
+            created_at:
+              type: string
+              example: '2020-04-20T14:00:00.000Z'
+            updated_at:
+              type: string
+              example: '2020-04-20T14:00:00.000Z'
+
+    User_put_request:
+      type: object
+      properties:
+        username:
+          type: string
+          example: 'newUserName'
+
+

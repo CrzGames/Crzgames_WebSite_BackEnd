@@ -1,0 +1,16 @@
+{
+  "host": "0.0.0.0",
+  "port": 4222,
+  "debug": true,
+  "trace": true,
+  "logtime": true,
+  "jetstream": "enabled",
+  "authorization": {
+    "users": [{ "nkey": "UANV4DZUWPB6GURHWSTNYU5D4ILAKDQFSM63GK3AMCIDT2T6OJVS3D4S" }]
+  },
+  "websocket": {
+    "port": 4223,
+    "no_tls": true
+  },
+  "http_port": 8222
+}

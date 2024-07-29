@@ -1,0 +1,15 @@
+paths:
+  /ticket-categories:
+    get:
+      tags:
+        - Ticket categories
+      description: Get all ticket categories
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TicketCategories_get_return'

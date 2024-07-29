@@ -1,0 +1,72 @@
+paths:
+  /signup:
+    post:
+      tags:
+        - Authentification
+      description: Sign Up
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - email
+                - password
+                - password_confirmation
+              properties:
+                username:
+                  type: string
+                  example: 'kkfggvsskk'
+                email:
+                  type: string
+                  example: 'kkggvvkk@machisne.com'
+                password:
+                  type: string
+                  example: 'B§idulfff3fe'
+                password_confirmation:
+                  type: string
+                  example: 'B§idulfff3fe'
+      responses:
+        '201':
+          description: Success
+
+  /signin:
+    post:
+      tags:
+        - Authentification
+      description: Sign In
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: 'kkggvvkk@machisne.com'
+                password:
+                  type: string
+                  example: 'B§idulfff3fe'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: "bearer"
+                  token:
+                    type: string
+                    example: "Mw.0qYPhtaIWk0CZ4luwea4Q3aUU0JSO7Kba9ZEmeLShRB634nehy4PlulDnP4-"
+                  expires_at:
+                    type: string
+                    example: "2023-07-18T14:26:15.794+00:00"

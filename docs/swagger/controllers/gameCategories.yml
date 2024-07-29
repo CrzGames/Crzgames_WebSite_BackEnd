@@ -1,0 +1,16 @@
+paths:
+  /game-categories:
+    get:
+      tags:
+        - Game Categories
+      description: Get all game categories
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GameCategories_get_return'
+

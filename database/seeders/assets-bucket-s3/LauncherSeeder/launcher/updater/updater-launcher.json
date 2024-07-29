@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "platforms": {
+    "darwin-x86_64": {
+      "signature": "Content of app.tar.gz.sig",
+      "url": "https://api.crzcommon.com/launcher/download/CrzGamesSetup_x86_64.app.tar.gz"
+    },
+    "darwin-aarch64": {
+      "signature": "Content of app.tar.gz.sig",
+      "url": "https://api.crzcommon.com/launcher/download/CrzGamesSetup_arm64.app.tar.gz"
+    },
+    "linux-x86_64": {
+      "signature": "Content of app.AppImage.tar.gz.sig",
+      "url": "https://api.crzcommon.com/launcher/download/CrzGamesSetup_x86_64.AppImage.tar.gz"
+    },
+    "windows-x86_64": {
+      "signature": "Content of app.msi.sig",
+      "url": "https://api.crzcommon.com/launcher/download/CrzGamesSetup_x64.msi.zip"
+    },
+    "windows-i686": {
+      "signature": "Content of app.msi.sig",
+      "url": "https://api.crzcommon.com/launcher/download/CrzGamesSetup_x86.msi.zip"
+    }
+  }
+}

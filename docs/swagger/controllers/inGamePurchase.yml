@@ -1,0 +1,19 @@
+paths:
+  /purchase/item:
+    post:
+      tags:
+        - Purchase
+      description: Create a new purchase
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Purchase_post_request'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Purchase_get_return'

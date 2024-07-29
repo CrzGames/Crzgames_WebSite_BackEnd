@@ -1,0 +1,40 @@
+#paths:
+#  /publish:
+#    post:
+#      tags:
+#        - Nats
+#      summary: Publish a message
+#      description: Publish a message
+#      operationId: publishMessage
+#      requestBody:
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/Publish_post_request'
+#      responses:
+#        '200':
+#          description: OK
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Publish_post_return'
+#
+#  /subscribe:
+#    post:
+#      tags:
+#        - Nats
+#      summary: Subscribe to a message
+#      description: Subscribe to a message
+#      operationId: subscribeMessage
+#      requestBody:
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/Subscribe_post_request'
+#      responses:
+#        '200':
+#          description: OK
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Subscribe_post_return'

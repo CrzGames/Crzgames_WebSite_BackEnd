@@ -1,0 +1,17 @@
+components:
+  schemas:
+    TicketCategories_get_return:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: 'Game Server Connection Issue'
+        created_at:
+          type: string
+          example: '2020-04-20T14:00:00.000Z'
+        updated_at:
+          type: string
+          example: '2020-04-20T14:00:00.000Z'

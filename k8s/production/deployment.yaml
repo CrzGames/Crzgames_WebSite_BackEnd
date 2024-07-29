@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prod-crzgames-website-backend-deployment
+  namespace: prod-crzgames-website-backend
+  labels:
+    app: prod-crzgames-website-backend
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: prod-crzgames-website-backend
+  template:
+    metadata:
+      labels:
+        app: prod-crzgames-website-backend
+    spec:
+      containers:
+        - name: prod-crzgames-website-backend
+          image: corentin35/crzgames-website-backend:${TAG_VERSION}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3333
+          env:
+            - name: PORT
+              value: '3333'
+          resources:
+            requests:
+              cpu: '300m'
+              memory: '400Mi'
+            limits:
+              cpu: '600m'
+              memory: '800Mi'
+      imagePullSecrets:
+        - name: regcred

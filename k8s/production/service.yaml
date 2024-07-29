@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prod-crzgames-website-backend-service
+  namespace: prod-crzgames-website-backend
+spec:
+  ports:
+    - port: 3333
+      targetPort: 3333
+  selector:
+    app: prod-crzgames-website-backend

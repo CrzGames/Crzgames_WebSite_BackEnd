@@ -1,0 +1,76 @@
+paths:
+  /ticket:
+    post:
+      tags:
+        - Ticket
+      description: Create ticket for support
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ticket_post_request'
+      responses:
+        '204':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket_post_return'
+
+  /ticket/{id}:
+    get:
+      tags:
+        - Ticket
+      description: Get ticket by Id
+      parameters:
+        - name: id
+          in: path
+          description: The id of the ticket to retrieve.
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket_get_return'
+
+  /tickets:
+    get:
+      tags:
+        - Ticket
+      description: Get all tickets
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticket_get_return'
+
+  /tickets/{userId}:
+    get:
+      tags:
+        - Ticket
+      description: Get all tickets by userId
+      parameters:
+        - name: userId
+          in: path
+          description: The id of the user.
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticket_get_return'

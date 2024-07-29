@@ -1,0 +1,17 @@
+components:
+  schemas:
+    GameCategories_get_return:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: 'MMORPG'
+        createdAt:
+          type: string
+          example: '2020-04-20T14:00:00.000Z'
+        updatedAt:
+          type: string
+          example: '2020-04-20T14:00:00.000Z'

@@ -1,0 +1,52 @@
+components:
+    schemas:
+      GameChangeLog_post_request:
+        type: object
+        properties:
+          game_id:
+            type: number
+            example: 1
+          version:
+            type: string
+            example: '1.2.3'
+          change_log:
+            type: string
+            example: 'Fix bug mineur'
+
+      GameChangeLog_get_return:
+        type: object
+        properties:
+          game_id:
+            type: number
+            example: 1
+          version:
+            type: string
+            example: '1.2.3'
+          change_log:
+            type: string
+            example: 'Fix bug mineur'
+          release_date:
+            type: string
+            example: '2020-04-20T14:00:00.000Z'
+          created_at:
+            type: string
+            example: '2020-04-20T14:00:00.000Z'
+          updated_at:
+            type: string
+            example: '2020-04-20T14:00:00.000Z'
+          id:
+            type: number
+            example: 1
+
+      GameChangeLog_put_request:
+        type: object
+        properties:
+          game_id:
+            type: number
+            example: 1
+          version:
+            type: string
+            example: '1.2.3'
+          change_log:
+            type: string
+            example: 'Fix bug mineur'

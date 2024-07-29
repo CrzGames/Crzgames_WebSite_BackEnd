@@ -1,0 +1,113 @@
+paths:
+  /game-change-log:
+    post:
+      tags:
+        - Game change log
+      description: Create a game change log
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameChangeLog_post_request'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameChangeLog_get_return'
+        '400':
+          description: Bad request
+
+  /game-change-logs:
+    get:
+      tags:
+        - Game change log
+      description: Get all game change logs
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GameChangeLog_get_return'
+
+  /game-change-log/{id}:
+    get:
+      tags:
+        - Game change log
+      description: Get a game change log by id
+      parameters:
+        - name: id
+          in: path
+          description: id of game change log
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GameChangeLog_get_return'
+        #            '404':
+        #              description: Game change log not found
+
+    put:
+      tags:
+        - Game change log
+      description: Update a game change log by id
+      parameters:
+        - name: id
+          in: path
+          description: id of game change log
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameChangeLog_put_request'
+      responses:
+        '204':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GameChangeLog_get_return'
+        '404':
+          description: Game change log not found
+
+    delete:
+      tags:
+        - Game change log
+      description: Delete a game change log by id
+      parameters:
+        - name: id
+          in: path
+          description: id of game change log
+          required: true
+          schema:
+            type: number
+      responses:
+        '204':
+          description: Successful operation
+        '404':
+          description: Game change log not found
+
+
+
+
+
+
+
