@@ -101,6 +101,21 @@ services:
     networks:
       - app-network
 
+  nats:
+    container_name: nats
+    image: nats:latest
+    restart: always
+    ports:
+      - '4222:4222'  # NATS client connections
+      - '4223:4223'  # WebSocket connections
+      - '8222:8222'  # HTTP monitoring
+    volumes:
+      - ./nats/nats_config.json:/etc/nats/nats_config.json # Mount a configuration file
+      - nats_data:/data/nats  # Mount a volume for JetStream data storage
+    command: -c /etc/nats/nats_config.json
+    networks:
+      - app-network
+
 networks:
   app-network:
 
@@ -109,3 +124,4 @@ volumes:
   app:
   node_modules:
   bucket_s3:
+  nats_data:

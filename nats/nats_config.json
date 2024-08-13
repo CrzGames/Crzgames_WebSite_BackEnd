@@ -4,9 +4,20 @@
   "debug": true,
   "trace": true,
   "logtime": true,
-  "jetstream": "enabled",
-  "authorization": {
-    "users": [{ "nkey": "UANV4DZUWPB6GURHWSTNYU5D4ILAKDQFSM63GK3AMCIDT2T6OJVS3D4S" }]
+  "jetstream": {
+    "max_mem": 2147483648,
+    "max_file": 536870912000,
+    "store_dir": "/data/nats"
+  },
+  "accounts": {
+    "admin": {
+      "jetstream": "enabled",
+      "users": [
+        {
+          "nkey": "UDXU4RCSJNZOIQHZNWXHXORDPRTGNJAHAHFRGZNEEJCPQTT2M7NLCNF4"
+        }
+      ]
+    }
   },
   "websocket": {
     "port": 4223,
