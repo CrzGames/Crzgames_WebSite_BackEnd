@@ -53,6 +53,7 @@ import './routes/game-servers'
 import './routes/product-game-servers'
 import './routes/product-discounts'
 import './routes/maintenant-websites'
+import './routes/seatyrants'
 
 Route.get('/', async () => {
   return { hello: 'test' }
