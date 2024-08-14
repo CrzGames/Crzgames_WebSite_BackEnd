@@ -5,6 +5,11 @@ import { InternalServerErrorException } from 'App/Exceptions/InternalServerError
 import { BadRequestException } from 'App/Exceptions/BadRequestException'
 import { AuthContract } from '@ioc:Adonis/Addons/Auth'
 
+export type UserIdAndRole = {
+  id: number
+  role: string
+}
+
 export default class UsersService {
   // Decode le token bearer token (envoyer dans le header 'Authorization' de la request) et retourne l'utilisateur
   public static async decodeTokenReturnUser(auth: AuthContract): Promise<User> {
@@ -121,6 +126,15 @@ export default class UsersService {
         .preload('userRole')
         .whereRaw('LOWER(username) LIKE ?', [`%${usernameOrEmail.toLowerCase()}%`])
         .orWhereRaw('LOWER(email) LIKE ?', [`%${usernameOrEmail.toLowerCase()}%`])
+    } catch (error) {
+      throw new InternalServerErrorException(error.message)
+    }
+  }
+
+  public static async getUserRoleAndIdByEmail(email: string): Promise<UserIdAndRole> {
+    try {
+      const user: User = await User.query().where('email', email).preload('userRole').firstOrFail()
+      return { id: user.id, role: user.userRole.name } as UserIdAndRole
     } catch (error) {
       throw new InternalServerErrorException(error.message)
     }
