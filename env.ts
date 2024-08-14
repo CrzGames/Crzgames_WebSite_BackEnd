@@ -61,5 +61,5 @@ export default Env.rules({
   SWAGGER_AUTH_LOGIN: Env.schema.string(),
   SWAGGER_AUTH_PASSWORD: Env.schema.string(),
   STRIPE_WEBHOOK_SECRET: Env.schema.string(),
-  SEATYRANTS_API_KEY_SECRET: Env.schema.string(),
+  SEATYRANTSxCRZGAMES_API_KEY_SECRET: Env.schema.string(),
 })

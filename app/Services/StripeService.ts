@@ -300,7 +300,7 @@ export class StripeService {
           {
             headers: {
               'Content-Type': 'application/json',
-              'X-API-KEY': Env.get('SEATYRANTS_API_KEY_SECRET'),
+              'X-API-KEY': Env.get('SEATYRANTSxCRZGAMES_API_KEY_SECRET'),
             },
           },
         )
