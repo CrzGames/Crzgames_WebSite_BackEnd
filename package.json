@@ -79,7 +79,7 @@
     "eslint-plugin-unused-imports": "^3.2.0",
     "husky": "^9.1.1",
     "npm-check-updates": "^16.14.20",
-    "pino-pretty": "^11.2.1",
+    "pino-pretty": "^11.2.2",
     "prettier": "^3.3.3",
     "typescript": "~5.5.3",
     "youch": "^3.3.3",
