@@ -17,9 +17,7 @@ services:
       - phpmyadmin
     networks:
       - app-network
-    extra_hosts:
-      - "host.docker.internal:172.17.0.1"
-      
+
   minio-s3:
     container_name: minio-s3
     restart: always
