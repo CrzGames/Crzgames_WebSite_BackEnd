@@ -81,7 +81,7 @@
     "npm-check-updates": "^16.14.20",
     "pino-pretty": "^11.2.2",
     "prettier": "^3.3.3",
-    "typescript": "~5.5.3",
+    "typescript": "~5.5.4",
     "youch": "^3.3.3",
     "youch-terminal": "^2.2.3"
   },
