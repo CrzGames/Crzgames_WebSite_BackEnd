@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.9.6",
-    "@commitlint/cli": "^19.3.0",
+    "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.2.2",
     "@japa/preset-adonis": "^1.2.0",
     "@japa/runner": "^2.5.1",
