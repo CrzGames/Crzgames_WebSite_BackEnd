@@ -1,5 +1,5 @@
 # Set version for specific version to O2Switch
-FROM node:20.12.2
+FROM node:23.3.0
 
 WORKDIR /app
 
