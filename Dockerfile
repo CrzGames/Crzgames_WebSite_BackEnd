@@ -1,5 +1,5 @@
-# Set version for specific version to O2Switch
-FROM node:20.12.2
+# Set version LTS Node.js
+FROM node:22.14.0
 
 WORKDIR /app
 
