@@ -5,18 +5,6 @@
 
 version: 2
 updates:
-  # Configuration for npm
-  - package-ecosystem: 'npm'
-    directory: '/' # Location of package manifests
-    schedule:
-      interval: 'daily'
-
-  # Configuration for Dockerfile
-  - package-ecosystem: 'docker'
-    directory: '/' # Location of package manifests
-    schedule:
-      interval: 'daily'
-
   # Configuration for DockerCompose
   - package-ecosystem: 'composer'
     directory: '/' # Location of package manifests
