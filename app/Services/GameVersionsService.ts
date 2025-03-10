@@ -33,7 +33,9 @@ export default class GameVersionsService {
       }
 
       // Trier les versions en utilisant la fonction de comparaison
-      gameVersions.sort((a: GameVersion, b: GameVersion) => this.compareVersions(a.version, b.version))
+      gameVersions.sort((a: GameVersion, b: GameVersion) =>
+        this.compareVersions(a.version, b.version),
+      )
 
       // Retourner la dernière version
       return gameVersions[gameVersions.length - 1]

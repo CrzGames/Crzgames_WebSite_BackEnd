@@ -87,11 +87,17 @@ export default class CloudStorageS3Controller {
     response.status(201).ok('uploadFileOrFolderInBucket success')
   }
 
-  private async getTotalSizeFileOrFolderInBucket({ request, response }: HttpContextContract): Promise<void> {
+  private async getTotalSizeFileOrFolderInBucket({
+    request,
+    response,
+  }: HttpContextContract): Promise<void> {
     const payload: Record<string, any> = request.all()
 
     try {
-      const totalSize: number = await CloudStorageS3Service.getTotalSizeFileOrFolderInBucket(payload.bucketName, payload.pathFilename)
+      const totalSize: number = await CloudStorageS3Service.getTotalSizeFileOrFolderInBucket(
+        payload.bucketName,
+        payload.pathFilename,
+      )
       response.status(200).json({ totalSize })
     } catch (error) {
       response.status(500).json({ error: error.message })

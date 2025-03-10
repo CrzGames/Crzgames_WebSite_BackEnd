@@ -1,84 +1,400 @@
 {
   "version": "v1.0.0",
   "files": [
-    {"name": "images/lua51 - Copie (6).dll", "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab", "size": 565248},
-    {"name": "images/msvcp120 - Copie (9).dll", "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848", "size": 660128},
-    {"name": "images/lua51 - Copie (7).dll", "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab", "size": 565248},
-    {"name": "images/msvcr120 - Copie (4).dll", "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c", "size": 963232},
-    {"name": "images/love - Copie (6).dll", "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51", "size": 4780032},
-    {"name": "images/SDL2 - Copie (9).dll", "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16", "size": 1413632},
-    {"name": "images/msvcr120 - Copie (9).dll", "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c", "size": 963232},
-    {"name": "images/lua51 - Copie (5).dll", "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab", "size": 565248},
-    {"name": "images/mpg123 - Copie (3).dll", "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189", "size": 217088},
-    {"name": "images/mpg123 - Copie (2).dll", "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189", "size": 217088},
-    {"name": "images/mpg123 - Copie (4).dll", "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189", "size": 217088},
-    {"name": "images/msvcr120 - Copie (5).dll", "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c", "size": 963232},
-    {"name": "images/lua51.dll", "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab", "size": 565248},
-    {"name": "images/OpenAL32 - Copie (3).dll", "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b", "size": 898560},
-    {"name": "images/SDL2 - Copie.dll", "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16", "size": 1413632},
-    {"name": "images/SDL2 - Copie (4).dll", "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16", "size": 1413632},
-    {"name": "images/msvcr120 - Copie (8).dll", "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c", "size": 963232},
-    {"name": "images/msvcr120 - Copie (7).dll", "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c", "size": 963232},
-    {"name": "images/msvcr120 - Copie (3).dll", "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c", "size": 963232},
-    {"name": "images/msvcr120 - Copie (2).dll", "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c", "size": 963232},
-    {"name": "images/SDL2 - Copie (8).dll", "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16", "size": 1413632},
-    {"name": "images/msvcr120.dll", "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c", "size": 963232},
-    {"name": "images/love - Copie (9).dll", "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51", "size": 4780032},
-    {"name": "images/mpg123 - Copie (6).dll", "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189", "size": 217088},
-    {"name": "images/mpg123 - Copie (7).dll", "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189", "size": 217088},
-    {"name": "images/msvcp120 - Copie (3).dll", "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848", "size": 660128},
-    {"name": "images/lua51 - Copie (9).dll", "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab", "size": 565248},
-    {"name": "images/love - Copie (3).dll", "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51", "size": 4780032},
-    {"name": "images/lua51 - Copie (4).dll", "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab", "size": 565248},
-    {"name": "images/mpg123.dll", "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189", "size": 217088},
-    {"name": "images/SDL2 - Copie (3).dll", "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16", "size": 1413632},
-    {"name": "images/SDL2 - Copie (5).dll", "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16", "size": 1413632},
-    {"name": "images/msvcp120 - Copie (2).dll", "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848", "size": 660128},
-    {"name": "images/love - Copie (4).dll", "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51", "size": 4780032},
-    {"name": "images/SDL2.dll", "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16", "size": 1413632},
-    {"name": "images/OpenAL32 - Copie (4).dll", "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b", "size": 898560},
-    {"name": "images/msvcp120 - Copie (5).dll", "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848", "size": 660128},
-    {"name": "images/OpenAL32 - Copie (9).dll", "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b", "size": 898560},
-    {"name": "images/lua51 - Copie (3).dll", "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab", "size": 565248},
-    {"name": "images/msvcp120 - Copie (4).dll", "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848", "size": 660128},
-    {"name": "images/msvcp120 - Copie (8).dll", "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848", "size": 660128},
-    {"name": "images/love - Copie (2).dll", "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51", "size": 4780032},
-    {"name": "images/OpenAL32 - Copie (6).dll", "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b", "size": 898560},
-    {"name": "images/msvcr120 - Copie (6).dll", "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c", "size": 963232},
-    {"name": "images/love - Copie (7).dll", "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51", "size": 4780032},
-    {"name": "images/msvcp120.dll", "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848", "size": 660128},
-    {"name": "images/love - Copie (8).dll", "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51", "size": 4780032},
-    {"name": "images/SDL2 - Copie (7).dll", "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16", "size": 1413632},
-    {"name": "images/mpg123 - Copie.dll", "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189", "size": 217088},
-    {"name": "images/mpg123 - Copie (8).dll", "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189", "size": 217088},
-    {"name": "images/OpenAL32 - Copie (5).dll", "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b", "size": 898560},
-    {"name": "images/OpenAL32 - Copie (2).dll", "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b", "size": 898560},
-    {"name": "images/lua51 - Copie (2).dll", "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab", "size": 565248},
-    {"name": "images/msvcr120 - Copie.dll", "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c", "size": 963232},
-    {"name": "images/msvcp120 - Copie (6).dll", "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848", "size": 660128},
-    {"name": "images/mpg123 - Copie (5).dll", "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189", "size": 217088},
-    {"name": "images/mpg123 - Copie (9).dll", "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189", "size": 217088},
-    {"name": "images/OpenAL32 - Copie (7).dll", "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b", "size": 898560},
-    {"name": "images/OpenAL32 - Copie (8).dll", "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b", "size": 898560},
-    {"name": "images/love - Copie (5).dll", "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51", "size": 4780032},
-    {"name": "images/love.dll", "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51", "size": 4780032},
-    {"name": "images/OpenAL32.dll", "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b", "size": 898560},
-    {"name": "images/lua51 - Copie.dll", "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab", "size": 565248},
-    {"name": "images/msvcp120 - Copie.dll", "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848", "size": 660128},
-    {"name": "images/SDL2 - Copie (2).dll", "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16", "size": 1413632},
-    {"name": "images/OpenAL32 - Copie.dll", "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b", "size": 898560},
-    {"name": "images/love - Copie.dll", "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51", "size": 4780032},
-    {"name": "images/lua51 - Copie (8).dll", "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab", "size": 565248},
-    {"name": "images/SDL2 - Copie (6).dll", "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16", "size": 1413632},
-    {"name": "images/msvcp120 - Copie (7).dll", "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848", "size": 660128},
-    {"name": "GameTest.exe", "hash": "b1735dc9433cb5be39f736cff265b687ce6bd3834d2cb11f802f69ea1671593f", "size": 1953102},
-    {"name": "manifest.json", "hash": "a274bbe552fcb8e119b4e5364117a744cc86c443e577937d9f6848b2f32ad6e3", "size": 9810},
-    {"name": "lua51.dll", "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab", "size": 565248},
-    {"name": "msvcr120.dll", "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c", "size": 963232},
-    {"name": "mpg123.dll", "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189", "size": 217088},
-    {"name": "SDL2.dll", "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16", "size": 1413632},
-    {"name": "msvcp120.dll", "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848", "size": 660128},
-    {"name": "love.dll", "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51", "size": 4780032},
-    {"name": "OpenAL32.dll", "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b", "size": 898560}
+    {
+      "name": "images/lua51 - Copie (6).dll",
+      "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab",
+      "size": 565248
+    },
+    {
+      "name": "images/msvcp120 - Copie (9).dll",
+      "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848",
+      "size": 660128
+    },
+    {
+      "name": "images/lua51 - Copie (7).dll",
+      "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab",
+      "size": 565248
+    },
+    {
+      "name": "images/msvcr120 - Copie (4).dll",
+      "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c",
+      "size": 963232
+    },
+    {
+      "name": "images/love - Copie (6).dll",
+      "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51",
+      "size": 4780032
+    },
+    {
+      "name": "images/SDL2 - Copie (9).dll",
+      "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16",
+      "size": 1413632
+    },
+    {
+      "name": "images/msvcr120 - Copie (9).dll",
+      "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c",
+      "size": 963232
+    },
+    {
+      "name": "images/lua51 - Copie (5).dll",
+      "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab",
+      "size": 565248
+    },
+    {
+      "name": "images/mpg123 - Copie (3).dll",
+      "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189",
+      "size": 217088
+    },
+    {
+      "name": "images/mpg123 - Copie (2).dll",
+      "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189",
+      "size": 217088
+    },
+    {
+      "name": "images/mpg123 - Copie (4).dll",
+      "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189",
+      "size": 217088
+    },
+    {
+      "name": "images/msvcr120 - Copie (5).dll",
+      "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c",
+      "size": 963232
+    },
+    {
+      "name": "images/lua51.dll",
+      "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab",
+      "size": 565248
+    },
+    {
+      "name": "images/OpenAL32 - Copie (3).dll",
+      "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b",
+      "size": 898560
+    },
+    {
+      "name": "images/SDL2 - Copie.dll",
+      "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16",
+      "size": 1413632
+    },
+    {
+      "name": "images/SDL2 - Copie (4).dll",
+      "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16",
+      "size": 1413632
+    },
+    {
+      "name": "images/msvcr120 - Copie (8).dll",
+      "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c",
+      "size": 963232
+    },
+    {
+      "name": "images/msvcr120 - Copie (7).dll",
+      "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c",
+      "size": 963232
+    },
+    {
+      "name": "images/msvcr120 - Copie (3).dll",
+      "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c",
+      "size": 963232
+    },
+    {
+      "name": "images/msvcr120 - Copie (2).dll",
+      "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c",
+      "size": 963232
+    },
+    {
+      "name": "images/SDL2 - Copie (8).dll",
+      "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16",
+      "size": 1413632
+    },
+    {
+      "name": "images/msvcr120.dll",
+      "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c",
+      "size": 963232
+    },
+    {
+      "name": "images/love - Copie (9).dll",
+      "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51",
+      "size": 4780032
+    },
+    {
+      "name": "images/mpg123 - Copie (6).dll",
+      "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189",
+      "size": 217088
+    },
+    {
+      "name": "images/mpg123 - Copie (7).dll",
+      "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189",
+      "size": 217088
+    },
+    {
+      "name": "images/msvcp120 - Copie (3).dll",
+      "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848",
+      "size": 660128
+    },
+    {
+      "name": "images/lua51 - Copie (9).dll",
+      "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab",
+      "size": 565248
+    },
+    {
+      "name": "images/love - Copie (3).dll",
+      "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51",
+      "size": 4780032
+    },
+    {
+      "name": "images/lua51 - Copie (4).dll",
+      "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab",
+      "size": 565248
+    },
+    {
+      "name": "images/mpg123.dll",
+      "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189",
+      "size": 217088
+    },
+    {
+      "name": "images/SDL2 - Copie (3).dll",
+      "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16",
+      "size": 1413632
+    },
+    {
+      "name": "images/SDL2 - Copie (5).dll",
+      "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16",
+      "size": 1413632
+    },
+    {
+      "name": "images/msvcp120 - Copie (2).dll",
+      "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848",
+      "size": 660128
+    },
+    {
+      "name": "images/love - Copie (4).dll",
+      "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51",
+      "size": 4780032
+    },
+    {
+      "name": "images/SDL2.dll",
+      "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16",
+      "size": 1413632
+    },
+    {
+      "name": "images/OpenAL32 - Copie (4).dll",
+      "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b",
+      "size": 898560
+    },
+    {
+      "name": "images/msvcp120 - Copie (5).dll",
+      "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848",
+      "size": 660128
+    },
+    {
+      "name": "images/OpenAL32 - Copie (9).dll",
+      "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b",
+      "size": 898560
+    },
+    {
+      "name": "images/lua51 - Copie (3).dll",
+      "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab",
+      "size": 565248
+    },
+    {
+      "name": "images/msvcp120 - Copie (4).dll",
+      "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848",
+      "size": 660128
+    },
+    {
+      "name": "images/msvcp120 - Copie (8).dll",
+      "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848",
+      "size": 660128
+    },
+    {
+      "name": "images/love - Copie (2).dll",
+      "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51",
+      "size": 4780032
+    },
+    {
+      "name": "images/OpenAL32 - Copie (6).dll",
+      "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b",
+      "size": 898560
+    },
+    {
+      "name": "images/msvcr120 - Copie (6).dll",
+      "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c",
+      "size": 963232
+    },
+    {
+      "name": "images/love - Copie (7).dll",
+      "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51",
+      "size": 4780032
+    },
+    {
+      "name": "images/msvcp120.dll",
+      "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848",
+      "size": 660128
+    },
+    {
+      "name": "images/love - Copie (8).dll",
+      "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51",
+      "size": 4780032
+    },
+    {
+      "name": "images/SDL2 - Copie (7).dll",
+      "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16",
+      "size": 1413632
+    },
+    {
+      "name": "images/mpg123 - Copie.dll",
+      "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189",
+      "size": 217088
+    },
+    {
+      "name": "images/mpg123 - Copie (8).dll",
+      "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189",
+      "size": 217088
+    },
+    {
+      "name": "images/OpenAL32 - Copie (5).dll",
+      "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b",
+      "size": 898560
+    },
+    {
+      "name": "images/OpenAL32 - Copie (2).dll",
+      "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b",
+      "size": 898560
+    },
+    {
+      "name": "images/lua51 - Copie (2).dll",
+      "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab",
+      "size": 565248
+    },
+    {
+      "name": "images/msvcr120 - Copie.dll",
+      "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c",
+      "size": 963232
+    },
+    {
+      "name": "images/msvcp120 - Copie (6).dll",
+      "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848",
+      "size": 660128
+    },
+    {
+      "name": "images/mpg123 - Copie (5).dll",
+      "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189",
+      "size": 217088
+    },
+    {
+      "name": "images/mpg123 - Copie (9).dll",
+      "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189",
+      "size": 217088
+    },
+    {
+      "name": "images/OpenAL32 - Copie (7).dll",
+      "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b",
+      "size": 898560
+    },
+    {
+      "name": "images/OpenAL32 - Copie (8).dll",
+      "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b",
+      "size": 898560
+    },
+    {
+      "name": "images/love - Copie (5).dll",
+      "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51",
+      "size": 4780032
+    },
+    {
+      "name": "images/love.dll",
+      "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51",
+      "size": 4780032
+    },
+    {
+      "name": "images/OpenAL32.dll",
+      "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b",
+      "size": 898560
+    },
+    {
+      "name": "images/lua51 - Copie.dll",
+      "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab",
+      "size": 565248
+    },
+    {
+      "name": "images/msvcp120 - Copie.dll",
+      "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848",
+      "size": 660128
+    },
+    {
+      "name": "images/SDL2 - Copie (2).dll",
+      "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16",
+      "size": 1413632
+    },
+    {
+      "name": "images/OpenAL32 - Copie.dll",
+      "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b",
+      "size": 898560
+    },
+    {
+      "name": "images/love - Copie.dll",
+      "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51",
+      "size": 4780032
+    },
+    {
+      "name": "images/lua51 - Copie (8).dll",
+      "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab",
+      "size": 565248
+    },
+    {
+      "name": "images/SDL2 - Copie (6).dll",
+      "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16",
+      "size": 1413632
+    },
+    {
+      "name": "images/msvcp120 - Copie (7).dll",
+      "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848",
+      "size": 660128
+    },
+    {
+      "name": "GameTest.exe",
+      "hash": "b1735dc9433cb5be39f736cff265b687ce6bd3834d2cb11f802f69ea1671593f",
+      "size": 1953102
+    },
+    {
+      "name": "manifest.json",
+      "hash": "a274bbe552fcb8e119b4e5364117a744cc86c443e577937d9f6848b2f32ad6e3",
+      "size": 9810
+    },
+    {
+      "name": "lua51.dll",
+      "hash": "400d206c9a8e136c0d7d9a1c6c4c0451f62da54bd3468af02553f1643c54f1ab",
+      "size": 565248
+    },
+    {
+      "name": "msvcr120.dll",
+      "hash": "ad32240bb1de55c3f5fcac8789f583a17057f9d14914c538c2a7a5ad346b341c",
+      "size": 963232
+    },
+    {
+      "name": "mpg123.dll",
+      "hash": "654b9cb6f463f0da7e5d9838ee995e626d6b6aa17d261b77a59d3500483a6189",
+      "size": 217088
+    },
+    {
+      "name": "SDL2.dll",
+      "hash": "d822327e950c0267c112fdce0636f0192051a911b23e49f0d7c96ae363aa1a16",
+      "size": 1413632
+    },
+    {
+      "name": "msvcp120.dll",
+      "hash": "2abf0aab5a3c5ae9424b64e9d19d9d6d4aebc67814d7e92e4927b9798fef2848",
+      "size": 660128
+    },
+    {
+      "name": "love.dll",
+      "hash": "0bb2deec080d0e4da178aab4ec6a2f6433bc4983418249fe892cbcc279708e51",
+      "size": 4780032
+    },
+    {
+      "name": "OpenAL32.dll",
+      "hash": "c9c5959634aaea4c1dd801a9876444b4a08affe85e33212230527b54edc2205b",
+      "size": 898560
+    }
   ]
 }

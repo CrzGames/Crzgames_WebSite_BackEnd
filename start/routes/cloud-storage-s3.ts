@@ -10,6 +10,9 @@ Route.group((): void => {
     'CloudStorageS3Controller.streamDownloadFileInBucketForLauncher',
   )
   Route.post('/cloud-storage-s3/delete', 'CloudStorageS3Controller.deleteInBucketAndDB')
-  Route.post('/cloud-storage-s3/file-or-folder/size', 'CloudStorageS3Controller.getTotalSizeFileOrFolderInBucket')
+  Route.post(
+    '/cloud-storage-s3/file-or-folder/size',
+    'CloudStorageS3Controller.getTotalSizeFileOrFolderInBucket',
+  )
   Route.post('/cloud-storage-s3/content', 'CloudStorageS3Controller.getFileContentInBucket')
 })

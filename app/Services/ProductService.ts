@@ -20,8 +20,8 @@ export type ProductCommand = {
  * @property {boolean} isOwned - Si il possède le jeu
  */
 export type GamePaidAndOwnedStatus = {
-  isPaid: boolean;
-  isOwned: boolean;
+  isPaid: boolean
+  isOwned: boolean
 }
 
 export class ProductService {
@@ -124,12 +124,14 @@ export class ProductService {
     }
   }
 
-  public static async getProductByGameIdAndProductCategoryGame(gameId: number): Promise<Product | null> {
+  public static async getProductByGameIdAndProductCategoryGame(
+    gameId: number,
+  ): Promise<Product | null> {
     try {
       return Product.query()
         .where('games_id', gameId)
         .andWhereHas('productCategory', (queryProductCategory): void => {
-          queryProductCategory.where('name', 'game');
+          queryProductCategory.where('name', 'game')
         })
         .preload('imageFile')
         .preload('game')
@@ -143,24 +145,27 @@ export class ProductService {
   }
 
   // Check if the game is paid and owned
-  public static async isGamePaidAndOwned(gameId: number, userId: number): Promise<GamePaidAndOwnedStatus> {
+  public static async isGamePaidAndOwned(
+    gameId: number,
+    userId: number,
+  ): Promise<GamePaidAndOwnedStatus> {
     // Check if the product with the gameId exists and if the product category is 'games'
     const product: Product | null = await Product.query()
       .where('games_id', gameId)
       .whereHas('productCategory', (queryProductCategory): void => {
-        queryProductCategory.where('name', 'game');
+        queryProductCategory.where('name', 'game')
       })
-      .first();
+      .first()
 
     // Check if the user owns the game
     const userOwnsGame: UserGameLibrary | null = await UserGameLibrary.query()
       .where('users_id', userId)
       .where('games_id', gameId)
-      .first();
+      .first()
 
     // Determine if the game is paid and owned
-    const isPaid: boolean = product ? product.price > 0 : false;
-    const isOwned: boolean = !!userOwnsGame;
+    const isPaid: boolean = product ? product.price > 0 : false
+    const isOwned: boolean = !!userOwnsGame
 
     return {
       isPaid,

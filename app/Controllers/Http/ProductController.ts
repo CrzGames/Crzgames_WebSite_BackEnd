@@ -89,8 +89,9 @@ export default class ProductController {
   }
 
   private async isGamePaidAndOwned({ params, response, auth }: HttpContextContract): Promise<void> {
-    const user: User = await auth.authenticate() as User
-    const productGamePaidAndOwnedStatus: GamePaidAndOwnedStatus = await ProductService.isGamePaidAndOwned(params.gameId, user.id);
+    const user: User = (await auth.authenticate()) as User
+    const productGamePaidAndOwnedStatus: GamePaidAndOwnedStatus =
+      await ProductService.isGamePaidAndOwned(params.gameId, user.id)
     return response.status(200).json(productGamePaidAndOwnedStatus)
   }
 }

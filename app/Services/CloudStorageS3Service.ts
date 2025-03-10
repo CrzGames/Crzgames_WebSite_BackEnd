@@ -398,85 +398,102 @@ export default class CloudStorageS3Service {
   ): Promise<void> {
     Logger.info(
       `Début du téléchargement pour le chemin : ${pathFilename} dans le bucket : ${bucketName}`,
-    );
+    )
 
-    const bucket: MyBucket = await this.getBucketByName(bucketName);
-    await this.setBucketCurrent(bucket.name);
-    await this.setVisibilityBucketCurrent(bucket.visibility);
+    const bucket: MyBucket = await this.getBucketByName(bucketName)
+    await this.setBucketCurrent(bucket.name)
+    await this.setVisibilityBucketCurrent(bucket.visibility)
 
     try {
       // Vérifier si le chemin est une application macOS (.app)
       if (pathFilename.endsWith('.app')) {
         // Utilisation directe de l'objet response natif de Node.js pour CORS ou autres en-têtes critiques
-        const zipFilename: string = `${pathFilename.split('/').pop()}.zip`;
+        const zipFilename: string = `${pathFilename.split('/').pop()}.zip`
 
-        ctx.response.response.setHeader('Content-Type', 'application/zip');
-        ctx.response.response.setHeader('Access-Control-Allow-Origin', '*');
-        ctx.response.response.setHeader('Content-Disposition', `attachment; filename="${zipFilename}"`);
-        ctx.response.response.setHeader('Transfer-Encoding', 'chunked');
+        ctx.response.response.setHeader('Content-Type', 'application/zip')
+        ctx.response.response.setHeader('Access-Control-Allow-Origin', '*')
+        ctx.response.response.setHeader(
+          'Content-Disposition',
+          `attachment; filename="${zipFilename}"`,
+        )
+        ctx.response.response.setHeader('Transfer-Encoding', 'chunked')
 
         // Créer l'archive et définir le type à zip
-        const archive: archiver.Archiver = archiver('zip');
+        const archive: archiver.Archiver = archiver('zip')
 
         // Commencer le streaming des données
-        archive.pipe(ctx.response.response); // Envoi direct au client
+        archive.pipe(ctx.response.response) // Envoi direct au client
 
-        const contents: _Object[] = await this.fetchAllObjects(bucketName, pathFilename);
+        const contents: _Object[] = await this.fetchAllObjects(bucketName, pathFilename)
 
         if (contents.length > 0) {
           for (const item of contents) {
-            if (item.Key && !item.Key.endsWith('.tar.gz') && !item.Key.endsWith('.zip') && !item.Key.endsWith('.tar.gz.sig')) {
-              const relativePath: string = item.Key.substring(pathFilename.length + 1); // Relative path inside the zip
-              const objectStream: NodeJS.ReadableStream = await this.getObjectStream(bucketName, item.Key);
+            if (
+              item.Key &&
+              !item.Key.endsWith('.tar.gz') &&
+              !item.Key.endsWith('.zip') &&
+              !item.Key.endsWith('.tar.gz.sig')
+            ) {
+              const relativePath: string = item.Key.substring(pathFilename.length + 1) // Relative path inside the zip
+              const objectStream: NodeJS.ReadableStream = await this.getObjectStream(
+                bucketName,
+                item.Key,
+              )
               // @ts-ignore
-              archive.append(objectStream, { name: relativePath });
+              archive.append(objectStream, { name: relativePath })
             }
           }
         }
 
         // Finaliser l'archive après l'ajout de tous les fichiers
-        await archive.finalize();
+        await archive.finalize()
         archive.on('finish', (): void => {
-          console.log('Archive finalisée et prête à être téléchargée.');
-        });
+          console.log('Archive finalisée et prête à être téléchargée.')
+        })
 
-        return;
+        return
       }
 
       // Vérifier si le chemin existe
       if (await Drive.exists(pathFilename)) {
-        const driveFileStats: DriveFileStats = await Drive.getStats(pathFilename);
+        const driveFileStats: DriveFileStats = await Drive.getStats(pathFilename)
         if (driveFileStats.isFile) {
           // Gestion des fichiers
-          const fileStream: NodeJS.ReadableStream = await Drive.getStream(pathFilename);
+          const fileStream: NodeJS.ReadableStream = await Drive.getStream(pathFilename)
 
-          ctx.response.response.setHeader('Content-Type', 'application/octet-stream');
+          ctx.response.response.setHeader('Content-Type', 'application/octet-stream')
           ctx.response.response.setHeader(
             'Content-Disposition',
             `attachment; filename="${pathFilename.split('/').pop()}"`,
-          );
-          ctx.response.response.setHeader('Content-Length', driveFileStats.size.toString());
+          )
+          ctx.response.response.setHeader('Content-Length', driveFileStats.size.toString())
 
-          return ctx.response.stream(fileStream);
+          return ctx.response.stream(fileStream)
         }
       }
 
-      throw new NotFoundException('File or folder not found');
+      throw new NotFoundException('File or folder not found')
     } catch (error) {
-      Logger.error('Erreur lors de la vérification du chemin ou de la génération du fichier :', error);
-      throw new NotFoundException('File or folder not found');
+      Logger.error(
+        'Erreur lors de la vérification du chemin ou de la génération du fichier :',
+        error,
+      )
+      throw new NotFoundException('File or folder not found')
     }
   }
 
   // Méthode pour obtenir un flux d'objet depuis S3
-  private static async getObjectStream(bucketName: string, key: string): Promise<NodeJS.ReadableStream> {
+  private static async getObjectStream(
+    bucketName: string,
+    key: string,
+  ): Promise<NodeJS.ReadableStream> {
     const getObjectParams = {
       Bucket: bucketName,
       Key: key,
-    };
-    const command: GetObjectCommand = new GetObjectCommand(getObjectParams);
-    const { Body } = await s3Client.send(command);
-    return Body as NodeJS.ReadableStream;
+    }
+    const command: GetObjectCommand = new GetObjectCommand(getObjectParams)
+    const { Body } = await s3Client.send(command)
+    return Body as NodeJS.ReadableStream
   }
 
   public static async streamDownloadFileOrFolderInBucket(
@@ -781,7 +798,10 @@ export default class CloudStorageS3Service {
       .first()
   }
 
-  public static async getTotalSizeFileOrFolderInBucket(bucketName: string, pathFilename: string): Promise<number> {
+  public static async getTotalSizeFileOrFolderInBucket(
+    bucketName: string,
+    pathFilename: string,
+  ): Promise<number> {
     // Fetch le bucket en question dans la db pour récupérer la visibility du bucket
     const bucket: MyBucket = await this.getBucketByName(bucketName)
 

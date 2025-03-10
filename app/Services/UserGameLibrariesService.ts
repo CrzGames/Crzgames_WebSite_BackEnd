@@ -70,9 +70,9 @@ export default class UserGameLibrariesService {
   ): Promise<UserGameLibrary> {
     try {
       // Vérifie d'abord si l'utilisateur a payé pour le jeu
-      const isOwnedAndPaid: boolean = await this.verifyOwnershipAndPaidStatus(userId, gameId);
+      const isOwnedAndPaid: boolean = await this.verifyOwnershipAndPaidStatus(userId, gameId)
       if (!isOwnedAndPaid) {
-        throw new BadRequestException('The game is either not paid for or not owned by the user');
+        throw new BadRequestException('The game is either not paid for or not owned by the user')
       }
 
       return await UserGameLibrary.create({
@@ -84,8 +84,12 @@ export default class UserGameLibrariesService {
     }
   }
 
-  private static async verifyOwnershipAndPaidStatus(userId: number, gameId: number): Promise<boolean> {
-    const product: Product | null = await ProductService.getProductByGameIdAndProductCategoryGame(gameId)
+  private static async verifyOwnershipAndPaidStatus(
+    userId: number,
+    gameId: number,
+  ): Promise<boolean> {
+    const product: Product | null =
+      await ProductService.getProductByGameIdAndProductCategoryGame(gameId)
 
     // Si product est null, c'est que le jeu est gratuit puisque tous les jeux payants ont un produit
     if (!product) {
@@ -95,21 +99,22 @@ export default class UserGameLibrariesService {
     try {
       // Si le produit est trouvé c'est que le jeu est payant.
       // Récupérer les OrderProduct liés à ce produit
-      const orderProducts: OrderProduct[] = await OrderProductService.getAllOrderProductsByProductId(product.id);
+      const orderProducts: OrderProduct[] =
+        await OrderProductService.getAllOrderProductsByProductId(product.id)
       let userPaidValid: boolean = false
 
       for (const orderProduct of orderProducts) {
-        const order: Order | null = await OrderService.getOrderById(orderProduct.orders_id);
+        const order: Order | null = await OrderService.getOrderById(orderProduct.orders_id)
 
         // Vérifiez si l'order est payé et appartient à l'utilisateur
         if (order && order.status_order === 'Paid' && order.users_id === userId) {
-          userPaidValid = true;
-          break;
+          userPaidValid = true
+          break
         }
       }
 
       // Si au moins une commande valide est trouvée, renvoyer vrai
-      return userPaidValid;
+      return userPaidValid
     } catch (error) {
       throw new BadRequestException('User has not paid for the game')
     }

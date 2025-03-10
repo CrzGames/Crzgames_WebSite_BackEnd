@@ -84,7 +84,7 @@ export default class ProductSeeder extends BaseSeeder {
       {
         name: 'World Of Warcraft',
         description: 'Le jeu',
-        price: 50.00,
+        price: 50.0,
         games_id: 1,
         imagePath: path.join(assetsBasePath2, 'wow-picture.webp'),
         product_categories_id: 2,

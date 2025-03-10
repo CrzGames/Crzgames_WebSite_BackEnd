@@ -1,9 +1,25 @@
 {
   "version": "f04daa5",
   "files": [
-    {"name": "manifest.json", "hash": "c717329a70f0b9151b90cd404e8988f80f330a24bf7d814654702d6c8f87b336", "size": 39},
-    {"name": "breakout", "hash": "8156a7c72f99601624bb503461bf5019bb1e718da52c64ccd77d576b2e1d5c89", "size": 1604776},
-    {"name": "breakout.png", "hash": "354046c31acf8a94577898ec52166da2bde7003d11e79a3da7c5d43286b13a1b", "size": 1036},
-    {"name": "data.pod", "hash": "f6a3ba3ecf6c73f1a9055dc4dbcec966661befef04fc1f34b5b6e2d4403e16e2", "size": 82829}
+    {
+      "name": "manifest.json",
+      "hash": "c717329a70f0b9151b90cd404e8988f80f330a24bf7d814654702d6c8f87b336",
+      "size": 39
+    },
+    {
+      "name": "breakout",
+      "hash": "8156a7c72f99601624bb503461bf5019bb1e718da52c64ccd77d576b2e1d5c89",
+      "size": 1604776
+    },
+    {
+      "name": "breakout.png",
+      "hash": "354046c31acf8a94577898ec52166da2bde7003d11e79a3da7c5d43286b13a1b",
+      "size": 1036
+    },
+    {
+      "name": "data.pod",
+      "hash": "f6a3ba3ecf6c73f1a9055dc4dbcec966661befef04fc1f34b5b6e2d4403e16e2",
+      "size": 82829
+    }
   ]
 }

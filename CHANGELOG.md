@@ -2,99 +2,87 @@
 
 ## [1.25.2](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/compare/v1.25.1...v1.25.2) (2024-06-18)
 
-
 ### Bug Fixes
 
-* fixed regex for signup ([41de2d4](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/41de2d4fc3d90ed0627f99d6a980b16b28a478e8))
+- fixed regex for signup ([41de2d4](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/41de2d4fc3d90ed0627f99d6a980b16b28a478e8))
 
 ## [1.25.1](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/compare/v1.25.0...v1.25.1) (2024-06-18)
 
-
 ### Bug Fixes
 
-* revert ([c466513](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/c466513b31b7f3b1e652b1df9bd5c561a6d07210))
+- revert ([c466513](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/c466513b31b7f3b1e652b1df9bd5c561a6d07210))
 
 ## [1.25.0](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/compare/v1.24.0...v1.25.0) (2024-06-18)
 
-
 ### Features
 
-* improvement api stripe for security ([55a9ded](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/55a9ded66859f6f8024665238124ee88784b261a))
+- improvement api stripe for security ([55a9ded](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/55a9ded66859f6f8024665238124ee88784b261a))
 
 ## [1.24.0](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/compare/v1.23.0...v1.24.0) (2024-06-18)
 
-
 ### Features
 
-* add directory images in v1.0.1 for seeder linux binary ([4236c12](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/4236c125322cddd00565b687c8a9f9c5a56700b9))
-* add manifest.json for binaries macos ([c7368ea](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/c7368ea9e41785f0612523543858609980e51b96))
-* add new game in product for productseeder ([b57b561](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/b57b561d5b565a70674d0a26df283284a437c080))
-* add new route, method, service for isGamePaidAndOwner ([907d450](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/907d450b024c2c8ee5743b652a80de30d705d27d))
-* add new seeders for macos ([1680cc8](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/1680cc810f5bad129675503fbb05f571350b9437))
-* delete version in docker-compose deprecated ([714730f](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/714730f51f9eb94e35c99efe28e2db873fd2b438))
-* rename .app ([7eb26e7](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/7eb26e7407140994ea97798270e5d70a144780c2))
-* update manifest.json for game binary macos ([9e90010](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/9e900103538605212005294cf47234b69ab220eb))
-* update seeder for game binary windows ([43f82e7](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/43f82e70473d5d94e8c254938417efb28dfd4a01))
-* update seeder for linux ([0df02b9](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/0df02b9caffdc17ed12eb7b5a8c8ea909115b915))
-* update seeder game for linux ([3e48747](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/3e48747504571e03aca383304fbaa3daa4a4086b))
-* update seeder linux for manifest.json ([6090a30](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/6090a303d3def5109bf534a140caa4b95304275e))
-
+- add directory images in v1.0.1 for seeder linux binary ([4236c12](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/4236c125322cddd00565b687c8a9f9c5a56700b9))
+- add manifest.json for binaries macos ([c7368ea](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/c7368ea9e41785f0612523543858609980e51b96))
+- add new game in product for productseeder ([b57b561](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/b57b561d5b565a70674d0a26df283284a437c080))
+- add new route, method, service for isGamePaidAndOwner ([907d450](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/907d450b024c2c8ee5743b652a80de30d705d27d))
+- add new seeders for macos ([1680cc8](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/1680cc810f5bad129675503fbb05f571350b9437))
+- delete version in docker-compose deprecated ([714730f](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/714730f51f9eb94e35c99efe28e2db873fd2b438))
+- rename .app ([7eb26e7](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/7eb26e7407140994ea97798270e5d70a144780c2))
+- update manifest.json for game binary macos ([9e90010](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/9e900103538605212005294cf47234b69ab220eb))
+- update seeder for game binary windows ([43f82e7](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/43f82e70473d5d94e8c254938417efb28dfd4a01))
+- update seeder for linux ([0df02b9](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/0df02b9caffdc17ed12eb7b5a8c8ea909115b915))
+- update seeder game for linux ([3e48747](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/3e48747504571e03aca383304fbaa3daa4a4086b))
+- update seeder linux for manifest.json ([6090a30](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/6090a303d3def5109bf534a140caa4b95304275e))
 
 ### Bug Fixes
 
-* add install npm@latest in Dockerfile for fixed timeout npm i ([3d2e11f](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/3d2e11f75a69929168e9adc4def93b3073e05da7))
-* fixed .app seeder for macos ([7964373](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/796437373182c4f4a1a1f4e53eaca799c4936206))
-
+- add install npm@latest in Dockerfile for fixed timeout npm i ([3d2e11f](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/3d2e11f75a69929168e9adc4def93b3073e05da7))
+- fixed .app seeder for macos ([7964373](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/796437373182c4f4a1a1f4e53eaca799c4936206))
 
 ### Performance Improvements
 
-* improvement validate account ([1c6d4db](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/1c6d4db2ad68389106ea08221f6fc3e1ea85a352))
+- improvement validate account ([1c6d4db](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/1c6d4db2ad68389106ea08221f6fc3e1ea85a352))
 
 ## [1.23.0](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/compare/v1.22.1...v1.23.0) (2024-05-22)
 
-
 ### Features
 
-* modify cors for launcher ([38067ee](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/38067eed19bfd9490357d3218e6c24ac54806f9b))
+- modify cors for launcher ([38067ee](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/38067eed19bfd9490357d3218e6c24ac54806f9b))
 
 ## [1.22.1](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/compare/v1.22.0...v1.22.1) (2024-05-21)
 
-
 ### Bug Fixes
 
-* fixed download .app macos ([b009bc9](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/b009bc905ebaf7dc2d9764c953582114fa19cd87))
-* fixed download directory launcher for macos .app ([dc516be](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/dc516bed9bb88f11c4d4b1dec8e59891e79a785c))
-* fixed download file or folder launcher ([94ed05b](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/94ed05be4d087ad0499f53c6e877944e8504dfb5))
-* rename call service method ([8d27272](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/8d272721a5a14faa4ae507bf11f77cf62bfd4939))
+- fixed download .app macos ([b009bc9](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/b009bc905ebaf7dc2d9764c953582114fa19cd87))
+- fixed download directory launcher for macos .app ([dc516be](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/dc516bed9bb88f11c4d4b1dec8e59891e79a785c))
+- fixed download file or folder launcher ([94ed05b](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/94ed05be4d087ad0499f53c6e877944e8504dfb5))
+- rename call service method ([8d27272](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/8d272721a5a14faa4ae507bf11f77cf62bfd4939))
 
 ## [1.22.0](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/compare/v1.21.3...v1.22.0) (2024-05-20)
 
-
 ### Features
 
-* add maintenancewebsite for controller, service, route, model ([2d770d7](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/2d770d7cf930ffff17de2eedde372e290ad0fdaa))
-* remove propertie price for game ([007674f](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/007674f4f024176a857ea240dd76616ee3862821))
+- add maintenancewebsite for controller, service, route, model ([2d770d7](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/2d770d7cf930ffff17de2eedde372e290ad0fdaa))
+- remove propertie price for game ([007674f](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/007674f4f024176a857ea240dd76616ee3862821))
 
 ## [1.21.3](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/compare/v1.21.2...v1.21.3) (2024-05-16)
 
-
 ### Bug Fixes
 
-* fixed if payment is not paid return ([f9434bb](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/f9434bb346db93ff0a6b1368ee3cc26b8b1128d0))
+- fixed if payment is not paid return ([f9434bb](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/f9434bb346db93ff0a6b1368ee3cc26b8b1128d0))
 
 ## [1.21.2](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/compare/v1.21.1...v1.21.2) (2024-05-16)
 
-
 ### Bug Fixes
 
-* added secret key api for seatyrants change logic ([4f2d6fe](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/4f2d6feb162eec9ef3cb447b760c910d59d4d72f))
+- added secret key api for seatyrants change logic ([4f2d6fe](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/4f2d6feb162eec9ef3cb447b760c910d59d4d72f))
 
 ## [1.21.1](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/compare/v1.21.0...v1.21.1) (2024-05-16)
 
-
 ### Bug Fixes
 
-* fixed domaine seatyrants.com to api.seatyrants.com ([d597f3a](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/d597f3aa5ecf93a73e42ac2123dbf54ee97031f3))
+- fixed domaine seatyrants.com to api.seatyrants.com ([d597f3a](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/commit/d597f3aa5ecf93a73e42ac2123dbf54ee97031f3))
 
 ## [1.21.0](https://github.com/corentin35000/Crzgames_WebSite_BackEnd/compare/v1.20.0...v1.21.0) (2024-05-15)
 

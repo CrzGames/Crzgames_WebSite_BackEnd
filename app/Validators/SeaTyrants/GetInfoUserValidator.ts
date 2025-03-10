@@ -5,14 +5,11 @@ export default class GetInfoUserValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    email: schema.string({ trim: true }, [
-      rules.required(),
-      rules.email(),
-    ]),
+    email: schema.string({ trim: true }, [rules.required(), rules.email()]),
   })
 
   public messages = {
     'email.required': 'Email is required',
-    'email.email': 'Email must be a valid'
+    'email.email': 'Email must be a valid',
   }
 }

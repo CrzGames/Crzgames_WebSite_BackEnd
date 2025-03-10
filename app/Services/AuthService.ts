@@ -45,7 +45,8 @@ export default class AuthService {
       {
         username: user.username,
         code: user.active_code,
-        redirect_uri: Env.get('APP_BASE_URL') + Env.get('APP_REDIRECT_URI_ACCOUNT_VALIDATE') + user.email,
+        redirect_uri:
+          Env.get('APP_BASE_URL') + Env.get('APP_REDIRECT_URI_ACCOUNT_VALIDATE') + user.email,
       },
       'Welcome to CrzGames',
     )
@@ -84,7 +85,8 @@ export default class AuthService {
         {
           username: user.username,
           code: user.active_code,
-          redirect_uri: Env.get('APP_BASE_URL') + Env.get('APP_REDIRECT_URI_ACCOUNT_VALIDATE') + user.email,
+          redirect_uri:
+            Env.get('APP_BASE_URL') + Env.get('APP_REDIRECT_URI_ACCOUNT_VALIDATE') + user.email,
         },
         'Activation code resend - CrzGames',
       )
