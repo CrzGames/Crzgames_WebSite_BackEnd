@@ -15,6 +15,10 @@ services:
     depends_on:
       - database_mariadb
       - phpmyadmin
+      - minio-s3
+      - miniomc-s3
+      - nats
+      - mailhog
     networks:
       - app-network
 
