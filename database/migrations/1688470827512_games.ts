@@ -5,31 +5,52 @@ export default class extends BaseSchema {
 
   public async up(): Promise<void> {
     this.schema.createTable(this.tableName, (table): void => {
-      table.increments('id').primary()
+      table.increments('id').primary().notNullable().unique()
       table.string('title').notNullable().unique()
       table
         .integer('trailer_files_id')
         .unsigned()
+        .notNullable()
         .references('id')
         .inTable('files')
         .onDelete('CASCADE')
       table
         .integer('picture_files_id')
         .unsigned()
+        .notNullable()
         .references('id')
         .inTable('files')
         .onDelete('CASCADE')
       table
         .integer('logo_files_id')
         .unsigned()
+        .notNullable()
         .references('id')
         .inTable('files')
         .onDelete('CASCADE')
       table.text('description').notNullable()
       table.boolean('upcoming_game').nullable() // si c'est un jeu à venir
       table.boolean('new_game').nullable() // si c'est un nouveau jeu
-      table.timestamp('created_at', { useTz: true })
-      table.timestamp('updated_at', { useTz: true })
+      table.dateTime('release_date', { useTz: true }).nullable()
+      table.enum('game_mode', ['solo', 'multiplayer', 'both']).notNullable()
+      table.string('publisher').notNullable()
+      table.string('developer').notNullable()
+      table
+        .integer('game_configurations_minimal_id')
+        .unsigned()
+        .nullable()
+        .references('id')
+        .inTable('game_configurations')
+        .onDelete('SET NULL')
+      table
+        .integer('game_configurations_recommended_id')
+        .unsigned()
+        .nullable()
+        .references('id')
+        .inTable('game_configurations')
+        .onDelete('SET NULL')
+      table.timestamp('created_at', { useTz: true }).notNullable()
+      table.timestamp('updated_at', { useTz: true }).nullable()
     })
   }
 
