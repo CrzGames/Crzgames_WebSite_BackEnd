@@ -137,6 +137,9 @@ export default class GamesService {
           })
         })
         .preload('gameCategory')
+        .preload('gameConfigurationMinimal')
+        .preload('gameConfigurationRecommended')
+        .preload('languages')
         .where('id', id)
         .firstOrFail()
     } catch (error) {
@@ -168,6 +171,9 @@ export default class GamesService {
             })
           })
           .preload('gameCategory')
+          .preload('gameConfigurationMinimal')
+          .preload('gameConfigurationRecommended')
+          .preload('languages')
           .whereRaw('LOWER(title) LIKE ?', [`%${title.toLowerCase()}%`])
       } else {
         games = await Game.query()
@@ -188,6 +194,9 @@ export default class GamesService {
             })
           })
           .preload('gameCategory')
+          .preload('gameConfigurationMinimal')
+          .preload('gameConfigurationRecommended')
+          .preload('languages')
       }
 
       return games
@@ -242,6 +251,9 @@ export default class GamesService {
           })
         })
         .preload('gameCategory')
+        .preload('gameConfigurationMinimal')
+        .preload('gameConfigurationRecommended')
+        .preload('languages')
         .firstOrFail()
     } catch (error) {
       if (error instanceof NotFoundException) {
