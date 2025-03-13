@@ -7,6 +7,7 @@ import {
   column,
   hasMany,
   HasMany,
+  ModelObject,
 } from '@ioc:Adonis/Lucid/Orm'
 import Hash from '@ioc:Adonis/Core/Hash'
 import UserRole from 'App/Models/UserRole'
@@ -96,5 +97,18 @@ export default class User extends BaseModel {
     if (user.$dirty.password) {
       user.password = await Hash.make(user.password)
     }
+  }
+
+  /**
+   * Surcharge de la sérialisation pour convertir les champs en booléens explicites
+   * lors de la sérialisation en JSON de la response 
+   */
+  public serialize(): ModelObject {
+    const serialized: ModelObject = super.serialize()
+
+    return {
+      ...serialized,
+      is_active: !!serialized.is_active
+    } as ModelObject
   }
 }

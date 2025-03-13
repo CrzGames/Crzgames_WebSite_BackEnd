@@ -1,33 +1,33 @@
+import { BaseModel, column, ModelObject } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column, ModelObject } from '@ioc:Adonis/Lucid/Orm'
-import User from 'App/Models/User'
-import Ticket from 'App/Models/Ticket'
 
-export default class TicketResponse extends BaseModel {
+export default class GameConfiguration extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public content: string
+  public type: 'minimal' | 'recommended'
 
   @column()
-  public users_id: number
+  public cpu: string
 
   @column()
-  public is_support: boolean
-
-  @belongsTo(() => User, {
-    foreignKey: 'users_id',
-  })
-  public user: BelongsTo<typeof User>
+  public gpu: string
 
   @column()
-  public tickets_id: number
+  public ram: string
 
-  @belongsTo(() => Ticket, {
-    foreignKey: 'tickets_id',
-  })
-  public ticket: BelongsTo<typeof Ticket>
+  @column()
+  public storage: string
+
+  @column()
+  public os: string
+
+  @column()
+  public internet: boolean | null
+
+  @column()
+  public additional_notes: string | null
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -44,7 +44,7 @@ export default class TicketResponse extends BaseModel {
 
     return {
       ...serialized,
-      is_support: !!serialized.is_support
+      internet: serialized.internet === null ? null : !!serialized.internet,
     } as ModelObject
   }
 }

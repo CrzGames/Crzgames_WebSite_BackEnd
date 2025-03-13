@@ -8,12 +8,15 @@ import {
   hasMany,
   manyToMany,
   ManyToMany,
+  ModelObject,
 } from '@ioc:Adonis/Lucid/Orm'
 import File from 'App/Models/File'
 import GameCategory from 'App/Models/GameCategory'
 import GamePlatform from 'App/Models/GamePlatform'
 import GameBinary from 'App/Models/GameBinary'
 import GameVersion from 'App/Models/GameVersion'
+import Language from 'App/Models/Language'
+import GameConfiguration from './GameConfiguration'
 
 export default class Game extends BaseModel {
   @column({ isPrimary: true })
@@ -81,9 +84,54 @@ export default class Game extends BaseModel {
   @column()
   public new_game: boolean | null
 
+  @column.dateTime()
+  public release_date: DateTime | null
+
+  @column()
+  public game_mode: 'solo' | 'multiplayer' | 'both'
+
+  @column()
+  public publisher: string
+
+  @column()
+  public developer: string
+
+  @column()
+  public game_configurations_minimal_id: number | null
+
+  @belongsTo(() => GameConfiguration, { foreignKey: 'game_configurations_minimal_id' })
+  public gameConfigurationMinimal: BelongsTo<typeof GameConfiguration>
+
+  @column()
+  public game_configurations_recommended_id: number | null
+
+  @belongsTo(() => GameConfiguration, { foreignKey: 'game_configurations_recommended_id' })
+  public gameConfigurationRecommended: BelongsTo<typeof GameConfiguration>
+
+  @manyToMany(() => Language, {
+    pivotTable: 'game_languages',
+    pivotForeignKey: 'games_id',
+    pivotRelatedForeignKey: 'languages_id',
+  })
+  public languages: ManyToMany<typeof Language>
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
+  public updatedAt: DateTime | null
+
+  /**
+   * Surcharge de la sérialisation pour convertir les champs en booléens explicites
+   * lors de la sérialisation en JSON de la response 
+   */
+  public serialize(): ModelObject {
+    const serialized: ModelObject = super.serialize()
+
+    return {
+      ...serialized,
+      upcoming_game: serialized.upcoming_game === null ? null : !!serialized.upcoming_game,
+      new_game: serialized.new_game === null ? null : !!serialized.new_game,
+    } as ModelObject
+  }
 }

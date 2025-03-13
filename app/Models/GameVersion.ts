@@ -1,4 +1,4 @@
-import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, belongsTo, BelongsTo, ModelObject } from '@ioc:Adonis/Lucid/Orm'
 import Game from 'App/Models/Game'
 import { DateTime } from 'luxon'
 
@@ -9,10 +9,7 @@ export default class GameVersion extends BaseModel {
   @column()
   public version: string
 
-  @column({
-    // Force the value to be a boolean, ne pas simplifier la methode laisser le ternaire
-    serialize: (value: boolean): boolean => (value ? true : false),
-  })
+  @column()
   public isAvailable: boolean
 
   @belongsTo(() => Game, {
@@ -28,4 +25,17 @@ export default class GameVersion extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  /**
+   * Surcharge de la sérialisation pour convertir les champs en booléens explicites
+   * lors de la sérialisation en JSON de la response 
+   */
+  public serialize(): ModelObject {
+    const serialized: ModelObject = super.serialize()
+
+    return {
+      ...serialized,
+      isAvailable: !!serialized.isAvailable
+    } as ModelObject
+  }
 }
