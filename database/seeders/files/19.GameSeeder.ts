@@ -84,21 +84,7 @@ export default class extends BaseSeeder {
         pictureFile: path.join(assetsBasePath, 'wow-picture.webp'),
         trailerFile: path.join(assetsBasePath, 'wow-trailer.webm'),
         logoFile: path.join(assetsBasePath, 'wow-logo.webp'),
-        gamePlatforms: [
-          'Windows',
-          'macOS',
-          'Linux',
-          'Microsoft Store',
-          'Nintendo Switch',
-          'PlayStation®5',
-          'PlayStation®4',
-          'Xbox One',
-          'Xbox Series X|S',
-          'iOS',
-          'Android',
-          'HTML5',
-          'Steam',
-        ],
+        gamePlatforms: ['Windows', 'macOS', 'Linux', 'Steam'],
         gameCategories: ['MMORPG'],
         release_date: '2025-03-09',
         game_mode: 'both',
@@ -131,7 +117,7 @@ export default class extends BaseSeeder {
         pictureFile: path.join(assetsBasePath, 'diablo4-picture.webp'),
         trailerFile: path.join(assetsBasePath, 'diablo4-trailer.webm'),
         logoFile: path.join(assetsBasePath, 'diablo4-logo.webp'),
-        gamePlatforms: ['iOS', 'Android', 'Windows', 'macOS', 'Linux'],
+        gamePlatforms: ['Windows', 'macOS', 'Linux'],
         gameCategories: ['Action'],
         release_date: '2025-04-15',
         game_mode: 'solo',
@@ -142,7 +128,7 @@ export default class extends BaseSeeder {
           gpu: 'GTX 1050',
           ram: '8GB',
           storage: '40GB',
-          os: 'Windows 10+ / macOS 10.15+ / Ubuntu 20.04+',
+          os: 'Windows 10+',
           internet: true,
           additional_notes: 'Requires an internet connection',
         },
@@ -151,7 +137,7 @@ export default class extends BaseSeeder {
           gpu: 'GTX 1660',
           ram: '16GB',
           storage: '40GB',
-          os: 'Windows 10+ / macOS 10.15+ / Ubuntu 20.04+',
+          os: 'Windows 10+',
           internet: true,
           additional_notes: 'Requires an internet connection',
         },
@@ -164,8 +150,8 @@ export default class extends BaseSeeder {
         pictureFile: path.join(assetsBasePath, 'gtav-picture.jpg'),
         trailerFile: path.join(assetsBasePath, 'gtav-trailer.mp4'),
         logoFile: path.join(assetsBasePath, 'diablo4-logo.webp'),
-        gamePlatforms: ['Windows', 'macOS', 'Linux', 'Microsoft Store', 'Steam'],
-        gameCategories: ['Fantasy'],
+        gamePlatforms: ['Windows', 'macOS', 'Steam'],
+        gameCategories: ['Action', 'Adventure'],
         release_date: '2025-02-20',
         game_mode: 'multiplayer',
         publisher: 'Rockstar Games',
@@ -192,106 +178,171 @@ export default class extends BaseSeeder {
       },
     ]
 
+    // Ajout de 10 jeux supplémentaires pour tester le scroll et les placements
+    for (let i = 1; i <= 10; i++) {
+      fakeGames.push({
+        title: `Test Game ${i}`,
+        upcoming_game: i % 2 === 0,
+        new_game: i % 3 === 0,
+        pictureFile: path.join(assetsBasePath, 'wow-picture.webp'),
+        trailerFile: path.join(assetsBasePath, 'wow-trailer.webm'),
+        logoFile: path.join(assetsBasePath, 'wow-logo.webp'),
+        gamePlatforms: ['Windows', 'Steam'],
+        gameCategories: ['Action'],
+        release_date: '2025-02-20',
+        game_mode: 'both',
+        publisher: `Indie Studio ${i}`,
+        developer: `Indie Dev Team ${i}`,
+        minimal_config: {
+          cpu: 'Intel i3',
+          gpu: 'GTX 950',
+          ram: '4GB',
+          storage: '20GB',
+          os: 'Windows 10+',
+          internet: i % 2 === 0,
+          additional_notes: 'Lightweight game, runs on most machines',
+        },
+        recommended_config: {
+          cpu: 'Intel i5',
+          gpu: 'GTX 1050',
+          ram: '8GB',
+          storage: '30GB',
+          os: 'Windows 10+',
+          internet: true,
+          additional_notes: 'Better performance with a dedicated GPU',
+        },
+        languages: ['English', 'French'],
+      })
+    }
+
     for (const fakeGame of fakeGames) {
-      const sanitizedGameName: string = fakeGame.title.toLowerCase().replace(/\s+/g, '-')
-      const pictureFileExtension: string = path.extname(fakeGame.pictureFile)
-      const trailerFileExtension: string = path.extname(fakeGame.trailerFile)
-      const logoFileExtension: string = path.extname(fakeGame.logoFile)
+      try {
+        const sanitizedGameName: string = fakeGame.title.toLowerCase().replace(/\s+/g, '-')
+        const pictureFileExtension: string = path.extname(fakeGame.pictureFile)
+        const trailerFileExtension: string = path.extname(fakeGame.trailerFile)
+        const logoFileExtension: string = path.extname(fakeGame.logoFile)
 
-      // Insére les assets dans le bucket s3
-      await CloudStorageS3Service.uploadFileOrFolderInBucket({
-        pathFilename: 'games/pictures/picture-' + sanitizedGameName + pictureFileExtension,
-        bucketName: bucketNameBase,
-        localPath: fakeGame.pictureFile,
-      })
+        // ✅ 0. Insére les assets dans le bucket s3 (images, vidéos, logos)
+        await CloudStorageS3Service.uploadFileOrFolderInBucket({
+          pathFilename: `games/pictures/picture-${sanitizedGameName}${pictureFileExtension}`,
+          bucketName: bucketNameBase,
+          localPath: fakeGame.pictureFile,
+        })
 
-      await CloudStorageS3Service.uploadFileOrFolderInBucket({
-        pathFilename: 'games/trailers/trailer-' + sanitizedGameName + trailerFileExtension,
-        bucketName: bucketNameBase,
-        localPath: fakeGame.trailerFile,
-      })
+        await CloudStorageS3Service.uploadFileOrFolderInBucket({
+          pathFilename: `games/trailers/trailer-${sanitizedGameName}${trailerFileExtension}`,
+          bucketName: bucketNameBase,
+          localPath: fakeGame.trailerFile,
+        })
 
-      await CloudStorageS3Service.uploadFileOrFolderInBucket({
-        pathFilename: 'games/logos/logo-' + sanitizedGameName + logoFileExtension,
-        bucketName: bucketNameBase,
-        localPath: fakeGame.logoFile,
-      })
+        await CloudStorageS3Service.uploadFileOrFolderInBucket({
+          pathFilename: `games/logos/logo-${sanitizedGameName}${logoFileExtension}`,
+          bucketName: bucketNameBase,
+          localPath: fakeGame.logoFile,
+        })
 
-      // Associe les fichier du bucket s3 au picture, trailer et logo
-      const pictureFile: File = await CloudStorageS3Service.createFileInDB({
-        pathFilename: 'games/pictures/picture-' + sanitizedGameName + pictureFileExtension,
-        bucketName: bucketNameBase,
-        localPath: fakeGame.pictureFile,
-      })
+        // ✅ 1. Création des "File" dans la db (images, vidéos, logos)
+        let pictureFile: File, trailerFile: File, logoFile: File
 
-      const trailerFile: File = await CloudStorageS3Service.createFileInDB({
-        pathFilename: 'games/trailers/trailer-' + sanitizedGameName + trailerFileExtension,
-        bucketName: bucketNameBase,
-        localPath: fakeGame.trailerFile,
-      })
+        try {
+          pictureFile = await CloudStorageS3Service.createFileInDB({
+            pathFilename: `games/pictures/picture-${sanitizedGameName}${pictureFileExtension}`,
+            bucketName: bucketNameBase,
+            localPath: fakeGame.pictureFile,
+          })
+        } catch (err) {
+          Logger.error(`Error uploading pictureFile for ${fakeGame.title}:` + err)
+          continue
+        }
 
-      const logoFile: File = await CloudStorageS3Service.createFileInDB({
-        pathFilename: 'games/logos/logo-' + sanitizedGameName + logoFileExtension,
-        bucketName: bucketNameBase,
-        localPath: fakeGame.logoFile,
-      })
+        try {
+          trailerFile = await CloudStorageS3Service.createFileInDB({
+            pathFilename: `games/trailers/trailer-${sanitizedGameName}${trailerFileExtension}`,
+            bucketName: bucketNameBase,
+            localPath: fakeGame.trailerFile,
+          })
+        } catch (err) {
+          Logger.error(`Error uploading trailerFile for ${fakeGame.title}:` + err)
+          continue
+        }
 
-      // Create les configurations du jeu (minimal et recommended)
-      const gameConfigurationMinimal: GameConfiguration = await GameConfiguration.create({
-        type: 'minimal',
-        cpu: fakeGame.minimal_config.cpu,
-        gpu: fakeGame.minimal_config.gpu,
-        ram: fakeGame.minimal_config.ram,
-        storage: fakeGame.minimal_config.storage,
-        os: fakeGame.minimal_config.os,
-        internet: fakeGame.minimal_config.internet,
-        additional_notes: fakeGame.minimal_config.additional_notes,
-      })
+        try {
+          logoFile = await CloudStorageS3Service.createFileInDB({
+            pathFilename: `games/logos/logo-${sanitizedGameName}${logoFileExtension}`,
+            bucketName: bucketNameBase,
+            localPath: fakeGame.logoFile,
+          })
+        } catch (err) {
+          Logger.error(`Error uploading logoFile for ${fakeGame.title}:` + err)
+          continue
+        }
 
-      const gameConfigurationRecommended: GameConfiguration = await GameConfiguration.create({
-        type: 'recommended',
-        cpu: fakeGame.recommended_config.cpu,
-        gpu: fakeGame.recommended_config.gpu,
-        ram: fakeGame.recommended_config.ram,
-        storage: fakeGame.recommended_config.storage,
-        os: fakeGame.recommended_config.os,
-        internet: fakeGame.recommended_config.internet,
-        additional_notes: fakeGame.recommended_config.additional_notes,
-      })
+        // ✅ 2. Création du jeu
+        let game: Game
+        try {
+          game = await Game.create({
+            upcoming_game: fakeGame.upcoming_game,
+            new_game: fakeGame.new_game,
+            title: fakeGame.title,
+            description: 'Generated test game',
+            trailer_files_id: trailerFile.id,
+            picture_files_id: pictureFile.id,
+            logo_files_id: logoFile.id,
+            release_date: DateTime.fromISO(fakeGame.release_date),
+            game_mode: fakeGame.game_mode,
+            publisher: fakeGame.publisher,
+            developer: fakeGame.developer,
+          })
+        } catch (err) {
+          Logger.error(`Error creating game ${fakeGame.title}:` + err)
+          continue
+        }
 
-      // Créer le jeu
-      const game: Game = await Game.create({
-        upcoming_game: fakeGame.upcoming_game,
-        new_game: fakeGame.new_game,
-        title: fakeGame.title,
-        description: 'my description game',
-        trailer_files_id: trailerFile.id,
-        picture_files_id: pictureFile.id,
-        logo_files_id: logoFile.id,
-        release_date: DateTime.fromISO(fakeGame.release_date),
-        game_mode: fakeGame.game_mode as 'solo' | 'multiplayer' | 'both',
-        publisher: fakeGame.publisher,
-        developer: fakeGame.developer,
-        game_configurations_minimal_id: gameConfigurationMinimal.id,
-        game_configurations_recommended_id: gameConfigurationRecommended.id,
-      })
+        // ✅ 3. Ajout des plateformes
+        for (const platformName of fakeGame.gamePlatforms) {
+          try {
+            const platform: GamePlatform | null = await GamePlatform.findBy('name', platformName)
+            if (!platform) {
+              Logger.warn(`GamePlatform "${platformName}" not found for ${fakeGame.title}!`)
+              continue
+            }
+            await game.related('gamePlatform').attach([platform.id])
+          } catch (err) {
+            Logger.error(`Error attaching platform ${platformName} to ${fakeGame.title}:` + err)
+          }
+        }
 
-      // Associe les plateformes au jeu
-      for (const platformName of fakeGame.gamePlatforms) {
-        const platform: GamePlatform = await GamePlatform.findByOrFail('name', platformName)
-        await game.related('gamePlatform').attach([platform.id])
-      }
+        // ✅ 4. Ajout des catégories
+        for (const categoryName of fakeGame.gameCategories) {
+          try {
+            const category: GameCategory | null = await GameCategory.findBy('name', categoryName)
+            if (!category) {
+              Logger.warn(`GameCategory "${categoryName}" not found for ${fakeGame.title}!`)
+              continue
+            }
+            await game.related('gameCategory').attach([category.id])
+          } catch (err) {
+            Logger.error(`Error attaching category ${categoryName} to ${fakeGame.title}:` + err)
+          }
+        }
 
-      // Associe les catégories au jeu
-      for (const categoryName of fakeGame.gameCategories) {
-        const category: GameCategory = await GameCategory.findByOrFail('name', categoryName)
-        await game.related('gameCategory').attach([category.id])
-      }
+        // ✅ 5. Ajout des langues
+        for (const languageName of fakeGame.languages) {
+          try {
+            const language: Language | null = await Language.findBy('name', languageName)
+            if (!language) {
+              Logger.warn(`Language "${languageName}" not found for ${fakeGame.title}!`)
+              continue
+            }
+            await game.related('languages').attach([language.id])
+          } catch (err) {
+            Logger.error(`Error attaching language ${languageName} to ${fakeGame.title}:` + err)
+          }
+        }
 
-      // Associe les langues au jeu
-      for (const languageName of fakeGame.languages) {
-        const language: Language = await Language.findByOrFail('name', languageName)
-        await game.related('languages').attach([language.id])
+        Logger.info(`GameSeeder: Successfully added ${fakeGame.title}`)
+      } catch (err) {
+        Logger.error(`Unexpected error in GameSeeder for ${fakeGame.title}:` + err)
       }
     }
 
