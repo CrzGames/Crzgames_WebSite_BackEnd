@@ -200,12 +200,15 @@ export default class CloudStorageS3Service {
     } while (continuationToken)
 
     // Enregistrer le fichier dans une base de données
-    return await File.create({
+    const file: File = await File.create({
       buckets_id: bucket.id,
       pathfilename: bucketFile.pathFilename,
       url: bucketFile.pathFilename,
       size: totalSize,
     })
+    // Charger (manuellement) la relation "bucket" pour éviter l'erreur dans le getter "url"
+    file.$setRelated('bucket', bucket)
+    return file
   }
 
   public static async updateFileInDB(bucketFile: BucketFileCommand, id: number): Promise<void> {
