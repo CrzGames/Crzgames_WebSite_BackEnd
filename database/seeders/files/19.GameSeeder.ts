@@ -13,8 +13,10 @@ import { DateTime } from 'luxon'
 /* TYPES */
 /**
  * @type {object} FakeGameConfiguration
- * @property {string} - cpu
- * @property {string} - gpu
+ * @property {string} - cpu_intel
+ * @property {string} - cpu_amd
+ * @property {string} - gpu_nvidia
+ * @property {string} - gpu_amd
  * @property {string} - ram
  * @property {string} - storage
  * @property {string} - os
@@ -22,8 +24,10 @@ import { DateTime } from 'luxon'
  * @property {string} - additional_notes
  */
 type FakeGameConfiguration = {
-  cpu: string
-  gpu: string
+  cpu_intel: string
+  cpu_amd: string
+  gpu_nvidia: string
+  gpu_amd: string
   ram: string
   storage: string
   os: string
@@ -48,6 +52,7 @@ type FakeGameConfiguration = {
  * @property {GameConfigurationFake} - minimal_config
  * @property {GameConfigurationFake} - recommended_config
  * @property {string[]} - languages
+ * @property {'PEGI 3' | 'PEGI 7' | 'PEGI 12' | 'PEGI 16' | 'PEGI 18'} - pegi_rating
  */
 type FakeGame = {
   title: string
@@ -65,6 +70,7 @@ type FakeGame = {
   minimal_config: FakeGameConfiguration
   recommended_config: FakeGameConfiguration
   languages: string[]
+  pegi_rating: 'PEGI 3' | 'PEGI 7' | 'PEGI 12' | 'PEGI 16' | 'PEGI 18'
 }
 
 export default class extends BaseSeeder {
@@ -91,24 +97,29 @@ export default class extends BaseSeeder {
         publisher: 'Blizzard Entertainment',
         developer: 'Blizzard Entertainment',
         minimal_config: {
-          cpu: 'Intel i5',
-          gpu: 'GTX 1050',
-          ram: '8GB',
-          storage: '50GB',
+          cpu_intel: 'Intel Core i3-9100',
+          cpu_amd: 'AMD Ryzen 3 1200',
+          gpu_nvidia: 'NVIDIA GeForce GTX 1050',
+          gpu_amd: 'AMD Radeon RX 560',
+          ram: '8 GB RAM',
+          storage: '50 GB',
           os: 'Windows 10+',
           internet: true,
           additional_notes: 'Requires an internet connection',
         },
         recommended_config: {
-          cpu: 'Intel i7',
-          gpu: 'GTX 1660',
-          ram: '16GB',
-          storage: '50GB',
+          cpu_intel: 'Intel Core i5-9400',
+          cpu_amd: 'AMD Ryzen 5 2600',
+          gpu_nvidia: 'NVIDIA GeForce GTX 1660',
+          gpu_amd: 'AMD Radeon RX 570',
+          ram: '16 GB RAM',
+          storage: '50 GB',
           os: 'Windows 10+',
           internet: true,
           additional_notes: 'Requires an internet connection',
         },
         languages: ['English', 'French'],
+        pegi_rating: 'PEGI 12',
       },
       {
         title: 'Diablo IV',
@@ -118,14 +129,16 @@ export default class extends BaseSeeder {
         trailerFile: path.join(assetsBasePath, 'diablo4-trailer.webm'),
         logoFile: path.join(assetsBasePath, 'diablo4-logo.webp'),
         gamePlatforms: ['Windows', 'macOS', 'Linux'],
-        gameCategories: ['Action'],
+        gameCategories: ['Mystery'],
         release_date: '2025-04-15',
         game_mode: 'solo',
         publisher: 'Blizzard Entertainment',
         developer: 'Blizzard Entertainment',
         minimal_config: {
-          cpu: 'Intel i5',
-          gpu: 'GTX 1050',
+          cpu_intel: 'Intel i3',
+          cpu_amd: 'AMD Ryzen 3',
+          gpu_nvidia: 'GTX 1050',
+          gpu_amd: 'RX 560',
           ram: '8GB',
           storage: '40GB',
           os: 'Windows 10+',
@@ -133,8 +146,10 @@ export default class extends BaseSeeder {
           additional_notes: 'Requires an internet connection',
         },
         recommended_config: {
-          cpu: 'Intel i7',
-          gpu: 'GTX 1660',
+          cpu_intel: 'Intel i5',
+          cpu_amd: 'AMD Ryzen 5',
+          gpu_nvidia: 'GTX 1660',
+          gpu_amd: 'RX 570',
           ram: '16GB',
           storage: '40GB',
           os: 'Windows 10+',
@@ -142,6 +157,7 @@ export default class extends BaseSeeder {
           additional_notes: 'Requires an internet connection',
         },
         languages: ['English'],
+        pegi_rating: 'PEGI 16',
       },
       {
         title: 'Grand Theft Auto V',
@@ -151,14 +167,16 @@ export default class extends BaseSeeder {
         trailerFile: path.join(assetsBasePath, 'gtav-trailer.mp4'),
         logoFile: path.join(assetsBasePath, 'diablo4-logo.webp'),
         gamePlatforms: ['Windows', 'macOS', 'Steam'],
-        gameCategories: ['Action', 'Adventure'],
+        gameCategories: ['Adventure'],
         release_date: '2025-02-20',
         game_mode: 'multiplayer',
         publisher: 'Rockstar Games',
         developer: 'Rockstar North',
         minimal_config: {
-          cpu: 'Intel i5',
-          gpu: 'GTX 1050',
+          cpu_intel: 'Intel Core 2 Quad CPU Q6600',
+          cpu_amd: 'AMD Phenom 9850 Quad-Core Processor',
+          gpu_nvidia: 'NVIDIA 9800 GT 1GB',
+          gpu_amd: 'AMD HD 4870 1GB',
           ram: '8GB',
           storage: '60GB',
           os: 'Windows 10+',
@@ -175,11 +193,12 @@ export default class extends BaseSeeder {
           additional_notes: 'For best visual quality',
         },
         languages: ['English', 'Spanish'],
+        pegi_rating: 'PEGI 18',
       },
     ]
 
     // Ajout de 10 jeux supplémentaires pour tester le scroll et les placements
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 30; i++) {
       fakeGames.push({
         title: `Test Game ${i}`,
         upcoming_game: i % 2 === 0,
@@ -189,13 +208,15 @@ export default class extends BaseSeeder {
         logoFile: path.join(assetsBasePath, 'wow-logo.webp'),
         gamePlatforms: ['Windows', 'Steam'],
         gameCategories: ['Action'],
-        release_date: '2025-02-20',
+        release_date: `2025-03-${i < 10 ? '0' + i : i}`,
         game_mode: 'both',
         publisher: `Indie Studio ${i}`,
         developer: `Indie Dev Team ${i}`,
         minimal_config: {
-          cpu: 'Intel i3',
-          gpu: 'GTX 950',
+          cpu_intel: 'Intel i3',
+          cpu_amd: 'AMD Ryzen 3',
+          gpu_nvidia: 'GTX 1050',
+          gpu_amd: 'RX 560',
           ram: '4GB',
           storage: '20GB',
           os: 'Windows 10+',
@@ -203,8 +224,10 @@ export default class extends BaseSeeder {
           additional_notes: 'Lightweight game, runs on most machines',
         },
         recommended_config: {
-          cpu: 'Intel i5',
-          gpu: 'GTX 1050',
+          cpu_intel: 'Intel i5',
+          cpu_amd: 'AMD Ryzen 5',
+          gpu_nvidia: 'GTX 1660',
+          gpu_amd: 'RX 570',
           ram: '8GB',
           storage: '30GB',
           os: 'Windows 10+',
@@ -212,6 +235,7 @@ export default class extends BaseSeeder {
           additional_notes: 'Better performance with a dedicated GPU',
         },
         languages: ['English', 'French'],
+        pegi_rating: 'PEGI 12',
       })
     }
 
@@ -277,6 +301,38 @@ export default class extends BaseSeeder {
           continue
         }
 
+        // ✅ 1.5 Création des configurations
+        let gameConfigurationMinimal: GameConfiguration,
+          gameConfigurationRecommended: GameConfiguration
+        try {
+          gameConfigurationMinimal = await GameConfiguration.create({
+            cpu_intel: fakeGame.minimal_config.cpu_intel,
+            cpu_amd: fakeGame.minimal_config.cpu_amd,
+            gpu_nvidia: fakeGame.minimal_config.gpu_nvidia,
+            gpu_amd: fakeGame.minimal_config.gpu_amd,
+            ram: fakeGame.minimal_config.ram,
+            storage: fakeGame.minimal_config.storage,
+            os: fakeGame.minimal_config.os,
+            internet: fakeGame.minimal_config.internet,
+            additional_notes: fakeGame.minimal_config.additional_notes,
+          })
+
+          gameConfigurationRecommended = await GameConfiguration.create({
+            cpu_intel: fakeGame.recommended_config.cpu_intel,
+            cpu_amd: fakeGame.recommended_config.cpu_amd,
+            gpu_nvidia: fakeGame.recommended_config.gpu_nvidia,
+            gpu_amd: fakeGame.recommended_config.gpu_amd,
+            ram: fakeGame.recommended_config.ram,
+            storage: fakeGame.recommended_config.storage,
+            os: fakeGame.recommended_config.os,
+            internet: fakeGame.recommended_config.internet,
+            additional_notes: fakeGame.recommended_config.additional_notes,
+          })
+        } catch (err) {
+          Logger.error(`Error creating minimalConfig for ${fakeGame.title}:` + err)
+          continue
+        }
+
         // ✅ 2. Création du jeu
         let game: Game
         try {
@@ -292,6 +348,8 @@ export default class extends BaseSeeder {
             game_mode: fakeGame.game_mode,
             publisher: fakeGame.publisher,
             developer: fakeGame.developer,
+            game_configurations_minimal_id: gameConfigurationMinimal.id,
+            game_configurations_recommended_id: gameConfigurationRecommended.id,
           })
         } catch (err) {
           Logger.error(`Error creating game ${fakeGame.title}:` + err)

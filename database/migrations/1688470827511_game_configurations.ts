@@ -1,14 +1,16 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class GameConfigurations extends BaseSchema {
+export default class extends BaseSchema {
   protected tableName = 'game_configurations'
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary().notNullable().unique()
       table.enum('type', ['minimal', 'recommended']).notNullable()
-      table.string('cpu').notNullable()
-      table.string('gpu').notNullable()
+      table.string('cpu_intel').notNullable()
+      table.string('cpu_amd').notNullable()
+      table.string('gpu_nvidia').notNullable()
+      table.string('gpu_amd').notNullable()
       table.string('ram').notNullable()
       table.string('storage').notNullable()
       table.string('os').notNullable()

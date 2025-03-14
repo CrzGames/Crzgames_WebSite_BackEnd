@@ -9,10 +9,16 @@ export default class GameConfiguration extends BaseModel {
   public type: 'minimal' | 'recommended'
 
   @column()
-  public cpu: string
+  public cpu_intel: string
 
   @column()
-  public gpu: string
+  public cpu_amd: string
+
+  @column()
+  public gpu_nvidia: string
+
+  @column()
+  public gpu_amd: string
 
   @column()
   public ram: string
@@ -37,7 +43,7 @@ export default class GameConfiguration extends BaseModel {
 
   /**
    * Surcharge de la sérialisation pour convertir les champs en booléens explicites
-   * lors de la sérialisation en JSON de la response 
+   * lors de la sérialisation en JSON de la response
    */
   public serialize(): ModelObject {
     const serialized: ModelObject = super.serialize()
