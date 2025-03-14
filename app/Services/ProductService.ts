@@ -16,10 +16,12 @@ export type ProductCommand = {
 
 /**
  * @type {object} GamePaidAndOwnedStatus
+ * @property {number} gameId - L'identifiant du jeu
  * @property {boolean} isPaid - Si le jeu est payant
  * @property {boolean} isOwned - Si il possède le jeu
  */
 export type GamePaidAndOwnedStatus = {
+  gameId?: number
   isPaid: boolean
   isOwned: boolean
 }
@@ -144,32 +146,93 @@ export class ProductService {
     }
   }
 
-  // Check if the game is paid and owned
-  public static async isGamePaidAndOwned(
+  /**
+   * Récupère le jeu et check si il est payant et possédé par l'utilisateur
+   * @param {number} gameId - L'identifiant du jeu
+   * @param {number} userId - L'identifiant de l'utilisateur
+   * @returns {Promise<GamePaidAndOwnedStatus>} - Le jeu payant et possédé
+   */
+  public static async getGameProductPaidAndOwned(
     gameId: number,
     userId: number,
   ): Promise<GamePaidAndOwnedStatus> {
-    // Check if the product with the gameId exists and if the product category is 'games'
-    const product: Product | null = await Product.query()
+    /**
+     * Check si le jeu est considéré comme un produit, si c'est le cas, vérifie si le produit est payant
+     */
+    const gameProduct: Product | null = await Product.query()
       .where('games_id', gameId)
       .whereHas('productCategory', (queryProductCategory): void => {
         queryProductCategory.where('name', 'game')
       })
       .first()
 
-    // Check if the user owns the game
+    /**
+     * On vérifie si l'utilisateur possède le jeu
+     */
     const userOwnsGame: UserGameLibrary | null = await UserGameLibrary.query()
       .where('users_id', userId)
       .where('games_id', gameId)
       .first()
 
-    // Determine if the game is paid and owned
-    const isPaid: boolean = product ? product.price > 0 : false
+    /**
+     * On détermine si le jeu est payant et possédé par l'utilisateur
+     */
+    const isPaid: boolean = gameProduct ? gameProduct.price > 0 : false
     const isOwned: boolean = !!userOwnsGame
 
+    // On retourne le résultat
     return {
       isPaid,
       isOwned,
     } as GamePaidAndOwnedStatus
+  }
+
+  /**
+   * Récupère tous les jeux et vérifie s'ils sont payants et possédés par l'utilisateur
+   * @param {number} userId - L'identifiant de l'utilisateur
+   * @returns {Promise<GamePaidAndOwnedStatus[]>} - Liste de tous les jeux avec leur statut payant et possédé
+   */
+  public static async getAllGamesProductsPaidAndOwned(
+    userId: number,
+  ): Promise<GamePaidAndOwnedStatus[]> {
+    // Récupère tous les produits de catégorie 'game' (jeux payants uniquement)
+    const gameProducts: Product[] = await Product.query()
+      .whereHas('productCategory', (queryProductCategory) => {
+        queryProductCategory.where('name', 'game')
+      })
+      .select('games_id', 'price')
+
+    // Récupère tous les jeux possédés par l'utilisateur (jeux gratuits et payants)
+    const userGamesLibrary: UserGameLibrary[] = await UserGameLibrary.query()
+      .where('users_id', userId)
+      .select('games_id')
+
+    // Création d'un Set pour savoir quels jeux sont possédés
+    const ownedGamesSet: Set<number> = new Set(
+      userGamesLibrary.map((userGameLibrary: UserGameLibrary): number => userGameLibrary.games_id),
+    )
+
+    // Création d'une Map pour stocker les jeux payants trouvés dans `gameProducts`
+    const productsMap: Map<number, Product> = new Map(
+      gameProducts
+        .filter((product): product is Product & { games_id: number } => product.games_id !== null)
+        .map((product) => [product.games_id, product]),
+    )
+
+    // Récupération de **tous** les games_id possibles (payants et gratuits)
+    const allGameIds: Set<number> = new Set([
+      ...productsMap.keys(), // Jeux payants trouvés dans `gameProducts`
+      ...ownedGamesSet, // Jeux possédés (gratuits ou payants)
+    ])
+
+    // Création d'un tableau de GamePaidAndOwnedStatus pour chaque jeu
+    return Array.from(allGameIds).map((gameId: number): GamePaidAndOwnedStatus => {
+      const product: Product | undefined = productsMap.get(gameId) // Récupère le produit s'il existe (sinon undefined)
+      return {
+        gameId,
+        isPaid: product ? product.price > 0 : false, // Si pas trouvé dans productsMap, alors jeu gratuit
+        isOwned: ownedGamesSet.has(gameId), // Vérifie si le jeu est possédé
+      } as GamePaidAndOwnedStatus
+    })
   }
 }
