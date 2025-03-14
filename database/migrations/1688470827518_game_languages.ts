@@ -1,6 +1,6 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class GameLanguages extends BaseSchema {
+export default class extends BaseSchema {
   protected tableName = 'game_languages'
 
   public async up() {

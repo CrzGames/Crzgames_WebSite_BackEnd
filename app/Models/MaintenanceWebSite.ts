@@ -19,14 +19,14 @@ export default class MaintenanceWebSite extends BaseModel {
 
   /**
    * Surcharge de la sérialisation pour convertir les champs en booléens explicites
-   * lors de la sérialisation en JSON de la response 
+   * lors de la sérialisation en JSON de la response
    */
   public serialize(): ModelObject {
     const serialized: ModelObject = super.serialize()
 
     return {
       ...serialized,
-      is_maintenance: !!serialized.is_maintenance
+      is_maintenance: !!serialized.is_maintenance,
     } as ModelObject
   }
 }

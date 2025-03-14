@@ -32,8 +32,8 @@ export default class UserGameWishlistSeeder extends BaseSeeder {
 
       if (!existingEntry) {
         await UserGameWishlist.create({
-            users_id: randomUser.id,
-            games_id: randomGame.id
+          users_id: randomUser.id,
+          games_id: randomGame.id,
         })
       }
     }

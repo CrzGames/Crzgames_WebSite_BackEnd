@@ -123,7 +123,7 @@ export default class Game extends BaseModel {
 
   /**
    * Surcharge de la sérialisation pour convertir les champs en booléens explicites
-   * lors de la sérialisation en JSON de la response 
+   * lors de la sérialisation en JSON de la response
    */
   public serialize(): ModelObject {
     const serialized: ModelObject = super.serialize()
