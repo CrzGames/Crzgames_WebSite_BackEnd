@@ -49,6 +49,10 @@ export default class extends BaseSchema {
         .references('id')
         .inTable('game_configurations')
         .onDelete('SET NULL')
+      table
+        .enum('pegi_rating', ['PEGI 3', 'PEGI 7', 'PEGI 12', 'PEGI 16', 'PEGI 18'])
+        .notNullable()
+        .comment('Classification PEGI du jeu')
       table.timestamp('created_at', { useTz: true }).notNullable()
       table.timestamp('updated_at', { useTz: true }).nullable()
     })

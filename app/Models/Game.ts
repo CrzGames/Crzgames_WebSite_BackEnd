@@ -115,6 +115,9 @@ export default class Game extends BaseModel {
   })
   public languages: ManyToMany<typeof Language>
 
+  @column()
+  public pegi_rating: 'PEGI 3' | 'PEGI 7' | 'PEGI 12' | 'PEGI 16' | 'PEGI 18'
+  
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
