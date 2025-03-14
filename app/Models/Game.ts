@@ -17,6 +17,7 @@ import GameBinary from 'App/Models/GameBinary'
 import GameVersion from 'App/Models/GameVersion'
 import Language from 'App/Models/Language'
 import GameConfiguration from './GameConfiguration'
+import GameMedia from './GameMedia'
 
 export default class Game extends BaseModel {
   @column({ isPrimary: true })
@@ -117,7 +118,12 @@ export default class Game extends BaseModel {
 
   @column()
   public pegi_rating: 'PEGI 3' | 'PEGI 7' | 'PEGI 12' | 'PEGI 16' | 'PEGI 18'
-  
+
+  @hasMany(() => GameMedia, {
+    foreignKey: 'games_id',
+  })
+  public gameMedias: HasMany<typeof GameMedia>
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
