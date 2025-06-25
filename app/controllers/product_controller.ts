@@ -75,11 +75,7 @@ export default class ProductController {
       product_categories_id: payload.product_categories_id,
     }
 
-    const product: Product = await ProductService.updateProduct(
-      params.id,
-      productCommand,
-      bucketFileCommand,
-    )
+    const product: Product = await ProductService.updateProduct(params.id, productCommand, bucketFileCommand)
     return response.status(200).json(product)
   }
 
@@ -88,24 +84,18 @@ export default class ProductController {
     return response.noContent()
   }
 
-  public async getGameProductPaidAndOwned({
-    params,
-    response,
-    auth,
-  }: HttpContext): Promise<void> {
+  public async getGameProductPaidAndOwned({ params, response, auth }: HttpContext): Promise<void> {
     const user: User = (await auth.authenticate()) as User
-    const productGamePaidAndOwnedStatus: GamePaidAndOwnedStatus =
-      await ProductService.getGameProductPaidAndOwned(params.gameId, user.id)
+    const productGamePaidAndOwnedStatus: GamePaidAndOwnedStatus = await ProductService.getGameProductPaidAndOwned(
+      params.gameId,
+      user.id,
+    )
     return response.status(200).json(productGamePaidAndOwnedStatus)
   }
 
-  public async getAllGamesProductsPaidAndOwned({
-    response,
-    auth,
-  }: HttpContext): Promise<void> {
+  public async getAllGamesProductsPaidAndOwned({ response, auth }: HttpContext): Promise<void> {
     const user: User = (await auth.authenticate()) as User
-    const gameStatuses: GamePaidAndOwnedStatus[] =
-      await ProductService.getAllGamesProductsPaidAndOwned(user.id)
+    const gameStatuses: GamePaidAndOwnedStatus[] = await ProductService.getAllGamesProductsPaidAndOwned(user.id)
     return response.status(200).json(gameStatuses)
   }
 }

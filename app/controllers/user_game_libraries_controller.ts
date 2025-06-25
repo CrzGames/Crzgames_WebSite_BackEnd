@@ -7,27 +7,17 @@ import UserGameLibrary from '#models/user_game_library'
 
 export default class UserGameLibrariesController {
   //function to get all games library by user id in table users_games_library
-  public async getAllUsersGamesLibrariesByUserId({
-    request,
-    response,
-  }: HttpContext): Promise<void> {
-    const payload: { userId: number } = await request.validate(
-      GetAllUsersGamesLibrariesByUserIdValidator,
-    )
+  public async getAllUsersGamesLibrariesByUserId({ request, response }: HttpContext): Promise<void> {
+    const payload: { userId: number } = await request.validate(GetAllUsersGamesLibrariesByUserIdValidator)
     const title: string = request.input('title')
-    const games: Game[] = await UserGameLibrariesService.getAllUsersGamesLibrariesByUserId(
-      payload.userId,
-      title,
-    )
+    const games: Game[] = await UserGameLibrariesService.getAllUsersGamesLibrariesByUserId(payload.userId, title)
 
     response.status(200).json(games)
   }
 
   //function to add game to a user library in table users_games_library
   public async addGameToUserGameLibraries({ request, response }: HttpContext): Promise<void> {
-    const payload: { userId: number; gameId: number } = await request.validate(
-      CreateUsersGamesLibrariesValidator,
-    )
+    const payload: { userId: number; gameId: number } = await request.validate(CreateUsersGamesLibrariesValidator)
     const gameLibrary: UserGameLibrary = await UserGameLibrariesService.addGameToUserGameLibraries(
       payload.userId,
       payload.gameId,

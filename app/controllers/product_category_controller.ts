@@ -4,8 +4,7 @@ import ProductCategory from '#models/product_category'
 
 export default class ProductCategoryController {
   public async getAllProductCategories({ response }: HttpContext): Promise<void> {
-    const productCategories: ProductCategory[] =
-      await ProductCategoryService.getAllProductCategories()
+    const productCategories: ProductCategory[] = await ProductCategoryService.getAllProductCategories()
     return response.status(200).json(productCategories)
   }
 }

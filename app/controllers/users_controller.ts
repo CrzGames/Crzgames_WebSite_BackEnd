@@ -52,16 +52,12 @@ export default class UsersController {
 
   //function to update user role
   public async updateUsersRole({ request, response }: HttpContext): Promise<void> {
-    const payload: { userId: number; roleId: number } =
-      await request.validate(UpdateUsersRoleValidator)
+    const payload: { userId: number; roleId: number } = await request.validate(UpdateUsersRoleValidator)
     await UsersService.updateUsersRole(payload.userId, payload.roleId)
     response.status(204).noContent()
   }
 
-  public async getAllUsersByUsernameOrEmail({
-    response,
-    params,
-  }: HttpContext): Promise<void> {
+  public async getAllUsersByUsernameOrEmail({ response, params }: HttpContext): Promise<void> {
     const users: User[] = await UsersService.getAllUsersByUsernameOrEmail(params.usernameOrEmail)
     response.status(200).json(users)
   }

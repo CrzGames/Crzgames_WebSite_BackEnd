@@ -7,14 +7,12 @@ import ProductDiscount from '#models/product_discount'
 export default class ProductDiscountController {
   public async createProductDiscount({ request, response }: HttpContext): Promise<void> {
     const payload: ProductDiscountCommand = await request.validate(CreateProductDiscountValidator)
-    const productDiscount: ProductDiscount =
-      await ProductDiscountService.createProductDiscount(payload)
+    const productDiscount: ProductDiscount = await ProductDiscountService.createProductDiscount(payload)
     return response.created(productDiscount)
   }
 
   public async getProductDiscountById({ params, response }: HttpContext): Promise<void> {
-    const productDiscount: ProductDiscount | null =
-      await ProductDiscountService.getProductDiscountById(params.id)
+    const productDiscount: ProductDiscount | null = await ProductDiscountService.getProductDiscountById(params.id)
     if (productDiscount) {
       return response.status(200).json(productDiscount)
     } else {
@@ -22,25 +20,16 @@ export default class ProductDiscountController {
     }
   }
 
-  public async getAllProductDiscountsByProductId({
-    params,
-    response,
-  }: HttpContext): Promise<void> {
-    const productDiscounts: ProductDiscount[] =
-      await ProductDiscountService.getAllProductDiscountsByProductId(params.productId)
+  public async getAllProductDiscountsByProductId({ params, response }: HttpContext): Promise<void> {
+    const productDiscounts: ProductDiscount[] = await ProductDiscountService.getAllProductDiscountsByProductId(
+      params.productId,
+    )
     return response.status(200).json(productDiscounts)
   }
 
-  public async updateProductDiscount({
-    params,
-    request,
-    response,
-  }: HttpContext): Promise<void> {
+  public async updateProductDiscount({ params, request, response }: HttpContext): Promise<void> {
     const payload: ProductDiscountCommand = await request.validate(UpdateProductDiscountValidator)
-    const productDiscount: ProductDiscount = await ProductDiscountService.updateProductDiscount(
-      params.id,
-      payload,
-    )
+    const productDiscount: ProductDiscount = await ProductDiscountService.updateProductDiscount(params.id, payload)
     return response.status(200).json(productDiscount)
   }
 

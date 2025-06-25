@@ -8,13 +8,8 @@ import GetAllGamePlatformAssignmentByPlatformIdValidator from '#validators/game_
 
 export default class GamePlatformAssignmentsController {
   //function to get all platforms of a game
-  public async getAllGamePlatformAssignmentByGameId({
-    request,
-    response,
-  }: HttpContext): Promise<void> {
-    const payload: { gameId: number } = await request.validate(
-      GetAllGamePlatformAssignmentByGameIdValidator,
-    )
+  public async getAllGamePlatformAssignmentByGameId({ request, response }: HttpContext): Promise<void> {
+    const payload: { gameId: number } = await request.validate(GetAllGamePlatformAssignmentByGameIdValidator)
 
     // Récupération des jeux en utilisant le service GamePlatformAssignmentsService
     const gamePlatformAssignments: GamePlatformAssignment[] =
@@ -24,19 +19,12 @@ export default class GamePlatformAssignmentsController {
   }
 
   // function to get all games by platform
-  public async getAllGamePlatformAssignmentByPlatformId({
-    request,
-    response,
-  }: HttpContext): Promise<void> {
-    const payload: { platformId: number } = await request.validate(
-      GetAllGamePlatformAssignmentByPlatformIdValidator,
-    )
+  public async getAllGamePlatformAssignmentByPlatformId({ request, response }: HttpContext): Promise<void> {
+    const payload: { platformId: number } = await request.validate(GetAllGamePlatformAssignmentByPlatformIdValidator)
 
     // Récupération des jeux en utilisant le service GamePlatformAssignmentsService
     const gamePlatformAssignments: GamePlatformAssignment[] =
-      await GamePlatformAssignmentsService.getAllGamePlatformAssignmentByPlatformId(
-        payload.platformId,
-      )
+      await GamePlatformAssignmentsService.getAllGamePlatformAssignmentByPlatformId(payload.platformId)
 
     // recuperation des jeux en bouclant sur les ids
     const games: Game[] = []

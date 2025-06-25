@@ -5,13 +5,8 @@ import GetAllGameBinaryAssignmentByGameIdValidator from '#validators/game_binary
 
 export default class GameBinaryAssignmentsController {
   //funtion to get all binaries of a game
-  public async getAllGameBinaryAssignmentByGameId({
-    request,
-    response,
-  }: HttpContext): Promise<void> {
-    const payload: { gameId: number } = await request.validate(
-      GetAllGameBinaryAssignmentByGameIdValidator,
-    )
+  public async getAllGameBinaryAssignmentByGameId({ request, response }: HttpContext): Promise<void> {
+    const payload: { gameId: number } = await request.validate(GetAllGameBinaryAssignmentByGameIdValidator)
 
     // Récupération des jeux en utilisant le service GameBinaryAssignmentsService
     const gameBinaryAssignments: GameBinaryAssignment[] =

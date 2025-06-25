@@ -50,16 +50,10 @@ export default class GamesController {
     */
 
     // Ajout des catégories au game en utilisant le service GameCategoryAssignmentsService
-    await GameCategoryAssignmentsService.createGameCategoryAssignment(
-      newGame.id,
-      payload.categoryIds,
-    )
+    await GameCategoryAssignmentsService.createGameCategoryAssignment(newGame.id, payload.categoryIds)
 
     // Ajout des plateformes au game en utilisant le service GamePlatformAssignmentsService
-    await GamePlatformAssignmentsService.createGamePlatformAssignment(
-      newGame.id,
-      payload.platformIds,
-    )
+    await GamePlatformAssignmentsService.createGamePlatformAssignment(newGame.id, payload.platformIds)
 
     // Response 201 Document created
     response.status(201)
@@ -108,18 +102,12 @@ export default class GamesController {
     // Suppression des catégories du game pour ne pas les avoir en double
     await GameCategoryAssignmentsService.deleteAllGameCategoryAssignmentByGameId(updatedGame.id)
     // Update des catégories au game pour les re-set en utilisant le service GameCategoryAssignmentsService
-    await GameCategoryAssignmentsService.createGameCategoryAssignment(
-      updatedGame.id,
-      payload.categoryIds,
-    )
+    await GameCategoryAssignmentsService.createGameCategoryAssignment(updatedGame.id, payload.categoryIds)
 
     // Suppression des plateformes du game pour ne pas les avoir en double
     await GamePlatformAssignmentsService.deleteAllGamePlatformAssignmentByGameId(updatedGame.id)
     // Update des plateformes au game pour les re-set en utilisant le service GamePlatformAssignmentsService
-    await GamePlatformAssignmentsService.createGamePlatformAssignment(
-      updatedGame.id,
-      payload.platformIds,
-    )
+    await GamePlatformAssignmentsService.createGamePlatformAssignment(updatedGame.id, payload.platformIds)
 
     /* A REFAIRE COTE FRONT END pour que cela marche
     // Suppression des game_binaries_assignments du game (qui vas delete en cascade pour les game_binaries) pour ne pas les avoir en double
@@ -163,11 +151,17 @@ export default class GamesController {
     const page: number | undefined = request.input('page') ? Number(request.input('page')) : undefined
     const perPage: number | undefined = request.input('perPage') ? Number(request.input('perPage')) : undefined
     const genres: string[] | undefined = request.input('genres') ? request.input('genres', []).split(',') : undefined
-    const languages: string[] | undefined = request.input('languages') ? request.input('languages', []).split(',') : undefined
-    const gameModes: string[] | undefined = request.input('gameModes') ? request.input('gameModes', []).split(',') : undefined
-    const featuredGames: boolean | undefined = request.input('featuredGames') ? request.input('featuredGames') === 'true' : undefined
+    const languages: string[] | undefined = request.input('languages')
+      ? request.input('languages', []).split(',')
+      : undefined
+    const gameModes: string[] | undefined = request.input('gameModes')
+      ? request.input('gameModes', []).split(',')
+      : undefined
+    const featuredGames: boolean | undefined = request.input('featuredGames')
+      ? request.input('featuredGames') === 'true'
+      : undefined
     const sortBy: string | undefined = request.input('sortBy')
-  
+
     const games: GamesResponse = await GamesService.getAllGames(
       title,
       page,
@@ -176,7 +170,7 @@ export default class GamesController {
       languages,
       gameModes,
       featuredGames,
-      sortBy
+      sortBy,
     )
     response.status(200).json(games)
   }

@@ -15,11 +15,7 @@ export default class OrderProductController {
     return response.created(productOrder)
   }
 
-  public async updateOrderProduct({
-    params,
-    request,
-    response,
-  }: HttpContext): Promise<void> {
+  public async updateOrderProduct({ params, request, response }: HttpContext): Promise<void> {
     const payload: ProductOrderCommand = request.only([
       'orders_id',
       'products_id',
@@ -27,10 +23,7 @@ export default class OrderProductController {
       'game_servers_id',
       'price',
     ])
-    const productOrder: OrderProduct = await OrderProductService.updateOrderProduct(
-      params.id,
-      payload,
-    )
+    const productOrder: OrderProduct = await OrderProductService.updateOrderProduct(params.id, payload)
     return response.status(200).json(productOrder)
   }
 
@@ -39,13 +32,8 @@ export default class OrderProductController {
     return response.noContent()
   }
 
-  public async getAllOrderProductsByOrderId({
-    params,
-    response,
-  }: HttpContext): Promise<void> {
-    const productOrders: OrderProduct[] = await OrderProductService.getAllOrderProductsByOrderId(
-      params.orders_id,
-    )
+  public async getAllOrderProductsByOrderId({ params, response }: HttpContext): Promise<void> {
+    const productOrders: OrderProduct[] = await OrderProductService.getAllOrderProductsByOrderId(params.orders_id)
     return response.status(200).json(productOrders)
   }
 }

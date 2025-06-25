@@ -4,8 +4,7 @@ import ProductGameServer from '#models/product_game_server'
 
 export default class ProductGameServerController {
   public async getAllProductGameServers({ response }: HttpContext): Promise<void> {
-    const gameServers: ProductGameServer[] =
-      await ProductGameServerService.getAllProductGameServers()
+    const gameServers: ProductGameServer[] = await ProductGameServerService.getAllProductGameServers()
     return response.status(200).json(gameServers)
   }
 

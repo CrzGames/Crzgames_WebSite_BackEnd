@@ -17,8 +17,7 @@ export default class GameBinaryController {
 
   //function to create a game binary
   public async createGameBinary({ request, response }: HttpContext): Promise<void> {
-    const payload: { gameId: number; binary: GameBinaryCommand } =
-      await request.validate(CreateGameBinaryValidator)
+    const payload: { gameId: number; binary: GameBinaryCommand } = await request.validate(CreateGameBinaryValidator)
     const gameBinary: GameBinary = await GameBinariesService.createGameBinary(payload.binary)
 
     // Ajout du binary au game en utilisant le service GameBinaryAssignmentsService
@@ -27,14 +26,9 @@ export default class GameBinaryController {
   }
 
   //function to update a binary by id
-  public async updateGameBinary({
-    request,
-    response,
-    params,
-  }: HttpContext): Promise<void> {
+  public async updateGameBinary({ request, response, params }: HttpContext): Promise<void> {
     const gameBinaryId: number = params.id
-    const payload: { gameId: number; binary: GameBinaryCommand } =
-      await request.validate(UpdateGameBinaryValidator)
+    const payload: { gameId: number; binary: GameBinaryCommand } = await request.validate(UpdateGameBinaryValidator)
 
     await GameBinariesService.updateGameBinary(gameBinaryId, payload.binary)
 

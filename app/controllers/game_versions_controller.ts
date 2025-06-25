@@ -6,29 +6,15 @@ import UpdateGameVersionValidator from '#validators/game_versions/update_game_ve
 
 export default class GameVersionsController {
   // GET: Recupere la derniere version du jeu et qui est disponible pour le telechargement
-  public async getLatestAvailableVersion({
-    params,
-    response,
-  }: HttpContext): Promise<void> {
-    const gameVersion: GameVersion = await GameVersionsService.getLatestAvailableVersion(
-      params.gameId,
-    )
+  public async getLatestAvailableVersion({ params, response }: HttpContext): Promise<void> {
+    const gameVersion: GameVersion = await GameVersionsService.getLatestAvailableVersion(params.gameId)
     return response.ok(gameVersion)
   }
 
   // POST: Crée une version de jeu
-  public async createGameVersion({
-    request,
-    params,
-    response,
-  }: HttpContext): Promise<void> {
-    const payload: { version: string; is_available: boolean } = await request.validate(
-      CreateGameVersionValidator,
-    )
-    const gameVersion: GameVersion = await GameVersionsService.createGameVersion(
-      params.gameId,
-      payload,
-    )
+  public async createGameVersion({ request, params, response }: HttpContext): Promise<void> {
+    const payload: { version: string; is_available: boolean } = await request.validate(CreateGameVersionValidator)
+    const gameVersion: GameVersion = await GameVersionsService.createGameVersion(params.gameId, payload)
     return response.created(gameVersion)
   }
 
@@ -39,31 +25,19 @@ export default class GameVersionsController {
   }
 
   // GET: Récupère toutes les versions pour un jeu spécifique
-  public async getAllGameVersionsByGameId({
-    params,
-    response,
-  }: HttpContext): Promise<void> {
-    const gameVersions: GameVersion[] = await GameVersionsService.getAllGameVersionsByGameId(
-      params.gameId,
-    )
+  public async getAllGameVersionsByGameId({ params, response }: HttpContext): Promise<void> {
+    const gameVersions: GameVersion[] = await GameVersionsService.getAllGameVersionsByGameId(params.gameId)
     return response.ok(gameVersions)
   }
 
   // GET: Récupère une version de jeu spécifique
   public async getGameVersion({ params, response }: HttpContext): Promise<void> {
-    const gameVersion: GameVersion = await GameVersionsService.getGameVersion(
-      params.gameId,
-      params.gameVersionId,
-    )
+    const gameVersion: GameVersion = await GameVersionsService.getGameVersion(params.gameId, params.gameVersionId)
     return response.ok(gameVersion)
   }
 
   // PUT: Met à jour une version de jeu spécifique
-  public async updateGameVersion({
-    params,
-    request,
-    response,
-  }: HttpContext): Promise<void> {
+  public async updateGameVersion({ params, request, response }: HttpContext): Promise<void> {
     const payload: { is_available: boolean } = await request.validate(UpdateGameVersionValidator)
     const gameVersion: GameVersion = await GameVersionsService.updateGameVersion(
       params.gameId,

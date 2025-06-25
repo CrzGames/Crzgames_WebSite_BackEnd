@@ -9,11 +9,7 @@ import logger from '@adonisjs/core/services/logger'
 import StripeWebhookEvent from '#models/stripe_webhook_event'
 
 export default class StripeController {
-  public async createPaymentIntentStripe({
-    request,
-    response,
-    auth,
-  }: HttpContext): Promise<void> {
+  public async createPaymentIntentStripe({ request, response, auth }: HttpContext): Promise<void> {
     // @ts-ignore
     const payload: PaymentIntentCommand[] = request.all()
     const user: any = await auth.authenticate()
@@ -23,9 +19,7 @@ export default class StripeController {
 
   public async checkProxyVPN({ response, request }: HttpContext): Promise<void> {
     const payload: { ip: string } = await request.validate(CheckProxyVPNValidator)
-    const responseProxyCheckIO: ResponseProxyCheckIO = await ProxyCheckIOService.checkProxyVPN(
-      payload.ip,
-    )
+    const responseProxyCheckIO: ResponseProxyCheckIO = await ProxyCheckIOService.checkProxyVPN(payload.ip)
     response.status(200).json(responseProxyCheckIO)
   }
 
@@ -42,11 +36,7 @@ export default class StripeController {
     }
 
     try {
-      event = stripe.webhooks.constructEvent(
-        rawBody,
-        stripeSignature,
-        env.get('STRIPE_WEBHOOK_SECRET'),
-      )
+      event = stripe.webhooks.constructEvent(rawBody, stripeSignature, env.get('STRIPE_WEBHOOK_SECRET'))
     } catch (err) {
       logger.error('Webhook signature verification failed.', err.message)
       return response.status(400).send(`Webhook Error: ${err.message}`)
@@ -64,8 +54,7 @@ export default class StripeController {
 
     switch (event.type) {
       case 'payment_intent.succeeded':
-        const succeededPaymentIntent: Stripe.PaymentIntent = event.data
-          .object as Stripe.PaymentIntent
+        const succeededPaymentIntent: Stripe.PaymentIntent = event.data.object as Stripe.PaymentIntent
         await StripeService.handleAfterPaymentIntent(succeededPaymentIntent, 'Paid')
         break
 
@@ -75,8 +64,7 @@ export default class StripeController {
         break
 
       case 'payment_intent.canceled':
-        const canceledPaymentIntent: Stripe.PaymentIntent = event.data
-          .object as Stripe.PaymentIntent
+        const canceledPaymentIntent: Stripe.PaymentIntent = event.data.object as Stripe.PaymentIntent
         await StripeService.handleAfterPaymentIntent(canceledPaymentIntent, 'Canceled')
         break
 

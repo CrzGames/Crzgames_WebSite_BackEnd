@@ -9,13 +9,9 @@ export default class ChatFriendController {
     return response.status(200).ok(chatFriends)
   }
 
-  public async getAllChatFriendByUserUsername({
-    params,
-    response,
-  }: HttpContext): Promise<void> {
+  public async getAllChatFriendByUserUsername({ params, response }: HttpContext): Promise<void> {
     const username: string = params.username
-    const chatFriends: ChatFriend[] =
-      await ChatFriendService.getAllChatFriendByUserUsername(username)
+    const chatFriends: ChatFriend[] = await ChatFriendService.getAllChatFriendByUserUsername(username)
     return response.status(200).ok(chatFriends)
   }
 }

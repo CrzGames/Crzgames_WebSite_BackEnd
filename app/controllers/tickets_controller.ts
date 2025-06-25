@@ -51,11 +51,7 @@ export default class TicketsController {
     response.status(200).json(tickets)
   }
 
-  public async updateTicketByIdForStatus({
-    request,
-    response,
-    params,
-  }: HttpContext): Promise<void> {
+  public async updateTicketByIdForStatus({ request, response, params }: HttpContext): Promise<void> {
     const payload: {
       name: string
     } = await request.validate(UpdateTicketByIdForStatusValidator)
@@ -63,13 +59,8 @@ export default class TicketsController {
     response.status(200).json(ticket)
   }
 
-  public async getTicketsCountByStatusOpenForUser({
-    params,
-    response,
-  }: HttpContext): Promise<void> {
-    const countTicketsOpen: number = await TicketsService.getTicketsCountByStatusOpenForUser(
-      params.userId,
-    )
+  public async getTicketsCountByStatusOpenForUser({ params, response }: HttpContext): Promise<void> {
+    const countTicketsOpen: number = await TicketsService.getTicketsCountByStatusOpenForUser(params.userId)
     response.status(200).json(countTicketsOpen)
   }
 }
