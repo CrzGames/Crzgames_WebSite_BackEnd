@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: dev-customerName-projectName-backend-cert
+  namespace: dev-customerName-projectName-backend
+spec:
+  secretName: dev-customerName-projectName-backend-tls
+  dnsNames:
+    - dev.example.api.flapi.org
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer

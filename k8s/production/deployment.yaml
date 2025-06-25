@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prod-customerName-projectName-backend-deployment
+  namespace: prod-customerName-projectName-backend
+  labels:
+    app: prod-customerName-projectName-backend
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: prod-customerName-projectName-backend
+  template:
+    metadata:
+      labels:
+        app: prod-customerName-projectName-backend
+    spec:
+      containers:
+        - name: prod-customerName-projectName-backend
+          image: corentin35/customerName-projectName-backend:${TAG_VERSION}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3333
+          env:
+            - name: PORT
+              value: '3333'
+          resources:
+            requests:
+              cpu: '300m'
+              memory: '400Mi'
+            limits:
+              cpu: '600m'
+              memory: '800Mi'
+      imagePullSecrets:
+        - name: regcred
