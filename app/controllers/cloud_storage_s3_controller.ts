@@ -38,7 +38,7 @@ export default class CloudStorageS3Controller {
     response.status(204).ok('deleteFileInBucketAndDB success')
   }
 
-  public staticpublic async streamDownloadFileInBucketForLauncher(
+  public static async streamDownloadFileInBucketForLauncher(
     ctx: HttpContext,
   ): Promise<void> {
     const payload: Record<string, any> = ctx.request.all()
