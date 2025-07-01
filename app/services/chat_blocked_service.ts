@@ -1,4 +1,4 @@
-import { NotFoundException } from '#exceptions/not_found_exception'
+import NotFoundException from '#exceptions/not_found_exception'
 import ChatBlocked from '#models/chat_blocked'
 
 export default class ChatBlockedService {

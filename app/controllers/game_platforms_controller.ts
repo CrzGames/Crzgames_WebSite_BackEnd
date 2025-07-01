@@ -1,5 +1,5 @@
-import { HttpContext } from '@adonisjs/core/http'
-import GamePlatform from '#models/game_platform'
+import type { HttpContext } from '@adonisjs/core/http'
+import type GamePlatform from '#models/game_platform'
 import GamePlatformsService from '#services/game_platforms_service'
 
 export default class GamePlatformsController {

@@ -43,7 +43,7 @@ router.use([
  */
 export const middleware = router.named({
   auth: () => import('#middleware/auth_middleware'),
-  roleAuth: () => import('#middleware/role_auth_middleware'),
+  authRole: () => import('#middleware/auth_role_middleware'),
   health: () => import('#middleware/health_middleware'),
   restrictCorsToSeatyrants: () => import('#middleware/restrict_cors_to_seatyrants_middleware'),
 })

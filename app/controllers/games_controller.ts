@@ -1,13 +1,14 @@
-import { HttpContext } from '@adonisjs/core/http'
-import CreateGameValidator from '#validators/game/create_game_validator'
-import GamesService, { GamesResponse } from '#services/games_service'
+import type { HttpContext } from '@adonisjs/core/http'
+import GamesService from '#services/games_service'
+import type { GamesResponse } from '#services/games_service'
 import GameCategoryAssignmentsService from '#services/game_category_assignments_service'
 import GamePlatformAssignmentsService from '#services/game_platform_assignments_service'
-import Game from '#models/game'
-import GetGamesByIdValidator from '#validators/game/get_games_by_id_validator'
-import DeleteGamesValidator from '#validators/game/delete_games_validator'
-import UpdateGameValidator from '#validators/game/update_game_validator'
+import type Game from '#models/game'
 import type { GameBinaryCommand } from '#services/game_binaries_service'
+import { updateGameValidator } from '#validators/game/update_game_validator'
+import { createGameValidator } from '#validators/game/create_game_validator'
+import { deleteGamesValidator } from '#validators/game/delete_games_validator'
+import { getGamesByIdValidator } from '#validators/game/get_games_by_id_validator'
 
 export default class GamesController {
   public async createGames({ request, response }: HttpContext): Promise<void> {
@@ -26,7 +27,7 @@ export default class GamesController {
       platformIds: number[]
       // binaries: GameBinaryCommand[]
       description: string
-    } = await request.validate(CreateGameValidator)
+    } = await request.validateUsing(createGameValidator)
 
     // Création du game en utilisant le service GamesService
     const newGame: Game = await GamesService.createGames(
@@ -79,7 +80,7 @@ export default class GamesController {
       platformIds: number[]
       binaries: GameBinaryCommand[]
       description: string
-    } = await request.validate(UpdateGameValidator)
+    } = await request.validateUsing(updateGameValidator)
 
     // Update du game en utilisant le service GamesService
     const updatedGame: Game = await GamesService.updateGames(
@@ -123,13 +124,13 @@ export default class GamesController {
   }
 
   public async deleteGames({ request, response }: HttpContext): Promise<void> {
-    const payload: { id: number } = await request.validate(DeleteGamesValidator)
+    const payload: { id: number } = await request.validateUsing(deleteGamesValidator)
     await GamesService.deleteGames(payload.id)
     response.status(204).noContent()
   }
 
   public async getGamesById({ request, response }: HttpContext): Promise<void> {
-    const payload: { id: number } = await request.validate(GetGamesByIdValidator)
+    const payload: { id: number } = await request.validateUsing(getGamesByIdValidator)
     const game: Game = await GamesService.getGamesById(payload.id)
     return response.status(200).json(game)
   }

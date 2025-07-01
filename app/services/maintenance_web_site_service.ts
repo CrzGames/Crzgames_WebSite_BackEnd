@@ -1,5 +1,5 @@
-import { BadRequestException } from '#exceptions/bad_request_exception'
-import { NotFoundException } from '#exceptions/not_found_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
+import NotFoundException from '#exceptions/not_found_exception'
 import MaintenanceWebSite from '#models/maintenance_web_site'
 
 export default class MaintenanceWebSiteService {

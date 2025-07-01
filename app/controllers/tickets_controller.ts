@@ -1,10 +1,10 @@
 import TicketsService from '#services/tickets_service'
-import { HttpContext } from '@adonisjs/core/http'
-import CreateTicketsValidator from '#validators/ticket/create_tickets_validator'
-import Ticket from '#models/ticket'
-import GetTicketsByIdValidator from '#validators/ticket/get_tickets_by_id_validator'
-import GetAllTicketsByUserIdValidator from '#validators/ticket/get_all_tickets_by_user_id_validator'
-import UpdateTicketByIdForStatusValidator from '#validators/ticket/update_ticket_by_id_for_status_validator'
+import type { HttpContext } from '@adonisjs/core/http'
+import type Ticket from '#models/ticket'
+import { updateTicketByIdForStatusValidator } from '#validators/ticket/update_ticket_by_id_for_status_validator'
+import { createTicketsValidator } from '#validators/ticket/CreateTicketsValidator'
+import { getTicketsByIdValidator } from '#validators/ticket/GetTicketsByIdValidator'
+import { getAllTicketsByUserIdValidator } from '#validators/ticket/GetAllTicketsByUserIdValidator'
 
 export default class TicketsController {
   public async createTickets({ request, response }: HttpContext): Promise<void> {
@@ -15,7 +15,7 @@ export default class TicketsController {
       statusId: number
       categoryId: number
       userId: number
-    } = await request.validate(CreateTicketsValidator)
+    } = await request.validateUsing(createTicketsValidator)
 
     // Création du ticket en utilisant le service TicketsService
     const ticket: Ticket = await TicketsService.createTickets(
@@ -31,7 +31,7 @@ export default class TicketsController {
   }
 
   public async getTicketsById({ request, response }: HttpContext): Promise<void> {
-    const payload: { id: number } = await request.validate(GetTicketsByIdValidator)
+    const payload: { id: number } = await request.validateUsing(getTicketsByIdValidator)
     const ticket: Ticket = await TicketsService.getTicketsById(payload.id)
     response.status(200).json(ticket)
   }
@@ -39,7 +39,7 @@ export default class TicketsController {
   public async getAllTicketsByUserId({ request, response }: HttpContext): Promise<void> {
     const start: number = request.input('start')
     const end: number = request.input('end')
-    const payload: { userId: number } = await request.validate(GetAllTicketsByUserIdValidator)
+    const payload: { userId: number } = await request.validateUsing(getAllTicketsByUserIdValidator)
     const tickets: Ticket[] = await TicketsService.getAllTicketsByUserId(payload.userId, start, end)
     response.status(200).json(tickets)
   }
@@ -54,7 +54,7 @@ export default class TicketsController {
   public async updateTicketByIdForStatus({ request, response, params }: HttpContext): Promise<void> {
     const payload: {
       name: string
-    } = await request.validate(UpdateTicketByIdForStatusValidator)
+    } = await request.validateUsing(updateTicketByIdForStatusValidator)
     const ticket: Ticket = await TicketsService.updateTicketByIdForStatus(params.id, payload.name)
     response.status(200).json(ticket)
   }

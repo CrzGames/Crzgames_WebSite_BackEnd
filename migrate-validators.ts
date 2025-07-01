@@ -1,10 +1,4 @@
-import {
-  readdirSync,
-  readFileSync,
-  writeFileSync,
-  renameSync,
-  statSync
-} from 'node:fs'
+import { readdirSync, readFileSync, writeFileSync, renameSync, statSync } from 'node:fs'
 import { join, basename, extname } from 'node:path'
 
 const VALIDATORS_DIR = './app/validators'

@@ -1,7 +1,6 @@
 import ChatFriendRequest from '#models/chat_friend_request'
-import { BadRequestException } from '#exceptions/bad_request_exception'
-import { NotFoundException } from '#exceptions/not_found_exception'
-import ChatFriendService from '#services/chat_friend_service'
+import BadRequestException from '#exceptions/bad_request_exception'
+import NotFoundException from '#exceptions/not_found_exception'
 
 export default class ChatFriendRequestService {
   public static async updateChatFriendRequestStatus(

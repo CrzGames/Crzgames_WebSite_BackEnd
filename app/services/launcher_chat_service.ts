@@ -1,6 +1,6 @@
-import NatsService from '#services/nats_service'
+import type NatsService from '#services/nats_service'
 import logger from '@adonisjs/core/services/logger'
-import ChatFriend from '#models/chat_friend'
+import type ChatFriend from '#models/chat_friend'
 
 type ReceivedChatMessage = {
   sender_users_id: number

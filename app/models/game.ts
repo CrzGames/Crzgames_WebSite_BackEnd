@@ -6,12 +6,12 @@ import GamePlatform from '#models/game_platform'
 import GameBinary from '#models/game_binary'
 import GameVersion from '#models/game_version'
 import Language from '#models/language'
-import GameConfiguration from './GameConfiguration'
-import GameMedia from './GameMedia'
+import GameConfiguration from '#models/game_configuration'
+import GameMedia from '#models/game_media'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import type { ManyToMany } from '@adonisjs/lucid/types/relations'
-import { ModelObject } from ' @adonisjs/lucid/types/model'
+import { ModelObject } from '@adonisjs/lucid/types/model'
 
 export default class Game extends BaseModel {
   @column({ isPrimary: true })

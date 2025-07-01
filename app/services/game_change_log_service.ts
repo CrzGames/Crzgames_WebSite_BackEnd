@@ -1,7 +1,7 @@
 import GameChangeLog from '#models/game_change_log'
-import { BadRequestException } from '#exceptions/bad_request_exception'
-import { NotFoundException } from '#exceptions/not_found_exception'
-import { InternalServerErrorException } from '#exceptions/internal_server_error_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
+import NotFoundException from '#exceptions/not_found_exception'
+import InternalServerErrorException from '#exceptions/internal_server_error_exception'
 import Game from '#models/game'
 
 type GameChangeLogCommand = {

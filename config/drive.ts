@@ -17,6 +17,8 @@ const driveConfig = defineConfig({
       region: env.get('S3_REGION'),
       bucket: env.get('S3_BUCKET'),
       visibility: env.get('S3_VISIBILITY'),
+      endpoint: env.get('S3_ENDPOINT'),
+      forcePathStyle: env.get('S3_FORCE_PATH_STYLE'),
     }),
   },
 })

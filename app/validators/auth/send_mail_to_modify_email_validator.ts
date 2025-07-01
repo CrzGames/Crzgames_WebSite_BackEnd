@@ -1,20 +1,10 @@
-import { schema, rules } from '@adonisjs/validator'
-import { HttpContext } from '@adonisjs/core/http'
+import vine from '@vinejs/vine'
 
-export default class SendMailToModifyEmailValidator {
-  constructor(protected ctx: HttpContext) {}
-
-  public schema = schema.create({
-    email: schema.string({ trim: true }, [
-      rules.email(),
-      rules.required(),
-      rules.exists({ table: 'users', column: 'email' }),
-    ]),
-  })
-
-  public messages = {
-    'email.required': 'Email is required',
-    'email.email': 'Email format is not valid',
-    'email.exists': 'No account found with this email',
-  }
-}
+/**
+ * Validateur pour l'action d'envoi d'un email pour modifier l'email
+ */
+export const sendMailToModifyEmailValidator = vine.compile(
+  vine.object({
+    email: vine.string().trim().email().exists({ table: 'users', column: 'email' }),
+  }),
+)

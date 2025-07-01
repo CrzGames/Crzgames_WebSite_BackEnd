@@ -1,10 +1,11 @@
-import { HttpContext } from '@adonisjs/core/http'
-import { GamePaidAndOwnedStatus, ProductCommand, ProductService } from '#services/product_service'
-import Product from '#models/product'
-import { BucketFileCommand } from '#services/cloud_storage_s3_service'
-import CreateProductValidator from '#validators/product/create_product_validator'
-import UpdateProductValidator from '#validators/product/update_product_validator'
-import User from '#models/user'
+import type { HttpContext } from '@adonisjs/core/http'
+import { ProductService } from '#services/product_service'
+import type { ProductCommand, GamePaidAndOwnedStatus } from '#services/product_service'
+import type Product from '#models/product'
+import type { BucketFileCommand } from '#services/cloud_storage_s3_service'
+import type User from '#models/user'
+import { createProductValidator } from '#validators/Product/CreateProductValidator'
+import { updateProductValidator } from '#validators/Product/UpdateProductValidator'
 
 export default class ProductController {
   public async createProduct({ request, response }: HttpContext): Promise<void> {
@@ -16,7 +17,7 @@ export default class ProductController {
       bucket_name: string
       pathFilename: string
       product_categories_id: number
-    } = await request.validate(CreateProductValidator)
+    } = await request.validateUsing(createProductValidator)
 
     const bucketFileCommand: BucketFileCommand = {
       bucketName: payload.bucket_name,
@@ -60,7 +61,7 @@ export default class ProductController {
       pathFilename: string
       image_files_id: number
       product_categories_id: number
-    } = await request.validate(UpdateProductValidator)
+    } = await request.validateUsing(updateProductValidator)
 
     const bucketFileCommand: BucketFileCommand = {
       bucketName: payload.bucket_name,

@@ -1,5 +1,5 @@
-import { BadRequestException } from '#exceptions/bad_request_exception'
-import { NotFoundException } from '#exceptions/not_found_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
+import NotFoundException from '#exceptions/not_found_exception'
 import ChatFriend from '#models/chat_friend'
 
 export default class ChatFriendService {

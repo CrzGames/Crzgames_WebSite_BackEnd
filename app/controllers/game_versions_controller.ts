@@ -1,8 +1,8 @@
-import { HttpContext } from '@adonisjs/core/http'
+import type { HttpContext } from '@adonisjs/core/http'
 import GameVersionsService from '#services/game_versions_service'
-import GameVersion from '#models/game_version'
-import CreateGameVersionValidator from '#validators/game_versions/create_game_version_validator'
-import UpdateGameVersionValidator from '#validators/game_versions/update_game_version_validator'
+import type GameVersion from '#models/game_version'
+import { updateGameVersionValidator } from '#validators/game_versions/update_game_version_validator'
+import { createGameVersionValidator } from '#validators/game_versions/create_game_version_validator'
 
 export default class GameVersionsController {
   // GET: Recupere la derniere version du jeu et qui est disponible pour le telechargement
@@ -13,7 +13,7 @@ export default class GameVersionsController {
 
   // POST: Crée une version de jeu
   public async createGameVersion({ request, params, response }: HttpContext): Promise<void> {
-    const payload: { version: string; is_available: boolean } = await request.validate(CreateGameVersionValidator)
+    const payload: { version: string; is_available: boolean } = await request.validateUsing(createGameVersionValidator)
     const gameVersion: GameVersion = await GameVersionsService.createGameVersion(params.gameId, payload)
     return response.created(gameVersion)
   }
@@ -38,7 +38,7 @@ export default class GameVersionsController {
 
   // PUT: Met à jour une version de jeu spécifique
   public async updateGameVersion({ params, request, response }: HttpContext): Promise<void> {
-    const payload: { is_available: boolean } = await request.validate(UpdateGameVersionValidator)
+    const payload: { is_available: boolean } = await request.validateUsing(updateGameVersionValidator)
     const gameVersion: GameVersion = await GameVersionsService.updateGameVersion(
       params.gameId,
       params.gameVersionId,

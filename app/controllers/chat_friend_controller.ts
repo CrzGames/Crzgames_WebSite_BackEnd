@@ -1,6 +1,6 @@
-import { HttpContext } from '@adonisjs/core/http'
+import type { HttpContext } from '@adonisjs/core/http'
 import ChatFriendService from '#services/chat_friend_service'
-import ChatFriend from '#models/chat_friend'
+import type ChatFriend from '#models/chat_friend'
 
 export default class ChatFriendController {
   public async getAllChatFriendByUserId({ params, response }: HttpContext): Promise<void> {

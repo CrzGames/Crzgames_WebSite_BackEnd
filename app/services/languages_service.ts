@@ -1,5 +1,5 @@
-import { NotFoundException } from '#exceptions/not_found_exception'
-import { InternalServerErrorException } from '#exceptions/internal_server_error_exception'
+import NotFoundException from '#exceptions/not_found_exception'
+import InternalServerErrorException from '#exceptions/internal_server_error_exception'
 import Language from '#models/language'
 
 export default class LanguagesService {

@@ -1,8 +1,8 @@
-import { HttpContext } from '@adonisjs/core/http'
+import type { HttpContext } from '@adonisjs/core/http'
 import CarouselService from '#services/carousel_service'
-import Carousel from '#models/carousel'
-import CreateCarouselValidator from '#validators/carousel/create_carousel_validator'
-import UpdateCarouselValidator from '#validators/carousel/update_carousel_validator'
+import type Carousel from '#models/carousel'
+import { createCarouselValidator } from '#validators/carousel/create_carousel_validator'
+import { updateCarouselValidator } from '#validators/carousel/update_carousel_validator'
 
 export default class CarouselController {
   public async getAllCarousels({ response }: HttpContext): Promise<void> {
@@ -16,7 +16,7 @@ export default class CarouselController {
   }
 
   public async createCarousel({ request, response }: HttpContext): Promise<void> {
-    const payload = await request.validate(CreateCarouselValidator)
+    const payload = await request.validateUsing(createCarouselValidator)
 
     const carousel: Carousel = await CarouselService.createCarousel(
       payload.title || null,
@@ -33,7 +33,7 @@ export default class CarouselController {
   }
 
   public async updateCarousel({ params, request, response }: HttpContext): Promise<void> {
-    const payload = await request.validate(UpdateCarouselValidator)
+    const payload = await request.validateUsing(updateCarouselValidator)
 
     await CarouselService.updateCarousel(
       params.id,

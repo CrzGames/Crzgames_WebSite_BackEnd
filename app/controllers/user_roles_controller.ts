@@ -1,6 +1,6 @@
-import UserRole from '#models/user_role'
+import type UserRole from '#models/user_role'
 import UserRolesService from '#services/user_roles_service'
-import { HttpContext } from '@adonisjs/core/http'
+import type { HttpContext } from '@adonisjs/core/http'
 
 export default class UserRolesController {
   //function to get all user roles

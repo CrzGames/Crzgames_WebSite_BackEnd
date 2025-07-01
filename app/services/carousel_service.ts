@@ -1,10 +1,11 @@
 import Carousel from '#models/carousel'
-import { NotFoundException } from '#exceptions/not_found_exception'
-import { InternalServerErrorException } from '#exceptions/internal_server_error_exception'
-import CloudStorageS3Service, { BucketFileCommand } from '#services/cloud_storage_s3_service'
-import { BadRequestException } from '#exceptions/bad_request_exception'
-import File from '#models/file'
-import { MultipartFileContract } from '@adonisjs/core/bodyparser'
+import NotFoundException from '#exceptions/not_found_exception'
+import InternalServerErrorException from '#exceptions/internal_server_error_exception'
+import CloudStorageS3Service from '#services/cloud_storage_s3_service'
+import type { BucketFileCommand } from '#types/bucket_file_command'
+import BadRequestException from '#exceptions/bad_request_exception'
+import type File from '#models/file'
+import type { RelationQueryBuilderContract } from '@adonisjs/lucid/types/relations'
 
 export default class CarouselService {
   /**
@@ -13,14 +14,14 @@ export default class CarouselService {
   public static async getAllCarousels(): Promise<Carousel[]> {
     try {
       const carousels: Carousel[] = await Carousel.query()
-        .preload('imageFile', (imageFileQuery): void => {
+        .preload('imageFile', (imageFileQuery: RelationQueryBuilderContract<typeof File, any>): void => {
           imageFileQuery.preload('bucket')
         })
-        .preload('logoFile', (logoFileQuery): void => {
+        .preload('logoFile', (logoFileQuery: RelationQueryBuilderContract<typeof File, any>): void => {
           logoFileQuery.preload('bucket')
         })
 
-      if (!carousels || carousels.length === 0) {
+      if (carousels.length === 0) {
         throw new NotFoundException('No carousels found')
       }
 

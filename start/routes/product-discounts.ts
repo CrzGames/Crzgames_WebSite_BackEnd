@@ -3,7 +3,7 @@ import router from '@adonisjs/core/services/router'
 const ProductDiscountController = () => import('#controllers/product_discount_controller')
 
 router
-  .group(() => {
+  .group((): void => {
     router.post('/product-discounts', [ProductDiscountController, 'createProductDiscount'])
     router.get('/product-discounts/:id', [ProductDiscountController, 'getProductDiscountById'])
     router.get('/product-discounts/product/:productId', [

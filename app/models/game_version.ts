@@ -1,8 +1,8 @@
-import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
 import Game from '#models/game'
 import { DateTime } from 'luxon'
-import { BelongsTo } from '@adonisjs/lucid/types/relations'
 import { ModelObject } from '@adonisjs/lucid/types/model'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 
 export default class GameVersion extends BaseModel {
   @column({ isPrimary: true })

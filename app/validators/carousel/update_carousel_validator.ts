@@ -1,20 +1,18 @@
-import { schema, rules } from '@adonisjs/validator'
-import { HttpContext } from '@adonisjs/core/http'
+import vine from '@vinejs/vine'
 
-export default class UpdateCarouselValidator {
-  constructor(protected ctx: HttpContext) {}
-
-  public schema = schema.create({
-    title: schema.string.optional(),
-    content: schema.string.optional(),
-    button_url: schema.string.optional(),
-    button_content: schema.string.optional(),
-    imagePathFilename: schema.string([rules.required()]),
-    imageBucketName: schema.string([rules.required()]),
-    logoPathFilename: schema.string.optional(),
-    logoBucketName: schema.string.optional(),
-    imageFilesId: schema.number([rules.required()]),
-  })
-
-  public messages = {}
-}
+/**
+ * Validateur pour l'action de mise à jour d'un carrousel
+ */
+export const updateCarouselValidator = vine.compile(
+  vine.object({
+    title: vine.string().optional(),
+    content: vine.string().optional(),
+    button_url: vine.string().optional(),
+    button_content: vine.string().optional(),
+    imagePathFilename: vine.string(),
+    imageBucketName: vine.string(),
+    logoPathFilename: vine.string().optional(),
+    logoBucketName: vine.string().optional(),
+    imageFilesId: vine.number(),
+  }),
+)

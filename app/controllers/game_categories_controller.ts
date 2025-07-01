@@ -1,6 +1,6 @@
-import { HttpContext } from '@adonisjs/core/http'
+import type { HttpContext } from '@adonisjs/core/http'
 import GameCategoriesService from '#services/game_categories_service'
-import GameCategory from '#models/game_category'
+import type GameCategory from '#models/game_category'
 
 export default class GameCategoriesController {
   //function to get all user roles

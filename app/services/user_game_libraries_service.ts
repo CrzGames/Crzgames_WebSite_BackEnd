@@ -1,14 +1,14 @@
 import UserGameLibrary from '#models/user_game_library'
 import Game from '#models/game'
-import { NotFoundException } from '#exceptions/not_found_exception'
-import { InternalServerErrorException } from '#exceptions/internal_server_error_exception'
-import { BadRequestException } from '#exceptions/bad_request_exception'
+import NotFoundException from '#exceptions/not_found_exception'
+import InternalServerErrorException from '#exceptions/internal_server_error_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
 import { ProductService } from '#services/product_service'
-import Product from '#models/product'
+import type Product from '#models/product'
 import { OrderProductService } from '#services/order_product_service'
-import OrderProduct from '#models/order_product'
+import type OrderProduct from '#models/order_product'
 import { OrderService } from '#services/order_service'
-import Order from '#models/order'
+import type Order from '#models/order'
 
 export default class UserGameLibrariesService {
   // Fonction pour récupérer tous les games pour un userId

@@ -1,8 +1,8 @@
 import Ticket from '#models/ticket'
 import TicketResponsesService from '#services/ticket_responses_service'
-import { BadRequestException } from '#exceptions/bad_request_exception'
-import { InternalServerErrorException } from '#exceptions/internal_server_error_exception'
-import { NotFoundException } from '#exceptions/not_found_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
+import InternalServerErrorException from '#exceptions/internal_server_error_exception'
+import NotFoundException from '#exceptions/not_found_exception'
 import TicketStatusesService from '#services/ticket_statuses_service'
 import { TicketStatus } from '#enums/ticket_status'
 

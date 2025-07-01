@@ -1,8 +1,7 @@
-import { BadRequestException } from '#exceptions/bad_request_exception'
-import { NotFoundException } from '#exceptions/not_found_exception'
-import { InternalServerErrorException } from '#exceptions/internal_server_error_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
+import NotFoundException from '#exceptions/not_found_exception'
+import InternalServerErrorException from '#exceptions/internal_server_error_exception'
 import GameBinaryAssignment from '#models/game_binary_assignment'
-import GamePlatformAssignment from '#models/game_platform_assignment'
 
 export default class GameBinaryAssignmentsService {
   // Fonction pour ajouter des binaires à un jeu

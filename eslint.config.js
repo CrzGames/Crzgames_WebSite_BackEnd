@@ -21,10 +21,12 @@ const mainConfig = {
     'app/middleware/auth_middleware.ts',
     'app/middleware/container_bindings_middleware.ts',
     'app/middleware/force_json_response_middleware.ts',
+    'app/validators/**',
     'tests/bootstrap.ts',
     'dist/**',
     'build/**',
     'node_modules/**',
+    'database/seeders/assets-bucket-s3/**',
   ],
   plugins: {
     '@typescript-eslint': eslintPluginTypeScript,
@@ -137,26 +139,10 @@ const mainConfig = {
       },
     ],
 
-    // Autorise les tags spécifiques pour le package adonis-autoswagger
-    'jsdoc/check-tag-names': [
-      'warn',
-      {
-        definedTags: [
-          'tag',
-          'summary',
-          'description',
-          'operationId',
-          'responseBody',
-          'responseHeader',
-          'paramType',
-          'requestBody',
-          'requestFormDataBody',
-          'paramPath',
-          'paramQuery',
-          'paramHeader',
-        ],
-      },
-    ],
+    /**
+     * Disables the rule for custom JSDoc tags used by adonis-autoswagger
+     */
+    'eslint-plugin-jsdoc/check-tag-names': 'off',
   },
   settings: {
     'import/resolver': {

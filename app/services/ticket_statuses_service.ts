@@ -1,6 +1,6 @@
 import TicketStatus from '#models/ticket_status'
-import { NotFoundException } from '#exceptions/not_found_exception'
-import { InternalServerErrorException } from '#exceptions/internal_server_error_exception'
+import NotFoundException from '#exceptions/not_found_exception'
+import InternalServerErrorException from '#exceptions/internal_server_error_exception'
 
 export default class TicketStatusesService {
   //functions to get all ticket statuses

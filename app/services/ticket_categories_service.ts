@@ -1,6 +1,6 @@
 import TicketCategory from '#models/ticket_category'
-import { NotFoundException } from '#exceptions/not_found_exception'
-import { InternalServerErrorException } from '#exceptions/internal_server_error_exception'
+import NotFoundException from '#exceptions/not_found_exception'
+import InternalServerErrorException from '#exceptions/internal_server_error_exception'
 
 export default class TicketCategoriesService {
   //functions to get all ticket categories

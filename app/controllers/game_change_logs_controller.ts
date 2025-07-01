@@ -1,18 +1,17 @@
 import GameChangeLogService from '#services/game_change_log_service'
-import { HttpContext } from '@adonisjs/core/http'
-import UpdateGameChangeLogValidator from '#validators/game_change_log/update_game_change_log_validator'
-import GameChangeLog from '#models/game_change_log'
-import DeleteGameChangeLogValidator from '#validators/game_change_log/delete_game_change_log_validator'
-import GetAllGameChangeLogByGameId from '#validators/game_change_log/get_all_game_change_log_by_game_id_validator'
-import CreateGameChangeLogValidator from '#validators/game_change_log/create_game_change_log_validator'
-import GetGameChangeLogByIdValidator from '#validators/game_change_log/get_game_change_log_by_id_validator'
-import GetAllGameChangeLogByTitleValidator from '#validators/game_change_log/get_all_game_change_log_by_title_validator'
+import type { HttpContext } from '@adonisjs/core/http'
+import type GameChangeLog from '#models/game_change_log'
+import { getAllGameChangeLogByTitleValidator } from '#validators/GameChangeLog/GetAllGameChangeLogByTitleValidator'
+import { createGameChangeLogValidator } from '#validators/GameChangeLog/CreateGameChangeLogValidator'
+import { updateGameChangeLogValidator } from '#validators/GameChangeLog/UpdateGameChangeLogValidator'
+import { deleteGameChangeLogValidator } from '#validators/GameChangeLog/DeleteGameChangeLogValidator'
+import { getGameChangeLogByIdValidator } from '#validators/GameChangeLog/GetGameChangeLogByIdValidator'
 
 export default class GameChangeLogsController {
   //function to create a game change log
   public async createGameChangeLog({ request, response }: HttpContext): Promise<void> {
     const payload: { games_id: number; version: string; content: string } =
-      await request.validate(CreateGameChangeLogValidator)
+      await request.validateUsing(createGameChangeLogValidator)
 
     const gameChangeLog: GameChangeLog = await GameChangeLogService.createGameChangeLog(payload)
 
@@ -28,7 +27,7 @@ export default class GameChangeLogsController {
   //function to update a game change log
   public async updateGameChangeLog({ request, response }: HttpContext): Promise<void> {
     const payload: { id: number; games_id: number; version: string; content: string } =
-      await request.validate(UpdateGameChangeLogValidator)
+      await request.validateUsing(updateGameChangeLogValidator)
 
     await GameChangeLogService.updateGameChangeLog(payload)
 
@@ -37,26 +36,26 @@ export default class GameChangeLogsController {
 
   //function to delete a game change log
   public async deleteGameChangeLog({ request, response }: HttpContext): Promise<void> {
-    const payload: { id: number } = await request.validate(DeleteGameChangeLogValidator)
+    const payload: { id: number } = await request.validateUsing(deleteGameChangeLogValidator)
     await GameChangeLogService.deleteGameChangeLog(payload.id)
     response.status(204).noContent()
   }
 
   //function to get a game change log by id game
   public async getAllGameChangeLogByGameId({ request, response }: HttpContext): Promise<void> {
-    const payload: { gameId: number } = await request.validate(GetAllGameChangeLogByGameId)
+    const payload: { gameId: number } = await request.validateUsing(this.getAllGameChangeLogByGameId)
     const gameChangeLogs: GameChangeLog[] = await GameChangeLogService.getAllGameChangeLogByGameId(payload.gameId)
     response.status(200).json(gameChangeLogs)
   }
 
   public async getGameChangeLogById({ request, response }: HttpContext): Promise<void> {
-    const payload: { id: number } = await request.validate(GetGameChangeLogByIdValidator)
+    const payload: { id: number } = await request.validateUsing(getGameChangeLogByIdValidator)
     const gameChangeLog: GameChangeLog = await GameChangeLogService.getGameChangeLogById(payload.id)
     response.status(200).json(gameChangeLog)
   }
 
   public async getAllGameChangeLogByGameTitle({ request, response }: HttpContext): Promise<void> {
-    const payload: { title: string } = await request.validate(GetAllGameChangeLogByTitleValidator)
+    const payload: { title: string } = await request.validateUsing(getAllGameChangeLogByTitleValidator)
     payload.title = decodeURIComponent(payload.title)
     const gameChangeLogs: GameChangeLog[] = await GameChangeLogService.getAllGameChangeLogByGameTitle(payload.title)
     response.status(200).json(gameChangeLogs)

@@ -1,6 +1,6 @@
 import GameCategory from '#models/game_category'
-import { NotFoundException } from '#exceptions/not_found_exception'
-import { InternalServerErrorException } from '#exceptions/internal_server_error_exception'
+import NotFoundException from '#exceptions/not_found_exception'
+import InternalServerErrorException from '#exceptions/internal_server_error_exception'
 
 export default class GameCategoriesService {
   // Fonction pour récupérer une catégorie de jeu par ID

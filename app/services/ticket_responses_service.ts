@@ -1,11 +1,11 @@
 import TicketResponse from '#models/ticket_response'
 import MailService from '#services/mail_service'
 import UsersService from '#services/users_service'
-import User from '#models/user'
+import type User from '#models/user'
 import env from '#start/env'
-import { BadRequestException } from '#exceptions/bad_request_exception'
-import { NotFoundException } from '#exceptions/not_found_exception'
-import { InternalServerErrorException } from '#exceptions/internal_server_error_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
+import NotFoundException from '#exceptions/not_found_exception'
+import InternalServerErrorException from '#exceptions/internal_server_error_exception'
 import TicketsService from '#services/tickets_service'
 
 export default class TicketResponsesService {
@@ -28,7 +28,8 @@ export default class TicketResponsesService {
           'ticket-response',
           {
             username: user.username,
-            ticketURL: env.get('APP_BASE_URL') + env.get('APP_REDIRECT_URI_TICKET_RESPONSE') + tickets_id,
+            ticketURL:
+              env.get('FRONTEND_APP_BASE_URL') + env.get('FRONTEND_APP_REDIRECT_URI_TICKET_RESPONSE') + tickets_id,
             ticketNumber: tickets_id,
             contentResponseSupport: content,
           },

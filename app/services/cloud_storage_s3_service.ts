@@ -3,38 +3,44 @@ import {
   CreateBucketCommand,
   ListBucketsCommand,
   DeleteBucketCommand,
+  GetObjectCommand,
+  ListObjectsV2Command,
+  GetBucketAclCommand,
+  DeleteObjectsCommand,
+} from '@aws-sdk/client-s3'
+import type {
   DeleteBucketCommandOutput,
   CreateBucketCommandOutput,
   ListBucketsCommandOutput,
   Bucket,
-  GetObjectCommand,
   GetObjectCommandOutput,
-  ListObjectsV2Command,
   ListObjectsV2CommandOutput,
-  GetBucketAclCommand,
   GetBucketAclCommandOutput,
   Grant,
   _Object,
   CreateBucketCommandInput,
-  DeleteObjectsCommand,
+  GetObjectCommandInput,
+  ListObjectsV2CommandInput,
+  DeleteObjectsCommandInput,
 } from '@aws-sdk/client-s3'
 import logger from '@adonisjs/core/services/logger'
 import env from '#start/env'
-import Drive, { DriveFileStats } from '@ioc:Adonis/Core/Drive'
+import drive from '@adonisjs/drive/services/main'
 import MyBucket from '#models/bucket'
-import { NotFoundException } from '#exceptions/not_found_exception'
-import { InternalServerErrorException } from '#exceptions/internal_server_error_exception'
+import NotFoundException from '#exceptions/not_found_exception'
+import InternalServerErrorException from '#exceptions/internal_server_error_exception'
 import File from '#models/file'
-import { MultipartFileContract } from '@adonisjs/core/bodyparser'
+import type { MultipartFile } from '@adonisjs/core/bodyparser'
 import fs from 'fs'
 import { promisify } from 'util'
-import { ListObjectsV2CommandInput } from '@aws-sdk/client-s3/dist-types/commands/ListObjectsV2Command'
-import { Buffer } from 'buffer'
+import type { Buffer } from 'buffer'
 import { DateTime } from 'luxon'
 import archiver from 'archiver'
-import { HttpContext } from '@adonisjs/core/http'
+import type { HttpContext } from '@adonisjs/core/http'
+import type { ObjectMetaData } from '@adonisjs/drive/types'
+import type { Readable } from 'stream'
 
-const readFile = promisify(fs.readFile)
+const readFile: any = promisify(fs.readFile)
 
 // Documentation Client S3 AWS v3 for Node.js : https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/
 const s3Client: S3Client = new S3Client({
@@ -44,15 +50,15 @@ const s3Client: S3Client = new S3Client({
   },
   region: env.get('S3_REGION') as string,
   endpoint: env.get('S3_ENDPOINT') as string,
-  forcePathStyle: true,
+  forcePathStyle: env.get('S3_FORCE_PATH_STYLE'),
 })
 
 export type BucketFileCommand = {
   pathFilename: string
   bucketName: string
-  // 'File' pour les assets real et 'localPath' pour les assets local pour les seeders (pour develop)
-  file?: MultipartFileContract
-  files?: MultipartFileContract[]
+  // 'File' pour les assets réel et 'localPath' pour les assets local pour les seeders (pour develop)
+  file?: MultipartFile
+  files?: MultipartFile[]
   localPath?: string
 }
 
@@ -136,19 +142,19 @@ export default class CloudStorageS3Service {
           const fileContentBuffer: Buffer = await readFile(file.tmpPath)
           const filePath: string = `${bucketFile.pathFilename}/${file.clientName}`
           console.log('uploadFileOrFolderInBucket : ' + filePath)
-          await Drive.put(filePath, fileContentBuffer)
+          await drive.use().put(filePath, fileContentBuffer)
         }
       }
     } else {
       // Handle single file or localPath
-      let fileContentBuffer
+      let fileContentBuffer: any
       if (bucketFile.localPath) {
         fileContentBuffer = await readFile(bucketFile.localPath)
       } else if (bucketFile.file && bucketFile.file.state === 'consumed' && bucketFile.file.tmpPath) {
         fileContentBuffer = await readFile(bucketFile.file.tmpPath)
       }
       console.log('Uploading to path:', bucketFile.pathFilename)
-      await Drive.put(bucketFile.pathFilename, fileContentBuffer)
+      await drive.use().put(bucketFile.pathFilename, fileContentBuffer)
     }
   }
 
@@ -277,7 +283,7 @@ export default class CloudStorageS3Service {
         }
       }
 
-      const deleteParams = {
+      const deleteParams: DeleteObjectsCommandInput = {
         Bucket: bucketName,
         Delete: {
           Objects: listedObjects.Contents.map(({ Key }) => ({ Key })),
@@ -296,8 +302,8 @@ export default class CloudStorageS3Service {
 
   private static async deleteFileInBucketAndDB(pathFilename: string): Promise<void> {
     try {
-      if (await Drive.exists(pathFilename)) {
-        await Drive.delete(pathFilename)
+      if (await drive.use().exists(pathFilename)) {
+        await drive.use().delete(pathFilename)
 
         // Check si le fichier est utilisé en base de donnée si c'est le cas le supprime
         const file: File | null = await File.query().preload('bucket').where('pathfilename', pathFilename).first()
@@ -338,9 +344,9 @@ export default class CloudStorageS3Service {
 
   public static async getURLToFileInBucket(pathFilename: string): Promise<string | undefined> {
     try {
-      if (await Drive.exists(pathFilename)) {
+      if (await drive.use().exists(pathFilename)) {
         logger.info('getFileInBucket success pathfilename for file')
-        const fileUrl: string = await Drive.getUrl(pathFilename)
+        const fileUrl: string = await drive.use().getUrl(pathFilename)
 
         if (env.get('NODE_ENV') === 'development') return this.replaceHostInUrl(fileUrl)
         return fileUrl
@@ -366,7 +372,7 @@ export default class CloudStorageS3Service {
     let contents: _Object[] = []
 
     do {
-      const listParams = {
+      const listParams: ListObjectsV2CommandInput = {
         Bucket: bucketName,
         Prefix: prefix,
         ContinuationToken: continuationToken,
@@ -418,7 +424,7 @@ export default class CloudStorageS3Service {
               !item.Key.endsWith('.tar.gz.sig')
             ) {
               const relativePath: string = item.Key.substring(pathFilename.length + 1) // Relative path inside the zip
-              const objectStream: NodeJS.ReadableStream = await this.getObjectStream(bucketName, item.Key)
+              const objectStream: Readable = await this.getObjectStream(bucketName, item.Key)
               // @ts-ignore
               archive.append(objectStream, { name: relativePath })
             }
@@ -435,21 +441,20 @@ export default class CloudStorageS3Service {
       }
 
       // Vérifier si le chemin existe
-      if (await Drive.exists(pathFilename)) {
-        const driveFileStats: DriveFileStats = await Drive.getStats(pathFilename)
-        if (driveFileStats.isFile) {
-          // Gestion des fichiers
-          const fileStream: NodeJS.ReadableStream = await Drive.getStream(pathFilename)
+      if (await drive.use().exists(pathFilename)) {
+        const meta: ObjectMetaData = await drive.use().getMetaData(pathFilename)
 
-          ctx.response.response.setHeader('Content-Type', 'application/octet-stream')
-          ctx.response.response.setHeader(
-            'Content-Disposition',
-            `attachment; filename="${pathFilename.split('/').pop()}"`,
-          )
-          ctx.response.response.setHeader('Content-Length', driveFileStats.size.toString())
+        // On considère que si on a des métadonnées, c'est un fichier
+        const fileStream: Readable = await drive.use().getStream(pathFilename)
 
-          return ctx.response.stream(fileStream)
-        }
+        ctx.response.response.setHeader('Content-Type', 'application/octet-stream')
+        ctx.response.response.setHeader(
+          'Content-Disposition',
+          `attachment; filename="${pathFilename.split('/').pop()}"`,
+        )
+        ctx.response.response.setHeader('Content-Length', meta.contentLength.toString())
+
+        return ctx.response.stream(fileStream)
       }
 
       throw new NotFoundException('File or folder not found')
@@ -459,15 +464,20 @@ export default class CloudStorageS3Service {
     }
   }
 
-  // Méthode pour obtenir un flux d'objet depuis S3
-  private static async getObjectStream(bucketName: string, key: string): Promise<NodeJS.ReadableStream> {
-    const getObjectParams = {
+  /**
+   * Méthode pour obtenir un flux d'objet depuis S3
+   * @param {string} bucketName - Le nom du bucket S3
+   * @param {string} key - La clé de l'objet S3
+   * @returns {Promise<Readable>} - Un flux lisible de l
+   */
+  private static async getObjectStream(bucketName: string, key: string): Promise<Readable> {
+    const getObjectParams: GetObjectCommandInput = {
       Bucket: bucketName,
       Key: key,
     }
     const command: GetObjectCommand = new GetObjectCommand(getObjectParams)
     const { Body } = await s3Client.send(command)
-    return Body as NodeJS.ReadableStream
+    return Body as Readable
   }
 
   public static async streamDownloadFileOrFolderInBucket(
@@ -485,16 +495,16 @@ export default class CloudStorageS3Service {
     if (pathFilename.endsWith('.zip')) {
       logger.info('Téléchargement direct d un fichier ZIP détecté')
 
-      if (await Drive.exists(pathFilename)) {
-        const fileStream: NodeJS.ReadableStream = await Drive.getStream(pathFilename)
-        const { size } = await Drive.getStats(pathFilename)
+      if (await drive.use().exists(pathFilename)) {
+        const fileStream: Readable = await drive.use().getStream(pathFilename)
+        const { contentLength } = await drive.use().getMetaData(pathFilename)
 
         ctx.response.response.setHeader('Content-Type', 'application/zip')
         ctx.response.response.setHeader(
           'Content-Disposition',
           `attachment; filename="${pathFilename.split('/').pop()}"`,
         )
-        ctx.response.response.setHeader('Content-Length', size.toString())
+        ctx.response.response.setHeader('Content-Length', contentLength.toString())
 
         return ctx.response.stream(fileStream)
       }

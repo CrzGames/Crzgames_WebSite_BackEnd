@@ -1,5 +1,5 @@
-import { NotFoundException } from '#exceptions/not_found_exception'
-import { BadRequestException } from '#exceptions/bad_request_exception'
+import NotFoundException from '#exceptions/not_found_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
 import ProductGameServer from '#models/product_game_server'
 
 export default class ProductGameServerService {

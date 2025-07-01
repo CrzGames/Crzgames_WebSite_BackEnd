@@ -1,6 +1,6 @@
-import { HttpContext } from '@adonisjs/core/http'
+import type { HttpContext } from '@adonisjs/core/http'
 import LanguagesService from '#services/languages_service'
-import Language from '#models/language'
+import type Language from '#models/language'
 
 export default class LanguagesController {
   /**

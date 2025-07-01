@@ -1,23 +1,11 @@
-import { schema, rules } from '@adonisjs/validator'
-import { HttpContext } from '@adonisjs/core/http'
+import vine from '@vinejs/vine'
 
-export default class VerifyCodeValidator {
-  constructor(protected ctx: HttpContext) {}
-
-  public schema = schema.create({
-    email: schema.string({ trim: true }, [
-      rules.email(),
-      rules.required(),
-      rules.exists({ table: 'users', column: 'email' }),
-    ]),
-    code: schema.number([rules.required()]),
-  })
-
-  public messages = {
-    'email.required': 'Email is required',
-    'email.email': 'Email format is not valid',
-    'email.exists': 'No account found with this email',
-    'code.required': 'Code is required',
-    'code.number': 'Code must be a number',
-  }
-}
+/**
+ * Validateur pour l'action de vérification de code
+ */
+export const verifyCodeValidator = vine.compile(
+  vine.object({
+    email: vine.string().trim().email().exists({ table: 'users', column: 'email' }),
+    code: vine.number(),
+  }),
+)

@@ -1,5 +1,4 @@
-import { HttpContext } from '@adonisjs/core/http'
-import NatsService from '#services/nats_service'
+import type { HttpContext } from '@adonisjs/core/http'
 
 export default class NatsController {
   public async publish({ response, request }: HttpContext): Promise<void> {
@@ -13,7 +12,7 @@ export default class NatsController {
     }
   }
 
-  private staticpublic async subscribe({ response, request }: HttpContext): Promise<void> {
+  public async subscribe({ response, request }: HttpContext): Promise<void> {
     const { subject } = request.only(['subject'])
 
     try {

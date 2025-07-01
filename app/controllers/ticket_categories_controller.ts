@@ -1,5 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import TicketCategory from '#models/ticket_category'
+import type TicketCategory from '#models/ticket_category'
 import TicketCategoriesService from '#services/ticket_categories_service'
 
 export default class TicketCategoriesController {

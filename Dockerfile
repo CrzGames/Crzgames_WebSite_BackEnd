@@ -1,5 +1,5 @@
 # Set version for latest LTS version of Node.js
-FROM node:22.16.0
+FROM node:22.17.0
 
 WORKDIR /app
 

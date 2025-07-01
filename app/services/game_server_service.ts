@@ -1,7 +1,6 @@
 import GameServer from '#models/game_server'
-import { NotFoundException } from '#exceptions/not_found_exception'
-import logger from '@adonisjs/core/services/logger'
-import { BadRequestException } from '#exceptions/bad_request_exception'
+import NotFoundException from '#exceptions/not_found_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
 
 export default class GameServerService {
   public static async getAllGameServers(): Promise<GameServer[]> {

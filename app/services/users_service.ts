@@ -1,9 +1,9 @@
 import User from '#models/user'
 import { UserRoles } from '#enums/user_roles'
-import { NotFoundException } from '#exceptions/not_found_exception'
-import { InternalServerErrorException } from '#exceptions/internal_server_error_exception'
-import { BadRequestException } from '#exceptions/bad_request_exception'
-import { AuthContract } from '@ioc:Adonis/Addons/Auth'
+import NotFoundException from '#exceptions/not_found_exception'
+import InternalServerErrorException from '#exceptions/internal_server_error_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
+import type { AuthContract } from '@ioc:Adonis/Addons/Auth'
 
 export type UserIdAndRole = {
   id: number

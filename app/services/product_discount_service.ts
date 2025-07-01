@@ -1,6 +1,6 @@
 import ProductDiscount from '#models/product_discount'
-import { BadRequestException } from '#exceptions/bad_request_exception'
-import { NotFoundException } from '#exceptions/not_found_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
+import NotFoundException from '#exceptions/not_found_exception'
 
 export type ProductDiscountCommand = {
   products_id: number

@@ -1,6 +1,6 @@
-import { NotFoundException } from '#exceptions/not_found_exception'
+import NotFoundException from '#exceptions/not_found_exception'
 import GamePlatform from '#models/game_platform'
-import { InternalServerErrorException } from '#exceptions/internal_server_error_exception'
+import InternalServerErrorException from '#exceptions/internal_server_error_exception'
 
 export default class GamePlatformsService {
   // Fonction pour récupérer une plateforme de jeu par son ID

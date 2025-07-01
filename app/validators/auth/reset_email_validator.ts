@@ -1,22 +1,18 @@
-import { schema, rules } from '@adonisjs/validator'
-import { HttpContext } from '@adonisjs/core/http'
+import vine from '@vinejs/vine'
 
-export default class ResetEmailValidator {
-  constructor(protected ctx: HttpContext) {}
-
-  public schema = schema.create({
-    token: schema.string({ trim: true }, [rules.required()]),
-    newEmail: schema.string({ trim: true }, [
-      rules.email(),
-      rules.required(),
-      rules.unique({ table: 'users', column: 'email' }),
-    ]),
-  })
-
-  public messages = {
-    'token.required': 'Token is required',
-    'newEmail.required': 'New Email is required',
-    'newEmail.email': 'New Email format is not valid',
-    'newEmail.unique': 'This new email is already in use',
-  }
-}
+/**
+ * Validateur pour l'action de réinitialisation de l'email
+ */
+export const resetEmailValidator = vine.compile(
+  vine.object({
+    token: vine.string().trim(),
+    newEmail: vine
+      .string()
+      .trim()
+      .email()
+      .unique(async (db, value, _field) => {
+        const user = await db.from('users').where('email', value).first()
+        return !user
+      }),
+  }),
+)

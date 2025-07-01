@@ -1,11 +1,11 @@
-import { HttpContext } from '@adonisjs/core/http'
+import type { HttpContext } from '@adonisjs/core/http'
 import SeaTyrantsService from '#services/sea_tyrants_service'
-import { UserIdAndRole } from '#services/users_service'
-import GetInfoUserValidator from '#validators/sea_tyrants/get_info_user_validator'
+import type { UserIdAndRole } from '#services/users_service'
+import { getInfoUserValidator } from '#validators/SeaTyrants/GetInfoUserValidator'
 
 export default class SeatyrantsController {
   public async getInfoUser({ response, request }: HttpContext): Promise<void> {
-    const payload: { email: string } = await request.validate(GetInfoUserValidator)
+    const payload: { email: string } = await request.validateUsing(getInfoUserValidator)
     console.log('payload', payload)
     const userIdAndRole: UserIdAndRole = await SeaTyrantsService.getInfoUser(payload.email)
     response.status(200).json(userIdAndRole)

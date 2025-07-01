@@ -1,11 +1,11 @@
 import Game from '#models/game'
-import { InternalServerErrorException } from '#exceptions/internal_server_error_exception'
-import { NotFoundException } from '#exceptions/not_found_exception'
-import { BadRequestException } from '#exceptions/bad_request_exception'
+import InternalServerErrorException from '#exceptions/internal_server_error_exception'
+import NotFoundException from '#exceptions/not_found_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
 import type { BucketFileCommand } from '#services/cloud_storage_s3_service'
 import CloudStorageS3Service from '#services/cloud_storage_s3_service'
-import File from '#models/file'
-import { ModelQueryBuilderContract } from ' @adonisjs/lucid/types/model'
+import type File from '#models/file'
+import type { ModelQueryBuilderContract } from '@adonisjs/lucid/types/model'
 
 /**
  * Type pour la méta-donnée de pagination

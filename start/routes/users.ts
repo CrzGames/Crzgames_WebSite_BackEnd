@@ -5,7 +5,6 @@ const UsersController = () => import('#controllers/users_controller')
 router
   .group((): void => {
     router.get('/user', [UsersController, 'decodeTokenReturnUser'])
-    // Get les variable d'environnement sensible pour le user lorsqu'il est connecté
     router.get('/user/sensitive-data', [UsersController, 'getVarsEnvironmentForUser'])
     router.get('/user/:id', [UsersController, 'getUsersById'])
     router.get('/users', [UsersController, 'getAllUsers'])

@@ -9,7 +9,7 @@
     "start:production": "NODE_ENV=production node bin/server.js",
     "build": "node ace build",
     "dev": "node ace serve --hmr",
-    "dev:docker": "docker-compose up",
+    "dev:swagger": "node ace serve --watch",
     "test:all": "node ace test",
     "test:all:watch": "node ace test --watch",
     "test:unit": "node ace test unit",
@@ -48,15 +48,16 @@
     "@adonisjs/core": "^6.19.0",
     "@adonisjs/cors": "^2.2.1",
     "@adonisjs/drive": "^3.4.1",
-    "@adonisjs/lucid": "^21.6.1",
+    "@adonisjs/lucid": "^21.7.0",
     "@adonisjs/mail": "^9.2.2",
-    "@aws-sdk/client-s3": "^3.835.0",
-    "@aws-sdk/s3-request-presigner": "^3.835.0",
+    "@aws-sdk/client-s3": "^3.839.0",
+    "@aws-sdk/s3-request-presigner": "^3.839.0",
     "@foadonis/crypt": "^0.0.3",
     "@vinejs/vine": "^3.0.1",
     "adonis-autoswagger": "^3.73.0",
     "archiver": "^7.0.1",
     "argon2": "^0.43.0",
+    "axios": "^1.10.0",
     "bcrypt": "^6.0.0",
     "edge.js": "^6.2.1",
     "luxon": "^3.6.1",
@@ -65,6 +66,7 @@
     "nats": "^2.29.3",
     "node-mailjet": "^6.0.8",
     "pino-pretty": "^13.0.0",
+    "proxycheck-ts": "^0.0.11",
     "reflect-metadata": "^0.2.2",
     "stripe": "^18.2.1",
     "uuid": "^11.1.0"
@@ -85,17 +87,18 @@
     "@japa/runner": "^4.2.0",
     "@japa/snapshot": "^2.0.8",
     "@openapitools/openapi-generator-cli": "^2.21.0",
-    "@stylistic/eslint-plugin": "^5.0.0",
-    "@swc/core": "^1.12.6",
+    "@stylistic/eslint-plugin": "^5.1.0",
+    "@swc/core": "^1.12.7",
     "@types/archiver": "^6.0.3",
     "@types/luxon": "^3.6.2",
-    "@types/node": "^24.0.4",
+    "@types/mjml": "^4.7.4",
+    "@types/node": "^24.0.7",
     "@types/node-mailjet": "^4.0.0",
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.35.0",
     "@typescript-eslint/parser": "^8.35.0",
     "cross-env": "^7.0.3",
-    "eslint": "^9.29.0",
+    "eslint": "^9.30.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-jsdoc": "^51.2.3",
     "eslint-plugin-prettier": "^5.5.1",
@@ -103,7 +106,7 @@
     "hot-hook": "^0.4.0",
     "husky": "^9.1.7",
     "npm-check-updates": "^18.0.1",
-    "prettier": "^3.6.1",
+    "prettier": "^3.6.2",
     "ts-node-maintained": "^10.9.5",
     "tsx": "^4.20.3",
     "typescript": "~5.8.3"
@@ -115,7 +118,7 @@
     ]
   },
   "engines": {
-    "node": ">=22.16.0"
+    "node": ">=22.17.0"
   },
   "imports": {
     "#controllers/*": "./app/controllers/*.js",
@@ -135,6 +138,8 @@
     "#tests/*": "./tests/*.js",
     "#config/*": "./config/*.js",
     "#enums/*": "./app/enums/*.js",
-    "#interfaces/*": "./app/interfaces/*.js"
+    "#interfaces/*": "./app/interfaces/*.js",
+    "#types/*": "./app/types/*.js",
+    "#scripts/*": "./scripts/*.js"
   }
 }

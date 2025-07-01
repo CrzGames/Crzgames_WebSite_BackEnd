@@ -1,13 +1,5 @@
-import {
-  connect,
-  NatsConnection,
-  StringCodec,
-  Subscription,
-  ErrorCode,
-  NatsError,
-  Codec,
-  nkeyAuthenticator,
-} from 'nats'
+import { connect, StringCodec, ErrorCode, NatsError, nkeyAuthenticator } from 'nats'
+import type { NatsConnection, Subscription, Codec } from 'nats'
 import env from '#start/env'
 
 export default class NatsService {
@@ -17,8 +9,8 @@ export default class NatsService {
 
   public async connect(): Promise<void> {
     try {
-      const serversOptions: string[] = [env.get('NATS_SERVER')]
-      const seed: Uint8Array = new TextEncoder().encode(env.get('NATS_NKEY_PUBLIC_KEY'))
+      const serversOptions: string[] = [env.get('NATS_SERVER_URL')]
+      const seed: Uint8Array = new TextEncoder().encode(env.get('NATS_NKEY_PRIVATE_KEY'))
 
       this.nc = await connect({
         servers: serversOptions,

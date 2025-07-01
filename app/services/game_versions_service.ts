@@ -1,7 +1,7 @@
 import GameVersion from '#models/game_version'
 import Game from '#models/game'
-import { BadRequestException } from '#exceptions/bad_request_exception'
-import { NotFoundException } from '#exceptions/not_found_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
+import NotFoundException from '#exceptions/not_found_exception'
 
 export default class GameVersionsService {
   private static compareVersions(a: string, b: string): number {

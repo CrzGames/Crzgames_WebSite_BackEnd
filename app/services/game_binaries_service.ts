@@ -1,9 +1,9 @@
-import { BadRequestException } from '#exceptions/bad_request_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
 import GameBinary from '#models/game_binary'
-import { InternalServerErrorException } from '#exceptions/internal_server_error_exception'
+import InternalServerErrorException from '#exceptions/internal_server_error_exception'
 import CloudStorageS3Service from '#services/cloud_storage_s3_service'
 import type { BucketFileCommand } from '#services/cloud_storage_s3_service'
-import File from '#models/file'
+import type File from '#models/file'
 
 export type GameBinaryCommand = {
   pathfilename: string

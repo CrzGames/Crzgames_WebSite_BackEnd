@@ -1,5 +1,5 @@
-import { HttpContext } from '@adonisjs/core/http'
-import GameServer from '#models/game_server'
+import type { HttpContext } from '@adonisjs/core/http'
+import type GameServer from '#models/game_server'
 import GameServerService from '#services/game_server_service'
 
 export default class GameServerController {

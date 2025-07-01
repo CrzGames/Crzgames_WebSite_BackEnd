@@ -1,4 +1,4 @@
-import { HttpContext } from '@adonisjs/core/http'
+import type { HttpContext } from '@adonisjs/core/http'
 import MaintenanceWebSiteService from '#services/maintenance_web_site_service'
 
 export default class MaintenanceWebSiteController {

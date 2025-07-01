@@ -1,12 +1,13 @@
-import { HttpContext } from '@adonisjs/core/http'
-import { ProductDiscountService, ProductDiscountCommand } from '#services/product_discount_service'
-import UpdateProductDiscountValidator from '#validators/product_discount/update_product_discount_validator'
-import CreateProductDiscountValidator from '#validators/product_discount/create_product_discount_validator'
-import ProductDiscount from '#models/product_discount'
+import type { HttpContext } from '@adonisjs/core/http'
+import { ProductDiscountService } from '#services/product_discount_service'
+import type { ProductDiscountCommand } from '#services/product_discount_service'
+import { updateProductDiscountValidator } from '#validators/product_discount/update_product_discount_validator'
+import { createProductDiscountValidator } from '#validators/product_discount/create_product_discount_validator'
+import type ProductDiscount from '#models/product_discount'
 
 export default class ProductDiscountController {
   public async createProductDiscount({ request, response }: HttpContext): Promise<void> {
-    const payload: ProductDiscountCommand = await request.validate(CreateProductDiscountValidator)
+    const payload: ProductDiscountCommand = await request.validateUsing(createProductDiscountValidator)
     const productDiscount: ProductDiscount = await ProductDiscountService.createProductDiscount(payload)
     return response.created(productDiscount)
   }
@@ -28,7 +29,7 @@ export default class ProductDiscountController {
   }
 
   public async updateProductDiscount({ params, request, response }: HttpContext): Promise<void> {
-    const payload: ProductDiscountCommand = await request.validate(UpdateProductDiscountValidator)
+    const payload: ProductDiscountCommand = await request.validateUsing(updateProductDiscountValidator)
     const productDiscount: ProductDiscount = await ProductDiscountService.updateProductDiscount(params.id, payload)
     return response.status(200).json(productDiscount)
   }

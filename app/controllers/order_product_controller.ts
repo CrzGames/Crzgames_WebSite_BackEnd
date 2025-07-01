@@ -1,6 +1,7 @@
-import { HttpContext } from '@adonisjs/core/http'
-import { OrderProductService, ProductOrderCommand } from '#services/order_product_service'
-import OrderProduct from '#models/order_product'
+import type { HttpContext } from '@adonisjs/core/http'
+import { OrderProductService } from '#services/order_product_service'
+import type { ProductOrderCommand } from '#services/order_product_service'
+import type OrderProduct from '#models/order_product'
 
 export default class OrderProductController {
   public async createOrderProduct({ request, response }: HttpContext): Promise<void> {

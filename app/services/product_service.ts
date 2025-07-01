@@ -1,8 +1,9 @@
 import Product from '#models/product'
-import File from '#models/file'
-import CloudStorageS3Service, { BucketFileCommand } from '#services/cloud_storage_s3_service'
-import { BadRequestException } from '#exceptions/bad_request_exception'
-import { NotFoundException } from '#exceptions/not_found_exception'
+import type File from '#models/file'
+import CloudStorageS3Service from '#services/cloud_storage_s3_service'
+import type { BucketFileCommand } from '#services/cloud_storage_s3_service'
+import BadRequestException from '#exceptions/bad_request_exception'
+import NotFoundException from '#exceptions/not_found_exception'
 import UserGameLibrary from '#models/user_game_library'
 
 export type ProductCommand = {

@@ -1,4 +1,5 @@
-import ProxyCheck, { ProxyCheckResponse, IPAddressInfo } from 'proxycheck-ts'
+import ProxyCheck from 'proxycheck-ts'
+import type { ProxyCheckResponse, IPAddressInfo } from 'proxycheck-ts'
 import env from '#start/env'
 
 const proxyCheck: ProxyCheck = new ProxyCheck({ api_key: env.get('PROXY_CHECK_IO_API_KEY') })
@@ -46,7 +47,7 @@ export class ProxyCheckIOService {
         } as ResponseProxyCheckIO
       }
 
-      // Default response if no data is available for the IP
+      // Si l'IP n'est pas trouvé, on retourne un objet vide
       return {
         continent: '',
         continentCode: '',

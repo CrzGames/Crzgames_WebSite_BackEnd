@@ -9,7 +9,7 @@ export const UserFactory = factory
     const uniqueSuffix: string = Math.random().toString(36).substring(2)
 
     // Limiter à 18 caractères le username
-    let username: string = faker.internet.userName() + uniqueSuffix
+    let username: string = faker.internet.username() + uniqueSuffix
     username = username.length > 22 ? username.substring(0, 22) : username
 
     // Sélection aléatoire d'un rôle

@@ -1,24 +1,75 @@
 services:
-  adonis:
-    container_name: adonis
-    image: corentin35/crzgames-website-backend:develop
+  adonis_backend:
+    container_name: adonis_backend
     restart: always
+    image: crzgames/website-backend:develop
     build:
       context: .
       dockerfile: Dockerfile
+      network: host
     volumes:
       - .:/app
       - node_modules:/app/node_modules
     ports:
       - '3556:3556'
     depends_on:
-      - db_mariadb
-      - phpmyadmin
+      database_mariadb:
+        condition: service_healthy
+      minio-s3:
+        condition: service_healthy
+      miniomc-s3:
+        condition: service_completed_successfully
     networks:
       - app-network
 
-  db_mariadb:
-    container_name: db_mariadb
+  minio-s3:
+    container_name: minio-s3
+    restart: always
+    image: minio/minio
+    volumes:
+      - bucket_s3:/data
+    ports:
+      - '9000:9000' # API CloudStorage S3
+      - '9001:9001' # UI Dashboard
+    environment:
+      MINIO_ROOT_USER: minio_access_key
+      MINIO_ROOT_PASSWORD: minio_secret_key
+    command: server --console-address :9001 /data
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:9000/minio/health/live']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  miniomc-s3:
+    container_name: miniomc-s3
+    restart: on-failure
+    image: minio/mc
+    entrypoint: |
+      /bin/sh -c "
+      until /usr/bin/mc alias set myminio http://minio-s3:9000 minio_access_key minio_secret_key > /dev/null 2>&1; do
+        echo 'En attente de MinIO...'; sleep 2;
+      done;
+      if ! /usr/bin/mc ls myminio/crzgames-private > /dev/null 2>&1; then
+        /usr/bin/mc mb myminio/crzgames-private;
+        /usr/bin/mc anonymous set none myminio/crzgames-private;
+      fi
+      if ! /usr/bin/mc ls myminio/crzgames-public > /dev/null 2>&1; then
+        /usr/bin/mc mb myminio/crzgames-public;
+        /usr/bin/mc anonymous set download myminio/crzgames-public;
+      fi
+      exit 0;
+      "
+    depends_on:
+      minio-s3:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  database_mariadb:
+    container_name: database_mariadb
     image: mariadb:latest
     restart: always
     environment:
@@ -30,6 +81,12 @@ services:
       - '3310:3306'
     volumes:
       - database_data:/var/lib/mysql
+    healthcheck:
+      test: ['CMD', '/usr/local/bin/healthcheck.sh', '--innodb_initialized']
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - app-network
 
@@ -38,11 +95,14 @@ services:
     image: phpmyadmin/phpmyadmin
     restart: always
     environment:
-      PMA_HOST: db_mariadb
+      PMA_HOST: database_mariadb
       PMA_USER: root
       PMA_PASSWORD: root
     ports:
-      - '7500:80'
+      - '8080:80'
+    depends_on:
+      database_mariadb:
+        condition: service_healthy
     networks:
       - app-network
 
@@ -60,6 +120,21 @@ services:
     networks:
       - app-network
 
+  nats:
+    container_name: nats
+    image: nats:latest
+    restart: always
+    ports:
+      - '4222:4222' # NATS client connections
+      - '4223:4223' # WebSocket connections
+      - '8222:8222' # HTTP monitoring
+    volumes:
+      - ./nats/nats_config.json:/etc/nats/nats_config.json # Mount a configuration file
+      - nats_data:/data/nats # Mount a volume for JetStream data storage
+    command: -c /etc/nats/nats_config.json
+    networks:
+      - app-network
+
 networks:
   app-network:
 
@@ -67,3 +142,5 @@ volumes:
   database_data:
   app:
   node_modules:
+  bucket_s3:
+  nats_data:

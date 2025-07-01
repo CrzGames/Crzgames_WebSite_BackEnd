@@ -1,6 +1,6 @@
 import Order from '#models/order'
-import { BadRequestException } from '#exceptions/bad_request_exception'
-import { NotFoundException } from '#exceptions/not_found_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
+import NotFoundException from '#exceptions/not_found_exception'
 
 export type OrderCommand = {
   users_id?: number

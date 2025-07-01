@@ -1,5 +1,5 @@
 import ChatMessage from '#models/chat_message'
-import { BadRequestException } from '#exceptions/bad_request_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
 
 class ChatMessageService {
   public async createChatMessage(

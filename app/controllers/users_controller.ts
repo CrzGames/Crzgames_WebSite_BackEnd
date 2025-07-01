@@ -1,11 +1,11 @@
-import { HttpContext } from '@adonisjs/core/http'
-import User from '#models/user'
+import type { HttpContext } from '@adonisjs/core/http'
+import type User from '#models/user'
 import UsersService from '#services/users_service'
-import UpdateUsersRoleValidator from '#validators/user/update_users_role_validator'
-import DeleteUsersValidator from '#validators/user/delete_users_validator'
-import UpdateUsersValidator from '#validators/user/update_users_validator'
-import GetUsersByIdValidator from '#validators/user/get_users_by_id_validator'
 import env from '#start/env'
+import { getUsersByIdValidator } from '#validators/User/GetUsersByIdValidator'
+import { updateUsersValidator } from '#validators/User/UpdateUsersValidator'
+import { deleteUsersValidator } from '#validators/User/DeleteUsersValidator'
+import { updateUsersRoleValidator } from '#validators/User/UpdateUsersRoleValidator'
 
 export default class UsersController {
   // Decode le token bearer token (envoyer dans le header 'Authorization' de la request) et retourne l'utilisateur
@@ -16,7 +16,7 @@ export default class UsersController {
 
   //function to get a user by id
   public async getUsersById({ response, request }: HttpContext): Promise<void> {
-    const payload: { id: number } = await request.validate(GetUsersByIdValidator)
+    const payload: { id: number } = await request.validateUsing(getUsersByIdValidator)
     const user: User = await UsersService.getUsersById(payload.id)
     response.status(200).json(user)
   }
@@ -38,21 +38,21 @@ export default class UsersController {
 
   //function to update a user
   public async updateUsers({ request, response }: HttpContext): Promise<void> {
-    const payload = await request.validate(UpdateUsersValidator)
+    const payload = await request.validateUsing(updateUsersValidator)
     await UsersService.updateUsers(payload)
     response.status(204).noContent()
   }
 
   //function to delete a user
   public async deleteUsers({ request, response }: HttpContext): Promise<void> {
-    const payload: { id: number } = await request.validate(DeleteUsersValidator)
+    const payload: { id: number } = await request.validateUsing(deleteUsersValidator)
     await UsersService.deleteUsers(payload.id)
     response.status(204).noContent()
   }
 
   //function to update user role
   public async updateUsersRole({ request, response }: HttpContext): Promise<void> {
-    const payload: { userId: number; roleId: number } = await request.validate(UpdateUsersRoleValidator)
+    const payload: { userId: number; roleId: number } = await request.validateUsing(updateUsersRoleValidator)
     await UsersService.updateUsersRole(payload.userId, payload.roleId)
     response.status(204).noContent()
   }

@@ -14,7 +14,8 @@ export default class HealthMiddleware {
    */
   public async handle({ request, response }: HttpContext, next: () => Promise<void>): Promise<void> {
     if (request.header('x-health-secret') === env.get('HEALTH')) {
-      await next() // Passe au contrôleur
+      // Si la clé de santé est correcte, passe au middleware suivant ou au contrôleur
+      await next()
     } else {
       response.unauthorized({ message: 'Unauthorized access' })
     }
