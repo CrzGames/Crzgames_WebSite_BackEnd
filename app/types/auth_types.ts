@@ -1,5 +1,5 @@
-import { Authenticator } from '@adonisjs/auth'
-import { Authenticators } from '@adonisjs/auth/types'
+import type { Authenticator } from '@adonisjs/auth'
+import type { Authenticators } from '@adonisjs/auth/types'
 
 /**
  * Données pour l'inscription des utilisateurs dans la couche du service 'auth_service.ts'.

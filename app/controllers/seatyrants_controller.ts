@@ -1,5 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import SeaTyrantsService from '#services/sea_tyrants_service'
+import SeaTyrantsService from '#services/seatyrants_service'
 import type { UserIdAndRole } from '#services/users_service'
 import { getInfoUserValidator } from '#validators/SeaTyrants/GetInfoUserValidator'
 

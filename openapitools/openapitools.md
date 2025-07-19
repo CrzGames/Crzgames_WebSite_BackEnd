@@ -33,13 +33,11 @@ Ce guide explique comment l'installer, l'utiliser, gérer l'authentification et 
 
 **Prérequis :**
 
-- **Java** est nécessaire pour exécuter OpenAPI Generator. Assure-toi de l’avoir installé :
+- **Java JDK >= 11** est nécessaire pour exécuter OpenAPI Generator. Assure-toi de l’avoir installé :
 
   ```sh
   java --version
   ```
-
-  Si ce n'est pas le cas, télécharge-le depuis [Java SE Downloads](https://www.oracle.com/java/technologies/javase-downloads.html).
 
 ---
 

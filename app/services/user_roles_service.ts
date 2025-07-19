@@ -8,7 +8,7 @@ import { errors as lucidErrors } from '@adonisjs/lucid'
  * Un service pour gérer les rôles d'utilisateur.
  * Ce service fournit des méthodes pour récupérer tous les rôles d'utilisateur,
  * ainsi que pour récupérer un rôle d'utilisateur par son ID ou son nom.
- * @service UserRolesService
+ * @class UserRolesService
  */
 export default class UserRolesService {
   /**
@@ -19,10 +19,12 @@ export default class UserRolesService {
    */
   public static async getAllUserRoles(): Promise<UserRole[]> {
     try {
+      // Récupérer tous les rôles d'utilisateur
       const userRoles: UserRole[] = await UserRole.all()
 
+      // Vérifier si des rôles d'utilisateur ont été trouvés
       if (userRoles.length === 0) {
-        throw new NotFoundException('No UserRoles found')
+        throw new NotFoundException('No user roles found')
       }
 
       return userRoles
@@ -46,6 +48,7 @@ export default class UserRolesService {
    */
   public static async getUserRoleById(id: number): Promise<UserRole> {
     try {
+      // Récupérer le rôle d'utilisateur par son ID
       return await UserRole.findOrFail(id)
     } catch (error: any) {
       logger.error('getUserRoleById error: ' + error.message)
@@ -69,6 +72,7 @@ export default class UserRolesService {
    */
   public static async getUserRoleByName(name: string): Promise<UserRole> {
     try {
+      // Récupérer le rôle d'utilisateur par son nom
       return await UserRole.findByOrFail('name', name)
     } catch (error: any) {
       logger.error('getUserRoleByName error: ' + error.message)

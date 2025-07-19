@@ -11,8 +11,6 @@ import './routes/health.js'
  */
 import './routes/auth.js'
 import './routes/carousel.js'
-import './routes/chat-friend-requests.js'
-import './routes/chat-friends.js'
 import './routes/cloud-storage-s3.js'
 import './routes/game-binaries.js'
 import './routes/game-binary-assignments.js'

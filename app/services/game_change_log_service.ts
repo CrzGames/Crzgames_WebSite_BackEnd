@@ -1,9 +1,19 @@
 import GameChangeLog from '#models/game_change_log'
-import BadRequestException from '#exceptions/bad_request_exception'
 import NotFoundException from '#exceptions/not_found_exception'
 import InternalServerErrorException from '#exceptions/internal_server_error_exception'
 import Game from '#models/game'
+import type File from '#models/file'
+import logger from '@adonisjs/core/services/logger'
+import type { RelationQueryBuilderContract } from '@adonisjs/lucid/types/relations'
+import { errors as lucidErrors } from '@adonisjs/lucid'
 
+/**
+ * Type qui représente une commande pour créer ou mettre à jour un journal de modifications de jeu
+ * @property {number} [id] - L'ID du journal de modifications (optionnel, pour la mise à jour)
+ * @property {number} games_id - L'ID du jeu auquel le journal de modifications est associé
+ * @property {string} version - La version du jeu pour laquelle le journal de modifications est créé
+ * @property {string} content - Le contenu du journal de modifications
+ */
 type GameChangeLogCommand = {
   id?: number
   games_id: number
@@ -11,138 +21,219 @@ type GameChangeLogCommand = {
   content: string
 }
 
+/**
+ * Service pour gérer les journaux de modifications de jeu
+ * Fournit des méthodes pour créer, récupérer, mettre à jour et supprimer des journaux de modifications de jeu
+ * @class GameChangeLogService
+ */
 export default class GameChangeLogService {
-  // Function to create a game change log
+  /**
+   * Fonction pour créer un nouveau journal de modifications de jeu
+   * @param {GameChangeLogCommand} newGameChangeLog - La commande contenant les informations du nouveau journal de modifications
+   * @returns {Promise<GameChangeLog>} - Le journal de modifications de jeu créé
+   */
   public static async createGameChangeLog(newGameChangeLog: GameChangeLogCommand): Promise<GameChangeLog> {
     try {
+      // Créer un nouveau journal de modifications de jeu dans la base de données
       return await GameChangeLog.create({
         games_id: newGameChangeLog.games_id,
         version: newGameChangeLog.version,
         content: newGameChangeLog.content,
       })
-    } catch (error) {
-      throw new BadRequestException(error.message)
+    } catch (error: any) {
+      logger.error('createGameChangeLog error: ' + error.message)
+
+      throw new InternalServerErrorException('Failed to create game change log')
     }
   }
 
-  // Function to get all game change logs
+  /**
+   * Fonction pour récupérer tous les journaux de modifications de jeu
+   * @returns {Promise<GameChangeLog[]>} - Un tableau de tous les journaux
+   */
   public static async getAllGameChangeLogs(): Promise<GameChangeLog[]> {
     try {
+      // Récupérer tous les journaux de modifications de jeu, triés par date de création décroissante
       const gameChangeLogs: GameChangeLog[] = await GameChangeLog.query()
         .orderBy('created_at', 'desc')
-        .preload('game', (gameQuery): void => {
+        .preload('game', (gameQuery: RelationQueryBuilderContract<typeof Game, any>): void => {
           gameQuery.preload('gamePlatform')
           gameQuery.preload('gameBinary')
           gameQuery.preload('gameCategory')
-          gameQuery.preload('pictureFile', (pictureFileQuery): void => {
+          gameQuery.preload('pictureFile', (pictureFileQuery: RelationQueryBuilderContract<typeof File, any>): void => {
             pictureFileQuery.preload('bucket')
           })
-          gameQuery.preload('logoFile', (logoFileQuery): void => {
+          gameQuery.preload('logoFile', (logoFileQuery: RelationQueryBuilderContract<typeof File, any>): void => {
             logoFileQuery.preload('bucket')
           })
-          gameQuery.preload('trailerFile', (trailerFileQuery): void => {
+          gameQuery.preload('trailerFile', (trailerFileQuery: RelationQueryBuilderContract<typeof File, any>): void => {
             trailerFileQuery.preload('bucket')
           })
         })
 
-      if (!gameChangeLogs || gameChangeLogs.length === 0) {
-        throw new NotFoundException('getAllGameChangeLogs not found')
+      // Vérifier si des journaux de modifications de jeu ont été trouvés
+      if (gameChangeLogs.length === 0) {
+        throw new NotFoundException('No Game Change Logs found')
       }
 
       return gameChangeLogs
-    } catch (error) {
+    } catch (error: any) {
+      logger.error('getAllGameChangeLogs error: ' + error.message)
+
       if (error instanceof NotFoundException) {
         throw error
-      } else {
-        throw new InternalServerErrorException(error.message)
       }
+
+      throw new InternalServerErrorException('Failed to fetch all game change logs')
     }
   }
 
-  // Function to update a game change log
+  /**
+   * Fonction pour mettre à jour un journal de modifications de jeu
+   * @param {GameChangeLogCommand} gameChangeLog - La commande contenant les informations du journal de modifications à mettre à jour
+   * @returns {Promise<void>} - Aucune valeur de retour, la fonction met à jour le journal de modifications
+   */
   public static async updateGameChangeLog(gameChangeLog: GameChangeLogCommand): Promise<void> {
-    const gameChangeLogUpdated: GameChangeLog = await GameChangeLog.findOrFail(gameChangeLog.id)
-
     try {
+      // Récupérer le journal de modifications de jeu par son ID
+      const gameChangeLogUpdated: GameChangeLog = await GameChangeLog.findOrFail(gameChangeLog.id)
+
+      // Mettre à jour le journal de modifications de jeu avec les nouvelles informations
       await gameChangeLogUpdated.merge(gameChangeLog).save()
-    } catch (error) {
-      throw new BadRequestException(error.message)
+    } catch (error: any) {
+      logger.error('updateGameChangeLog error: ' + error.message)
+
+      if (error instanceof lucidErrors.E_ROW_NOT_FOUND) {
+        throw new NotFoundException('Game Change Log not found')
+      }
+
+      throw new InternalServerErrorException('Failed to update game change log')
     }
   }
 
-  // Function to delete a game change log
+  /**
+   * Fonction pour supprimer un journal de modifications de jeu par son ID
+   * @param {number} gameChangeLogId - L'ID du journal de modifications de jeu à supprimer
+   * @returns {Promise<void>} - Aucune valeur de retour, la fonction supprime le journal de modifications
+   */
   public static async deleteGameChangeLog(gameChangeLogId: number): Promise<void> {
-    const gameChangeLogToDelete: GameChangeLog = await GameChangeLog.findOrFail(gameChangeLogId)
-
     try {
+      // Récupérer le journal de modifications de jeu par son ID
+      const gameChangeLogToDelete: GameChangeLog = await GameChangeLog.findOrFail(gameChangeLogId)
+
+      // Supprimer le journal de modifications de jeu récupéré
       await gameChangeLogToDelete.delete()
-    } catch (error) {
-      throw new BadRequestException(error.message)
+    } catch (error: any) {
+      logger.error('deleteGameChangeLog error: ' + error.message)
+
+      if (error instanceof lucidErrors.E_ROW_NOT_FOUND) {
+        throw new NotFoundException('Game Change Log not found')
+      }
+
+      throw new InternalServerErrorException('Failed to delete game change log')
     }
   }
 
-  // Function to get all game change log by game id
+  /**
+   * Fonction pour récupérer tous les journaux de modifications de jeu par l'ID du jeu
+   * @param {number} gameId - L'ID du jeu pour lequel récupérer les journaux de modifications
+   * @returns {Promise<GameChangeLog[]>} - Un tableau de tous les journaux de modifications de jeu associés au jeu
+   */
   public static async getAllGameChangeLogByGameId(gameId: number): Promise<GameChangeLog[]> {
     try {
+      // Récupérer tous les journaux de modifications de jeu associés à l'ID du jeu donné
       const gameChangeLogs: GameChangeLog[] = await GameChangeLog.query()
-        .preload('game', (gameQuery): void => {
+        .preload('game', (gameQuery: RelationQueryBuilderContract<typeof Game, any>): void => {
           gameQuery.preload('gamePlatform')
           gameQuery.preload('gameBinary')
           gameQuery.preload('gameCategory')
-          gameQuery.preload('pictureFile', (pictureFileQuery): void => {
+          gameQuery.preload('pictureFile', (pictureFileQuery: RelationQueryBuilderContract<typeof File, any>): void => {
             pictureFileQuery.preload('bucket')
           })
-          gameQuery.preload('logoFile', (logoFileQuery): void => {
+          gameQuery.preload('logoFile', (logoFileQuery: RelationQueryBuilderContract<typeof File, any>): void => {
             logoFileQuery.preload('bucket')
           })
-          gameQuery.preload('trailerFile', (trailerFileQuery): void => {
+          gameQuery.preload('trailerFile', (trailerFileQuery: RelationQueryBuilderContract<typeof File, any>): void => {
             trailerFileQuery.preload('bucket')
           })
         })
         .where('games_id', gameId)
         .orderBy('version', 'desc')
 
-      if (!gameChangeLogs || gameChangeLogs.length === 0) {
+      // Vérifier si des journaux de modifications de jeu ont été trouvés pour l'ID du jeu donné
+      if (gameChangeLogs.length === 0) {
         throw new NotFoundException('No Game Change Logs found for given Game ID')
       }
 
       return gameChangeLogs
     } catch (error) {
+      logger.error('getAllGameChangeLogByGameId error: ' + error.message)
+
       if (error instanceof NotFoundException) {
         throw error
-      } else {
-        throw new InternalServerErrorException(error.message)
       }
+
+      throw new InternalServerErrorException('Failed to fetch all game change logs by game ID')
     }
   }
 
+  /**
+   * Fonction pour récupérer un journal de modifications de jeu par son ID
+   * @param {number} id - L'ID du journal de modifications de jeu à récupérer
+   * @returns {Promise<GameChangeLog>} - Le journal de modifications de jeu correspondant à l'ID
+   */
   public static async getGameChangeLogById(id: number): Promise<GameChangeLog> {
     try {
+      // Récupérer le journal de modifications de jeu par son ID
       return await GameChangeLog.query()
-        .preload('game', (gameQuery): void => {
+        .preload('game', (gameQuery: RelationQueryBuilderContract<typeof Game, any>): void => {
           gameQuery.preload('gamePlatform')
           gameQuery.preload('gameBinary')
           gameQuery.preload('gameCategory')
-          gameQuery.preload('pictureFile', (pictureFileQuery): void => {
+          gameQuery.preload('pictureFile', (pictureFileQuery: RelationQueryBuilderContract<typeof File, any>): void => {
             pictureFileQuery.preload('bucket')
           })
-          gameQuery.preload('logoFile', (logoFileQuery): void => {
+          gameQuery.preload('logoFile', (logoFileQuery: RelationQueryBuilderContract<typeof File, any>): void => {
             logoFileQuery.preload('bucket')
           })
-          gameQuery.preload('trailerFile', (trailerFileQuery): void => {
+          gameQuery.preload('trailerFile', (trailerFileQuery: RelationQueryBuilderContract<typeof File, any>): void => {
             trailerFileQuery.preload('bucket')
           })
         })
         .where('id', id)
         .orderBy('version', 'desc')
         .firstOrFail()
-    } catch (error) {
-      throw new InternalServerErrorException(error.message)
+    } catch (error: any) {
+      logger.error('getGameChangeLogById error: ' + error.message)
+
+      if (error instanceof lucidErrors.E_ROW_NOT_FOUND) {
+        throw new NotFoundException('Game Change Log not found')
+      }
+
+      throw new InternalServerErrorException('Failed to fetch game change log by ID')
     }
   }
 
+  /**
+   * Fonction pour récupérer tous les journaux de modifications de jeu par le titre du jeu
+   * @param {string} title - Le titre du jeu pour lequel récupérer les journaux de modifications
+   * @returns {Promise<GameChangeLog[]>} - Un tableau de tous les journaux de modifications de jeu associés au titre du jeu
+   */
   public static async getAllGameChangeLogByGameTitle(title: string): Promise<GameChangeLog[]> {
-    const game: Game = await Game.query().where('title', title).firstOrFail()
-    return this.getAllGameChangeLogByGameId(game.id)
+    try {
+      // Récupérer le jeu par son titre
+      const game: Game = await Game.query().where('title', title).firstOrFail()
+
+      // Récupérer tous les journaux de modifications de jeu associés à l'ID du jeu trouvé
+      return this.getAllGameChangeLogByGameId(game.id)
+    } catch (error: any) {
+      logger.error('getAllGameChangeLogByGameTitle error: ' + error.message)
+
+      if (error instanceof lucidErrors.E_ROW_NOT_FOUND) {
+        throw new NotFoundException('Game not found with the given title')
+      }
+
+      throw new InternalServerErrorException('Failed to fetch all game change logs by game title')
+    }
   }
 }

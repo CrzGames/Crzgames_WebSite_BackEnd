@@ -6,6 +6,7 @@ import type { BucketFileCommand } from '#services/cloud_storage_s3_service'
 import CloudStorageS3Service from '#services/cloud_storage_s3_service'
 import type File from '#models/file'
 import type { ModelQueryBuilderContract } from '@adonisjs/lucid/types/model'
+import { errors as lucidErrors } from '@adonisjs/lucid'
 
 /**
  * Type pour la méta-donnée de pagination
@@ -34,6 +35,12 @@ export type GamesResponse =
   | Game[] // Si pas de pagination
   | { data: Game[]; meta: PaginationMeta } // Si pagination active
 
+/**
+ * Un service pour gérer les jeux.
+ * Ce service fournit des méthodes pour créer, mettre à jour, supprimer et récupérer des jeux,
+ * ainsi que pour récupérer des jeux par titre ou ID.
+ * @class GamesService
+ */
 export default class GamesService {
   // Fonction pour créer un nouveau game
   public static async createGames(

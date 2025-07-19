@@ -25,7 +25,7 @@ export interface ErrorResponseBody {
  * @property {string} rule - La règle de validation qui a échoué
  * @property {string} field - Le champ qui a échoué la validation
  */
-export interface ValidationError {
+interface ValidationError {
   message: string
   rule: string
   field: string

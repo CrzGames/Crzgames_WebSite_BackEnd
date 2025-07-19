@@ -2,10 +2,23 @@ import Product from '#models/product'
 import type File from '#models/file'
 import CloudStorageS3Service from '#services/cloud_storage_s3_service'
 import type { BucketFileCommand } from '#services/cloud_storage_s3_service'
-import BadRequestException from '#exceptions/bad_request_exception'
 import NotFoundException from '#exceptions/not_found_exception'
 import UserGameLibrary from '#models/user_game_library'
+import logger from '@adonisjs/core/services/logger'
+import InternalServerErrorException from '#exceptions/internal_server_error_exception'
+import { errors as lucidErrors } from '@adonisjs/lucid'
+import type { RelationQueryBuilderContract, RelationSubQueryBuilderContract } from '@adonisjs/lucid/types/relations'
+import type ProductCategory from '#models/product_category'
 
+/**
+ * @typedef {object} ProductCommand
+ * @property {string} name - Le nom du produit
+ * @property {string} description - La description du produit
+ * @property {number} image_files_id - L'identifiant du fichier image associé au produit
+ * @property {number} games_id - L'identifiant du jeu associé au produit
+ * @property {number} product_categories_id - L'identifiant de la catégorie de produit associée
+ * @property {number} price - Le prix du produit
+ */
 export type ProductCommand = {
   name: string
   description: string
@@ -27,8 +40,18 @@ export type GamePaidAndOwnedStatus = {
   isOwned: boolean
 }
 
+/**
+ * Service pour gérer les produits.
+ * Fournit des méthodes pour créer, mettre à jour, supprimer et récupérer des produits.
+ * @class ProductService
+ */
 export class ProductService {
-  // Create a new product
+  /**
+   * Crée un nouveau produit.
+   * @param {ProductCommand} productData - Les données du produit à créer.
+   * @param {BucketFileCommand} bucketFileCommand - Les données du fichier à associer au produit.
+   * @returns {Promise<Product>} - Le produit créé.
+   */
   public static async createProduct(
     productData: ProductCommand,
     bucketFileCommand: BucketFileCommand,
@@ -42,60 +65,89 @@ export class ProductService {
       return await Product.create({
         ...productData,
       })
-    } catch (error) {
-      throw new BadRequestException(error.message)
+    } catch (error: any) {
+      logger.error('createProduct error: ' + error.message)
+      throw new InternalServerErrorException('Failed to create product')
     }
   }
 
-  // Update an existing product
+  /**
+   * Met à jour un produit existant.
+   * @param {number} productId - L'ID du produit à mettre à jour.
+   * @param {ProductCommand} productData - Les données à mettre à jour pour le produit.
+   * @param {BucketFileCommand} bucketData - Les données du fichier à associer au produit.
+   * @returns {Promise<Product>} - Le produit mis à jour.
+   */
   public static async updateProduct(
     productId: number,
     productData: ProductCommand,
     bucketData: BucketFileCommand,
   ): Promise<Product> {
-    const product: Product = await Product.findOrFail(productId)
-
     try {
+      const product: Product = await Product.findOrFail(productId)
+
       // Update the file in the database
       await CloudStorageS3Service.updateFileInDB(bucketData, productData.image_files_id)
 
       // Update the product in the database
-      product.merge(productData)
-      await product.save()
-      return product
-    } catch (error) {
-      throw new BadRequestException(error.message)
+      return await product.merge(productData).save()
+    } catch (error: any) {
+      logger.error('updateProduct error: ' + error.message)
+
+      if (error instanceof lucidErrors.E_ROW_NOT_FOUND) {
+        throw new NotFoundException(`Product with ID ${productId} not found`)
+      }
+
+      throw new InternalServerErrorException('Failed to update product')
     }
   }
 
-  // Delete a product
+  /**
+   * Supprime un produit par son ID.
+   * @param {number} productId - L'ID du produit à supprimer.
+   * @returns {Promise<void>} - Aucune valeur de retour, mais l'opération peut échouer avec une exception.
+   * @throws {BadRequestException} Si la suppression échoue.
+   */
   public static async deleteProduct(productId: number): Promise<void> {
-    const product: Product = await Product.findOrFail(productId)
-
     try {
+      const product: Product = await Product.findOrFail(productId)
       await product.delete()
-    } catch (error) {
-      throw new BadRequestException(error.message)
+    } catch (error: any) {
+      logger.error('deleteProduct error: ' + error.message)
+
+      if (error instanceof lucidErrors.E_ROW_NOT_FOUND) {
+        throw new NotFoundException(`Product with ID ${productId} not found`)
+      }
+
+      throw new InternalServerErrorException('Failed to delete product')
     }
   }
 
-  // Get all products
+  /**
+   * Récupère tous les produits.
+   * @returns {Promise<Product[]>} - Retourne une liste de tous les produits.
+   */
   public static async getAllProducts(): Promise<Product[]> {
     try {
       return Product.query()
-        .preload('imageFile', (imageFileQuery): void => {
+        .preload('imageFile', (imageFileQuery: RelationQueryBuilderContract<typeof File, any>): void => {
           imageFileQuery.preload('bucket')
         })
         .preload('game')
         .preload('productDiscounts')
         .preload('productCategory')
         .preload('gameServers')
-    } catch (error) {
-      throw new NotFoundException(error.message)
+    } catch (error: any) {
+      logger.error('getAllProducts error: ' + error.message)
+      throw new InternalServerErrorException('Failed to fetch all products')
     }
   }
 
-  // Get a single product by ID
+  /**
+   * Récupère un produit par son ID.
+   * @param {number} productId - L'ID du produit à récupérer.
+   * @returns {Promise<Product>} - Le produit correspondant.
+   */
   public static async getProductById(productId: number): Promise<Product> {
     try {
       return Product.query()
@@ -106,12 +158,23 @@ export class ProductService {
         .preload('productCategory')
         .preload('gameServers')
         .firstOrFail()
-    } catch (error) {
-      throw new NotFoundException(error.message)
+    } catch (error: any) {
+      logger.error('getProductById error: ' + error.message)
+
+      if (error instanceof lucidErrors.E_ROW_NOT_FOUND) {
+        throw new NotFoundException(`Product with ID ${productId} not found`)
+      }
+
+      throw new InternalServerErrorException('Failed to fetch product by ID')
     }
   }
 
-  // Get a single product by name
+  /**
+   * Récupère un produit par son nom.
+   * @param {string} productName - Le nom du produit à récupérer.
+   * @returns {Promise<Product>} - Le produit correspondant.
+   * @throws {NotFoundException} Si le produit n'est pas trouvé.
+   */
   public static async getProductByName(productName: string): Promise<Product> {
     try {
       return Product.query()
@@ -122,26 +185,43 @@ export class ProductService {
         .preload('productCategory')
         .preload('gameServers')
         .firstOrFail()
-    } catch (error) {
-      throw new NotFoundException(error.message)
+    } catch (error: any) {
+      logger.error('getProductByName error: ' + error.message)
+
+      if (error instanceof lucidErrors.E_ROW_NOT_FOUND) {
+        throw new NotFoundException(`Product with name ${productName} not found`)
+      }
+
+      throw new InternalServerErrorException('Failed to fetch product by name')
     }
   }
 
+  /**
+   * Récupère un produit par l'ID du jeu et la catégorie de produit 'game'.
+   * @param {number} gameId - L'identifiant du jeu.
+   * @returns {Promise<Product | null>} - Le produit correspondant ou null si non trouvé.
+   * @throws {NotFoundException} Si le produit n'est pas trouvé.
+   */
   public static async getProductByGameIdAndProductCategoryGame(gameId: number): Promise<Product | null> {
     try {
       return Product.query()
         .where('games_id', gameId)
-        .andWhereHas('productCategory', (queryProductCategory): void => {
-          queryProductCategory.where('name', 'game')
-        })
+        .andWhereHas(
+          'productCategory',
+          (queryProductCategory: RelationSubQueryBuilderContract<typeof ProductCategory>): void => {
+            queryProductCategory.where('name', 'game')
+          },
+        )
         .preload('imageFile')
         .preload('game')
         .preload('productDiscounts')
         .preload('productCategory')
         .preload('gameServers')
         .first()
-    } catch (error) {
-      throw new NotFoundException(error.message)
+    } catch (error: any) {
+      logger.error('getProductByGameIdAndProductCategoryGame error: ' + error.message)
+
+      throw new InternalServerErrorException('Failed to fetch product by game ID and product category')
     }
   }
 
@@ -157,9 +237,12 @@ export class ProductService {
      */
     const gameProduct: Product | null = await Product.query()
       .where('games_id', gameId)
-      .whereHas('productCategory', (queryProductCategory): void => {
-        queryProductCategory.where('name', 'game')
-      })
+      .whereHas(
+        'productCategory',
+        (queryProductCategory: RelationSubQueryBuilderContract<typeof ProductCategory>): void => {
+          queryProductCategory.where('name', 'game')
+        },
+      )
       .first()
 
     /**
@@ -191,7 +274,7 @@ export class ProductService {
   public static async getAllGamesProductsPaidAndOwned(userId: number): Promise<GamePaidAndOwnedStatus[]> {
     // Récupère tous les produits de catégorie 'game' (jeux payants uniquement)
     const gameProducts: Product[] = await Product.query()
-      .whereHas('productCategory', (queryProductCategory) => {
+      .whereHas('productCategory', (queryProductCategory: RelationSubQueryBuilderContract<typeof ProductCategory>) => {
         queryProductCategory.where('name', 'game')
       })
       .select('games_id', 'price')
@@ -209,8 +292,14 @@ export class ProductService {
     // Création d'une Map pour stocker les jeux payants trouvés dans `gameProducts`
     const productsMap: Map<number, Product> = new Map(
       gameProducts
-        .filter((product): product is Product & { games_id: number } => product.games_id !== null)
-        .map((product) => [product.games_id, product]),
+        .filter((product: Product): product is Product & { games_id: number } => product.games_id !== null)
+        .map(
+          (
+            product: Product & {
+              games_id: number
+            },
+          ) => [product.games_id, product],
+        ),
     )
 
     // Récupération de **tous** les games_id possibles (payants et gratuits)

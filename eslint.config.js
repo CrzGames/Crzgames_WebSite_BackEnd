@@ -27,6 +27,7 @@ const mainConfig = {
     'build/**',
     'node_modules/**',
     'database/seeders/assets-bucket-s3/**',
+    'app/models/**/*.ts',
   ],
   plugins: {
     '@typescript-eslint': eslintPluginTypeScript,
@@ -171,4 +172,4 @@ const mainConfig = {
  * Exportation combinée des configurations
  * eslint.config.{js,mjs,cjs} nouvelle syntaxe depuis la version >= 8.57
  */
-export default [mainConfig, eslintPluginJSDoc.configs['flat/recommended'], eslintConfigPrettier]
+export default [mainConfig, eslintConfigPrettier]

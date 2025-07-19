@@ -3,10 +3,10 @@ import type GameBinary from '#models/game_binary'
 import GameBinariesService from '#services/game_binaries_service'
 import type { GameBinaryCommand } from '#services/game_binaries_service'
 import GameBinaryAssignmentsService from '#services/game_binary_assignments_service'
-import { getGameBinariesByIdValidator } from '#validators/GameBinary/GetGameBinariesByIdValidator'
-import { createGameBinaryValidator } from '#validators/GameBinary/CreateGameBinaryValidator'
-import { updateGameBinaryValidator } from '#validators/GameBinary/UpdateGameBinaryValidator'
-import { deleteGameBinariesValidator } from '#validators/GameBinary/DeleteGameBinariesValidator'
+import { getGameBinariesByIdValidator } from '#validators/game_binary/get_game_binaries_by_id_validator'
+import { createGameBinaryValidator } from '#validators/game_binary/create_game_binary_validator'
+import { updateGameBinaryValidator } from '#validators/game_binary/update_game_binary_validator'
+import { deleteGameBinariesValidator } from '#validators/game_binary/delete_game_binaries_validator'
 
 export default class GameBinaryController {
   public async getGameBinaryById({ request, response }: HttpContext): Promise<void> {

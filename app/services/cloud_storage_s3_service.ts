@@ -22,6 +22,7 @@ import type {
   GetObjectCommandInput,
   ListObjectsV2CommandInput,
   DeleteObjectsCommandInput,
+  ListBucketsCommandInput,
 } from '@aws-sdk/client-s3'
 import logger from '@adonisjs/core/services/logger'
 import env from '#start/env'
@@ -39,10 +40,15 @@ import archiver from 'archiver'
 import type { HttpContext } from '@adonisjs/core/http'
 import type { ObjectMetaData } from '@adonisjs/drive/types'
 import type { Readable } from 'stream'
+import { errors as lucidErrors } from '@adonisjs/lucid'
+import { log } from 'console'
+import { RelationSubQueryBuilderContract } from '@adonisjs/lucid/types/relations'
 
 const readFile: any = promisify(fs.readFile)
 
-// Documentation Client S3 AWS v3 for Node.js : https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/
+/**
+ * Documentation Client S3 AWS v3 for Node.js : https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/
+ */
 const s3Client: S3Client = new S3Client({
   credentials: {
     accessKeyId: env.get('S3_KEY') as string,
@@ -53,6 +59,15 @@ const s3Client: S3Client = new S3Client({
   forcePathStyle: env.get('S3_FORCE_PATH_STYLE'),
 })
 
+/**
+ * Commande pour les opérations sur les fichiers dans le bucket
+ * @typedef {object} BucketFileCommand
+ * @property {string} pathFilename - Le chemin et le nom du fichier dans le bucket
+ * @property {string} bucketName - Le nom du bucket S3
+ * @property {MultipartFile} [file] - Le fichier à uploader (pour les assets réel, donc sans seeders)
+ * @property {MultipartFile[]} [files] - Liste de fichiers à uploader (pour les assets réel, donc sans seeders)
+ * @property {string} [localPath] - Chemin local des assets pour les seeders (pour develop et tests)
+ */
 export type BucketFileCommand = {
   pathFilename: string
   bucketName: string
@@ -62,6 +77,18 @@ export type BucketFileCommand = {
   localPath?: string
 }
 
+/**
+ * Représente un bucket dans la base de données
+ * @typedef {object} MyBucket
+ * @property {number} id - L'ID du bucket
+ * @property {string} name - Le nom du bucket
+ * @property {string} visibility - La visibilité du bucket (public ou private)
+ * @property {DateTime} createdAt - La date de création du bucket
+ * @property {DateTime} updatedAt - La date de mise à jour du bucket
+ * @property {number} totalObjects - Le nombre total d'objets dans le bucket
+ * @property {number} totalSize - La taille totale des objets dans le bucket
+ * @property {Grant[]} access - Les permissions d'accès au bucket
+ */
 export type ExtendedBucket = {
   id?: number
   name: string
@@ -73,31 +100,48 @@ export type ExtendedBucket = {
   access?: Grant[]
 }
 
+/**
+ * Représente un fichier étendu dans le bucket
+ * @typedef {object} ExtendedFile
+ * @property {string} Key - La clé du fichier dans le bucket
+ * @property {DateTime} [LastModified] - La date de dernière modification du fichier
+ * @property {number} [Size] - La taille du fichier en octets
+ */
 export type ExtendedFile = {
   Key: string
   LastModified?: DateTime
   Size?: number
 }
 
+/**
+ * Service pour gérer les opérations de stockage dans un bucket S3
+ */
 export default class CloudStorageS3Service {
+  /**
+   * Récupère un bucket S3 par son nom
+   * @param {string} bucketName - Le nom du bucket S3
+   * @returns {Promise<ExtendedBucket[]>} - Liste des buckets S3
+   */
   public static async getBucketByName(bucketName: string): Promise<MyBucket> {
     try {
-      const bucket: MyBucket | null = await MyBucket.query().where('name', bucketName).first()
+      return await MyBucket.query().where('name', bucketName).firstOrFail()
+    } catch (error: any) {
+      logger.error('Error fetching bucket by name: ' + error.message)
 
-      if (!bucket) {
-        throw new NotFoundException(`Aucun bucket trouvé avec le nom: ${bucketName}`)
+      if (error instanceof lucidErrors.E_ROW_NOT_FOUND) {
+        throw new NotFoundException(`Get bucket by name: Bucket ${bucketName} not found`)
       }
 
-      return bucket
-    } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw error
-      } else {
-        throw new InternalServerErrorException(error.message)
-      }
+      throw new InternalServerErrorException(`Get bucket by name: Error fetching bucket ${bucketName}`)
     }
   }
 
+  /**
+   * Récupère le contenu d'un fichier dans un bucket S3
+   * @param {string} bucketName - Le nom du bucket S3
+   * @param {string} pathFilename - Le chemin et le nom du fichier dans le bucket
+   * @returns {Promise<string>} - Le contenu du fichier
+   */
   public static async getFileContent(bucketName: string, pathFilename: string): Promise<string> {
     try {
       // Fetch le bucket en question dans la db pour récupérer la visibility du bucket
@@ -107,28 +151,44 @@ export default class CloudStorageS3Service {
       await this.setBucketCurrent(bucket.name)
       await this.setVisibilityBucketCurrent(bucket.visibility)
 
+      // Vérifier si le fichier existe dans le bucket
       const command: GetObjectCommand = new GetObjectCommand({
         Bucket: bucketName,
         Key: pathFilename,
       })
       const response: GetObjectCommandOutput = await s3Client.send(command)
 
+      // Vérifier si le corps de la réponse est défini et renvoie le contenu du fichier
       if (!response.Body) {
         throw new InternalServerErrorException('Error while fetching file content')
       } else {
         return await response.Body.transformToString('utf-8')
       }
-    } catch (error) {
-      throw new InternalServerErrorException(error.message)
+    } catch (error: any) {
+      logger.error('Error fetching file content: ' + error.message)
+
+      if (error instanceof InternalServerErrorException) {
+        throw error
+      }
     }
   }
 
-  public static async replaceHostInUrl(url: string): Promise<any> {
+  /**
+   * Remplace 'host.docker.internal' par 'localhost' dans une URL pour les environnements de développement
+   * @param {string} url - L'URL à modifier
+   * @returns {string} - L'URL modifiée
+   */
+  private static replaceHostInUrl(url: string): string {
     return url.replace('host.docker.internal', 'localhost')
   }
 
+  /**
+   * Upload un fichier ou un dossier dans un bucket S3
+   * @param {BucketFileCommand} bucketFile - Commande contenant les informations du fichier ou du dossier à uploader
+   * @returns {Promise<void>}
+   */
   public static async uploadFileOrFolderInBucket(bucketFile: BucketFileCommand): Promise<void> {
-    // Fetch le bucket en question dans la db pour récupérer la visibility du bucket
+    // Récupérer le bucket par son nom
     const bucket: MyBucket = await this.getBucketByName(bucketFile.bucketName)
 
     // Avant de sauvegarder le fichier dans le bucket ont set le bucket courant et la visibilité courante
@@ -136,7 +196,7 @@ export default class CloudStorageS3Service {
     await this.setVisibilityBucketCurrent(bucket.visibility)
 
     if (bucketFile.files) {
-      // Handle multiple files
+      // Pour plusieurs fichiers, que pour les assets réel en production
       for (const file of bucketFile.files) {
         if (file.state === 'consumed' && file.tmpPath) {
           const fileContentBuffer: Buffer = await readFile(file.tmpPath)
@@ -146,8 +206,8 @@ export default class CloudStorageS3Service {
         }
       }
     } else {
-      // Handle single file or localPath
-      let fileContentBuffer: any
+      // Pour un seul fichier, que ce sois pour les seeders ou les assets réel en production
+      let fileContentBuffer: any = null
       if (bucketFile.localPath) {
         fileContentBuffer = await readFile(bucketFile.localPath)
       } else if (bucketFile.file && bucketFile.file.state === 'consumed' && bucketFile.file.tmpPath) {
@@ -158,10 +218,14 @@ export default class CloudStorageS3Service {
     }
   }
 
+  /**
+   * Crée un fichier dans la base de données et le bucket S3
+   * @param {BucketFileCommand} bucketFile - Commande contenant les informations du fichier à créer
+   * @returns {Promise<File>} - Le fichier créé dans la base de données
+   */
   public static async createFileInDB(bucketFile: BucketFileCommand): Promise<File> {
-    // Vérifier si le fichier existe déjà dans la DB
+    // Vérifier si le fichier existe déjà dans la DB, si oui, le retourner sinon le créer
     const fileInstance: File | null = await this.getFileWithPathFileNameAndBucketName(bucketFile)
-
     if (fileInstance) {
       return fileInstance
     }
@@ -208,11 +272,20 @@ export default class CloudStorageS3Service {
       url: bucketFile.pathFilename,
       size: totalSize,
     })
+
     // Charger (manuellement) la relation "bucket" pour éviter l'erreur dans le getter "url"
     file.$setRelated('bucket', bucket)
+
+    // Retourner le fichier créé
     return file
   }
 
+  /**
+   * Met à jour un fichier dans la base de données et le bucket S3
+   * @param {BucketFileCommand} bucketFile - Commande contenant les informations du fichier à mettre à jour
+   * @param {number} id - L'ID du fichier à mettre à jour
+   * @returns {Promise<void>}
+   */
   public static async updateFileInDB(bucketFile: BucketFileCommand, id: number): Promise<void> {
     // Chercher le bucket en question dans la db pour récupérer la visibilité du bucket
     const bucket: MyBucket = await this.getBucketByName(bucketFile.bucketName)
@@ -261,6 +334,12 @@ export default class CloudStorageS3Service {
       .save()
   }
 
+  /**
+   * Supprime un dossier dans le bucket S3 et la base de données
+   * @param {string} bucketName - Le nom du bucket S3
+   * @param {string} folderPath - Le chemin du dossier à supprimer
+   * @returns {Promise<void>}
+   */
   private static async deleteFolderInBucketAndDB(bucketName: string, folderPath: string): Promise<void> {
     try {
       const listCommand: ListObjectsV2Command = new ListObjectsV2Command({
@@ -300,6 +379,11 @@ export default class CloudStorageS3Service {
     }
   }
 
+  /**
+   * Supprime un fichier dans le bucket S3 et la base de données
+   * @param {string} pathFilename - Le chemin et le nom du fichier à supprimer
+   * @returns {Promise<void>}
+   */
   private static async deleteFileInBucketAndDB(pathFilename: string): Promise<void> {
     try {
       if (await drive.use().exists(pathFilename)) {
@@ -308,7 +392,7 @@ export default class CloudStorageS3Service {
         // Check si le fichier est utilisé en base de donnée si c'est le cas le supprime
         const file: File | null = await File.query().preload('bucket').where('pathfilename', pathFilename).first()
 
-        if (file !== null && file !== undefined) {
+        if (file !== null) {
           await file.delete()
         }
 
@@ -322,6 +406,12 @@ export default class CloudStorageS3Service {
     }
   }
 
+  /**
+   * Supprime un fichier ou un dossier dans le bucket S3 et la base de données
+   * @param {string} pathFilename - Le chemin et le nom du fichier ou du dossier à supprimer
+   * @param {string} bucketName - Le nom du bucket S3
+   * @returns {Promise<void>}
+   */
   public static async deleteInBucketAndDB(pathFilename: string, bucketName: string): Promise<void> {
     try {
       // Choisi le bucket
@@ -342,13 +432,23 @@ export default class CloudStorageS3Service {
     }
   }
 
+  /**
+   * Récupère un fichier dans le bucket S3 et retourne son URL
+   * @param {string} pathFilename - Le chemin et le nom du fichier dans le bucket
+   * @returns {Promise<string | undefined>} - L'URL du fichier ou undefined si le fichier n'existe pas
+   */
   public static async getURLToFileInBucket(pathFilename: string): Promise<string | undefined> {
     try {
       if (await drive.use().exists(pathFilename)) {
         logger.info('getFileInBucket success pathfilename for file')
         const fileUrl: string = await drive.use().getUrl(pathFilename)
 
-        if (env.get('NODE_ENV') === 'development') return this.replaceHostInUrl(fileUrl)
+        // En développement, on remplace 'host.docker.internal' par 'localhost' pour les URLs
+        if (env.get('NODE_ENV') === 'development' || env.get('NODE_ENV') === 'test') {
+          return this.replaceHostInUrl(fileUrl)
+        }
+
+        // En production, on retourne l'URL telle quelle
         return fileUrl
       } else {
         logger.warn('getFileInBucket pathfilename no exist for file')
@@ -359,6 +459,11 @@ export default class CloudStorageS3Service {
     }
   }
 
+  /**
+   * Récupère le système d'exploitation à partir de l'agent utilisateur
+   * @param {string} userAgent - L'agent utilisateur du navigateur
+   * @returns {string} - Le nom du système d'exploitation
+   */
   public static getOperatingSystem(userAgent: string): string {
     if (userAgent.includes('Win')) return 'Windows'
     if (userAgent.includes('Mac')) return 'MacOS'
@@ -367,8 +472,14 @@ export default class CloudStorageS3Service {
     return 'Unknown'
   }
 
+  /**
+   * Récupère tous les objets d'un bucket S3 avec un préfixe donné
+   * @param {string} bucketName - Le nom du bucket S3
+   * @param {string} prefix - Le préfixe des objets à lister
+   * @returns {Promise<_Object[]>} - Liste des objets dans le bucket
+   */
   private static async fetchAllObjects(bucketName: string, prefix: string): Promise<_Object[]> {
-    let continuationToken: string | undefined
+    let continuationToken: string | undefined = undefined
     let contents: _Object[] = []
 
     do {
@@ -385,6 +496,13 @@ export default class CloudStorageS3Service {
     return contents
   }
 
+  /**
+   * Télécharge un fichier ou un dossier dans le bucket S3 et le stream pour le launcher
+   * @param {HttpContext} ctx - Le contexte HTTP
+   * @param {string} pathFilename - Le chemin et le nom du fichier ou du dossier à télécharger
+   * @param {string} bucketName - Le nom du bucket S3
+   * @returns {Promise<void>}
+   */
   public static async streamDownloadFileOrFolderInBucketForLauncher(
     ctx: HttpContext,
     pathFilename: string,
@@ -480,6 +598,13 @@ export default class CloudStorageS3Service {
     return Body as Readable
   }
 
+  /**
+   * Télécharge un fichier ou un dossier dans le bucket S3 et le stream pour le client
+   * @param {HttpContext} ctx - Le contexte HTTP
+   * @param {string} pathFilename - Le chemin et le nom du fichier ou du dossier à télécharger
+   * @param {string} bucketName - Le nom du bucket S3
+   * @returns {Promise<void>}
+   */
   public static async streamDownloadFileOrFolderInBucket(
     ctx: HttpContext,
     pathFilename: string,
@@ -545,6 +670,14 @@ export default class CloudStorageS3Service {
     })
   }
 
+  /**
+   * Récupère un fichier depuis S3 et l'ajoute à l'archive
+   * @param {string} key - La clé de l'objet S3
+   * @param {archiver.Archiver} archive - L'archive dans laquelle ajouter le fichier
+   * @param {string} pathFilename - Le chemin du dossier ou du fichier dans le bucket
+   * @param {string} bucketName - Le nom du bucket S3
+   * @returns {Promise<void>}
+   */
   private static async fetchAndAppendFile(
     key: string,
     archive: archiver.Archiver,
@@ -589,6 +722,11 @@ export default class CloudStorageS3Service {
     }
   }
 
+  /**
+   * Crée un bucket S3
+   * @param {string} bucketName - Le nom du bucket à créer
+   * @returns {Promise<void>}
+   */
   public static async createBucket(bucketName: string): Promise<void> {
     const params: CreateBucketCommandInput = {
       Bucket: bucketName,
@@ -604,12 +742,16 @@ export default class CloudStorageS3Service {
     }
   }
 
+  /**
+   * Supprime un bucket S3
+   * @param {string} bucketName - Le nom du bucket à supprimer
+   * @returns {Promise<void>}
+   */
   public static async deleteBucket(bucketName: string): Promise<void> {
-    const command: DeleteBucketCommand = new DeleteBucketCommand({
-      Bucket: bucketName,
-    })
-
     try {
+      const command: DeleteBucketCommand = new DeleteBucketCommand({
+        Bucket: bucketName,
+      })
       const output: DeleteBucketCommandOutput = await s3Client.send(command)
       logger.info(`Bucket ${output} deleted successfully`)
     } catch (error: any) {
@@ -617,13 +759,12 @@ export default class CloudStorageS3Service {
     }
   }
 
-  public static async getVisibilityBucketCurrent(): Promise<string> {
-    const s3VisiblityBucketCurrent: string = env.get('S3_VISIBILITY') as string
-    logger.info('getVisibilityBucketCurrent' + s3VisiblityBucketCurrent)
-    return s3VisiblityBucketCurrent
-  }
-
-  public static async setVisibilityBucketCurrent(visibility: string): Promise<void> {
+  /**
+   * Définit la visibilité actuelle du bucket
+   * @param {string} visibility - La visibilité du bucket ('public' ou 'private')
+   * @returns {void}
+   */
+  public static setVisibilityBucketCurrent(visibility: string): void {
     if (visibility === 'public' || visibility === 'private') {
       logger.info('setVisibilityBucketCurrent new value : ' + visibility)
       env.set('S3_VISIBILITY', visibility)
@@ -632,17 +773,22 @@ export default class CloudStorageS3Service {
     }
   }
 
-  public static async setBucketCurrent(newBucketCurrent: string): Promise<void> {
+  /**
+   * Définit le bucket actuel
+   * @param {string} newBucketCurrent - Le nom du nouveau bucket courant
+   * @returns {void}
+   */
+  public static setBucketCurrent(newBucketCurrent: string): void {
     logger.info('setBucketCurrent : ' + newBucketCurrent)
     env.set('S3_BUCKET', newBucketCurrent)
   }
 
-  public static async getBucketCurrent(): Promise<string> {
-    const s3BucketCurrent: string = env.get('S3_BUCKET') as string
-    logger.info('getBucketCurrent' + s3BucketCurrent)
-    return s3BucketCurrent
-  }
-
+  /**
+   * Récupère la liste des fichiers dans un bucket S3 avec un préfixe donné
+   * @param {string} bucketName - Le nom du bucket S3
+   * @param {string} pathFilename - Le préfixe des fichiers à lister
+   * @returns {Promise<ExtendedFile[] | undefined>} - Liste des fichiers étendus dans le bucket
+   */
   public static async getListFilesObjectInBucket(
     bucketName: string,
     pathFilename: string,
@@ -651,9 +797,7 @@ export default class CloudStorageS3Service {
       Bucket: bucketName,
       Prefix: pathFilename,
     }
-
     const files: ExtendedFile[] = []
-
     let continuationToken: string | undefined
 
     do {
@@ -684,13 +828,17 @@ export default class CloudStorageS3Service {
       }
     } while (continuationToken)
 
-    if (!files || files.length === 0) return undefined
+    if (files.length === 0) return undefined
 
     return files
   }
 
+  /**
+   * Récupère tous les buckets S3 et leurs informations étendues
+   * @returns {Promise<ExtendedBucket[] | undefined>} - Liste des buckets étendus
+   */
   public static async getAllBuckets(): Promise<ExtendedBucket[] | undefined> {
-    const input = {}
+    const input: ListBucketsCommandInput = {}
     const command: ListBucketsCommand = new ListBucketsCommand(input)
 
     try {
@@ -703,7 +851,12 @@ export default class CloudStorageS3Service {
       }
 
       // Récupérez les données de visibilité pour chaque bucket
-      const dataBucketsUpdated = await Promise.all(
+      const dataBucketsUpdated: (
+        | ExtendedBucket
+        | {
+            name: undefined
+          }
+      )[] = await Promise.all(
         data.Buckets.map(async (bucket: Bucket) => {
           let dbBucket: MyBucket | null = null
 
@@ -768,13 +921,19 @@ export default class CloudStorageS3Service {
     pathFilename: string
     bucketName: string
   }): Promise<File | null> {
-    return File.query()
-      .preload('bucket')
-      .where('pathfilename', fileCommand.pathFilename)
-      .whereHas('bucket', (query) => {
-        query.where('name', fileCommand.bucketName)
-      })
-      .first()
+    try {
+      return File.query()
+        .preload('bucket')
+        .where('pathfilename', fileCommand.pathFilename)
+        .whereHas('bucket', (query: RelationSubQueryBuilderContract<typeof MyBucket>): void => {
+          query.where('name', fileCommand.bucketName)
+        })
+        .first()
+    } catch (error: any) {
+      logger.error(`Error fetching file with path and bucket name: ${error.message}`)
+
+      throw new InternalServerErrorException('Error fetching file with path and bucket name')
+    }
   }
 
   public static async getTotalSizeFileOrFolderInBucket(bucketName: string, pathFilename: string): Promise<number> {

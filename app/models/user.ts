@@ -2,10 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import hash from '@adonisjs/core/services/hash'
 import UserRole from '#models/user_role'
-import ChatMessage from '#models/chat_message'
-import ChatFriendRequest from '#models/chat_friend_request'
-import ChatFriend from '#models/chat_friend'
-import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import { ModelObject } from '@adonisjs/lucid/types/model'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { Hash } from '@adonisjs/core/hash'
@@ -81,66 +78,6 @@ export default class User extends compose(BaseModel, AuthFinder) {
    */
   @column()
   declare public ip_region: string | null
-
-  /**
-   * Relations pour les amis que l'utilisateur a ajoutés
-   * @type {HasMany<typeof ChatFriend>}
-   */
-  @hasMany(() => ChatFriend, {
-    foreignKey: 'users_id',
-  })
-  // @no-swagger
-  declare public addedFriends: HasMany<typeof ChatFriend>
-
-  /**
-   * Relations pour les amis qui ont ajouté l'utilisateur
-   * @type {HasMany<typeof ChatFriend>}
-   */
-  @hasMany(() => ChatFriend, {
-    foreignKey: 'friend_users_id',
-  })
-  // @no-swagger
-  declare public addedByFriends: HasMany<typeof ChatFriend>
-
-  /**
-   * Messages envoyés par l'utilisateur
-   * @type {HasMany<typeof ChatMessage>}
-   */
-  @hasMany(() => ChatMessage, {
-    foreignKey: 'sender_users_id',
-  })
-  // @no-swagger
-  declare public sentChatMessage: HasMany<typeof ChatMessage>
-
-  /**
-   * Messages reçus par l'utilisateur
-   * @type {HasMany<typeof ChatMessage>}
-   */
-  @hasMany(() => ChatMessage, {
-    foreignKey: 'receiver_users_id',
-  })
-  // @no-swagger
-  declare public receivedChatMessages: HasMany<typeof ChatMessage>
-
-  /**
-   * Demandes d'amis envoyées par l'utilisateur
-   * @type {HasMany<typeof ChatFriendRequest>}
-   */
-  @hasMany(() => ChatFriendRequest, {
-    foreignKey: 'sender_users_id',
-  })
-  // @no-swagger
-  declare public sentChatFriendRequests: HasMany<typeof ChatFriendRequest>
-
-  /**
-   * Demandes d'amis reçues par l'utilisateur
-   * @type {HasMany<typeof ChatFriendRequest>}
-   */
-  @hasMany(() => ChatFriendRequest, {
-    foreignKey: 'receiver_users_id',
-  })
-  // @no-swagger
-  declare public receivedChatFriendRequests: HasMany<typeof ChatFriendRequest>
 
   /**
    * Identifiant du rôle de l'utilisateur (requis lors de l'inscription, lié à la table user_roles)
