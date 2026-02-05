@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Decode .env.keys file
         run: |
           echo "${{ secrets.ENCRYPTED_ENV_KEYS_ADONISJS }}" | base64 --decode > .env.keys
 
       - name: Install Node.js to specific version LTS and setup cache
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 'lts/*'
           cache: 'npm'
@@ -75,7 +75,6 @@ jobs:
         with:
           args: |
             apply -f k8s/development-remote/namespace.yaml 
-            -f k8s/development-remote/certificate.yaml 
             -f k8s/development-remote/docker-registry-secret.yaml 
             -f k8s/development-remote/deployment.yaml 
             -f k8s/development-remote/ingress.yaml 

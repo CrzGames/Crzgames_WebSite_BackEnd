@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Decode .env.keys file
         run: |
@@ -54,7 +54,6 @@ jobs:
         with:
           args: |
             apply -f k8s/production/namespace.yaml 
-            -f k8s/production/certificate.yaml 
             -f k8s/production/docker-registry-secret.yaml 
             -f k8s/production/deployment.yaml 
             -f k8s/production/hpa.yaml 

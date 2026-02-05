@@ -1,5 +1,5 @@
 # First Stage: Build the App
-FROM node:22.17.1 AS builder
+FROM node:24.11.0 AS builder
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ COPY . .
 RUN npm run build
 
 # Second Stage: Setup the runtime
-FROM node:22.17.1 AS runtime
+FROM node:24.11.0 AS runtime
 
 WORKDIR /app
 
