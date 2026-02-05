@@ -1,5 +1,5 @@
 # Set version LTS version of Node.js
-FROM node:24.11.0
+FROM node:25.6.0
 
 WORKDIR /app
 
