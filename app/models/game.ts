@@ -96,12 +96,18 @@ export default class Game extends GameSchema {
    */
   public serialize(): ModelObject {
     const serialized: ModelObject = super.serialize()
+    const upcomingGameRaw: unknown = serialized.upcomingGame ?? serialized.upcoming_game
+    const newGameRaw: unknown = serialized.newGame ?? serialized.new_game
+
+    const upcomingGame: boolean | null = upcomingGameRaw === null ? null : Boolean(upcomingGameRaw)
+    const newGame: boolean | null = newGameRaw === null ? null : Boolean(newGameRaw)
 
     return {
       ...serialized,
-      upcoming_game: serialized.upcoming_game === null ? null : !!serialized.upcoming_game,
-      new_game: serialized.new_game === null ? null : !!serialized.new_game,
+      upcomingGame,
+      newGame,
+      upcoming_game: upcomingGame,
+      new_game: newGame,
     } as ModelObject
   }
 }
-
