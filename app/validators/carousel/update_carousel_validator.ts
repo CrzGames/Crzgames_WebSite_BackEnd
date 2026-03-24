@@ -14,5 +14,6 @@ export const updateCarouselValidator = vine.compile(
     logoPathFilename: vine.string().optional(),
     logoBucketName: vine.string().optional(),
     imageFilesId: vine.number(),
+    logoFilesId: vine.number().nullable().optional(),
   }),
 )

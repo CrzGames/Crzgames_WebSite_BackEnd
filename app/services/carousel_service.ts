@@ -28,18 +28,9 @@ export default class CarouselService {
           logoFileQuery.preload('bucket')
         })
 
-      // Vérification si des carrousels ont été trouvés
-      if (carousels.length === 0) {
-        throw new NotFoundException('No carousels found')
-      }
-
       return carousels
     } catch (error) {
       logger.error('getAllCarousels error: ' + error.message)
-
-      if (error instanceof NotFoundException) {
-        throw error
-      }
 
       throw new InternalServerErrorException('Failed to fetch all carousels')
     }
@@ -178,14 +169,20 @@ export default class CarouselService {
       }
       await CloudStorageS3Service.updateFileInDB(carouselImageFile, image_files_id)
 
-      // Si un logo est fourni pour le carrousel, créer un objet BucketFileCommand pour le logo du carrousel et mettre à jour l'entrée en base de données
-      let carouselLogoFile: BucketFileCommand | undefined
-      if (logoPathFilename && logoBucketName && logo_files_id) {
-        carouselLogoFile = {
+      // Si un logo est fourni, met à jour le fichier existant ou en crée un nouveau.
+      let nextLogoFilesId: number | null = logo_files_id
+      if (logoPathFilename && logoBucketName) {
+        const carouselLogoFile: BucketFileCommand = {
           pathFilename: logoPathFilename,
           bucketName: logoBucketName,
         }
-        await CloudStorageS3Service.updateFileInDB(carouselLogoFile, logo_files_id)
+
+        if (nextLogoFilesId) {
+          await CloudStorageS3Service.updateFileInDB(carouselLogoFile, nextLogoFilesId)
+        } else {
+          const carouselLogoFileInstance: File = await CloudStorageS3Service.createFileInDB(carouselLogoFile)
+          nextLogoFilesId = carouselLogoFileInstance.id
+        }
       }
 
       // Mettre à jour les informations du carrousel actuelle dans la base de données
@@ -196,7 +193,7 @@ export default class CarouselService {
           buttonUrl: button_url,
           buttonContent: button_content,
           imageFilesId: image_files_id,
-          logoFilesId: logo_files_id,
+          logoFilesId: nextLogoFilesId,
         })
         .save()
     } catch (error: any) {

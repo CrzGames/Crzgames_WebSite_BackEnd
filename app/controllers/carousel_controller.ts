@@ -3,6 +3,7 @@ import CarouselService from '#services/carousel_service'
 import type Carousel from '#models/carousel'
 import { createCarouselValidator } from '#validators/carousel/create_carousel_validator'
 import { updateCarouselValidator } from '#validators/carousel/update_carousel_validator'
+import BadRequestException from '#exceptions/bad_request_exception'
 
 export default class CarouselController {
   public async getAllCarousels({ response }: HttpContext): Promise<void> {
@@ -11,7 +12,12 @@ export default class CarouselController {
   }
 
   public async getCarouselById({ params, response }: HttpContext): Promise<void> {
-    const carousel: Carousel = await CarouselService.getCarouselById(params.id)
+    const carouselId: number = Number(params.id)
+    if (Number.isNaN(carouselId)) {
+      throw new BadRequestException('Invalid carousel id')
+    }
+
+    const carousel: Carousel = await CarouselService.getCarouselById(carouselId)
     return response.json(carousel)
   }
 
@@ -33,10 +39,15 @@ export default class CarouselController {
   }
 
   public async updateCarousel({ params, request, response }: HttpContext): Promise<void> {
+    const carouselId: number = Number(params.id)
+    if (Number.isNaN(carouselId)) {
+      throw new BadRequestException('Invalid carousel id')
+    }
+
     const payload = await request.validateUsing(updateCarouselValidator)
 
     await CarouselService.updateCarousel(
-      params.id,
+      carouselId,
       payload.title || null,
       payload.content || null,
       payload.button_url || null,
@@ -46,14 +57,19 @@ export default class CarouselController {
       payload.logoPathFilename || null,
       payload.logoBucketName || null,
       payload.imageFilesId,
-      null, // FIXME: il faudrait s'en douter changer le validator pour qu'il accepte un logoFilesId
+      payload.logoFilesId ?? null,
     )
 
     return response.ok({ message: 'Carousel updated successfully' })
   }
 
   public async delete({ params, response }: HttpContext): Promise<void> {
-    await CarouselService.delete(params.id)
+    const carouselId: number = Number(params.id)
+    if (Number.isNaN(carouselId)) {
+      throw new BadRequestException('Invalid carousel id')
+    }
+
+    await CarouselService.delete(carouselId)
     return response.ok({ message: 'Carousel deleted successfully' })
   }
 }
