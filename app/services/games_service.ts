@@ -76,11 +76,11 @@ export default class GamesService {
       return await Game.create({
         title,
         description,
-        upcoming_game: upcomingGame,
-        new_game: newGame,
-        trailer_files_id: trailerFileInstance.id,
-        picture_files_id: pictureFileInstance.id,
-        logo_files_id: logoFileInstance.id,
+        upcomingGame: upcomingGame,
+        newGame: newGame,
+        trailerFilesId: trailerFileInstance.id,
+        pictureFilesId: pictureFileInstance.id,
+        logoFilesId: logoFileInstance.id,
       })
     } catch (error) {
       throw new BadRequestException(error.message)
@@ -128,8 +128,8 @@ export default class GamesService {
         .merge({
           title,
           description,
-          upcoming_game: upcomingGame,
-          new_game: newGame,
+          upcomingGame: upcomingGame,
+          newGame: newGame,
         })
         .save()
     } catch (error) {
@@ -235,7 +235,7 @@ export default class GamesService {
 
       // Filtre par jeux en vedette (news ou à venir)
       if (featuredGames) {
-        query.where('new_game', true).orWhere('upcoming_game', true)
+        query.where('newGame', true).orWhere('upcomingGame', true)
       }
 
       // Filtre par genres
@@ -259,13 +259,13 @@ export default class GamesService {
           allowedModes.push('both')
         }
         allowedModes = [...new Set(allowedModes)]
-        query.whereIn('game_mode', allowedModes)
+        query.whereIn('gameMode', allowedModes)
       }
 
       // Appliquer le tri
       switch (sortBy) {
         case 'releaseDate':
-          query.orderBy('release_date', 'desc') // Plus récent au plus ancien
+          query.orderBy('releaseDate', 'desc') // Plus récent au plus ancien
           break
         case 'titleAsc':
           // Tri A-Z avec gestion des nombres
@@ -282,7 +282,7 @@ export default class GamesService {
           `)
           break
         default:
-          query.orderBy('release_date', 'desc') // Par défaut
+          query.orderBy('releaseDate', 'desc') // Par défaut
       }
 
       // Si la pagination n'est pas demandée, on renvoie simplement les jeux

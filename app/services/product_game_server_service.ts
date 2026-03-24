@@ -30,8 +30,8 @@ export default class ProductGameServerService {
   public static async createProductGameServer(productId: number, gameServerId: number): Promise<ProductGameServer> {
     try {
       return await ProductGameServer.create({
-        products_id: productId,
-        game_servers_id: gameServerId,
+        productsId: productId,
+        gameServersId: gameServerId,
       })
     } catch (error: any) {
       logger.error('createProductGameServer error: ' + error.message)

@@ -43,7 +43,7 @@ export default class UserGameLibrariesService {
       }
 
       // Extraire les IDs des jeux à partir des bibliothèques de jeux de l'utilisateur
-      const gameIds: number[] = userGameLibraries.map((userGameLibrary: UserGameLibrary) => userGameLibrary.games_id)
+      const gameIds: number[] = userGameLibraries.map((userGameLibrary: UserGameLibrary) => userGameLibrary.gamesId)
 
       // Préparer la requête de base pour récupérer les jeux
       const baseQuery: ModelQueryBuilderContract<typeof Game, Game> = Game.query()
@@ -105,8 +105,8 @@ export default class UserGameLibrariesService {
 
       // Si l'utilisateur possède le jeu et l'a payé, ajoute le jeu à la bibliothèque de l'utilisateur
       return await UserGameLibrary.create({
-        users_id: userId,
-        games_id: gameId,
+        usersId: userId,
+        gamesId: gameId,
       })
     } catch (error: any) {
       logger.error('addGameToUserGameLibraries error: ' + error.message)
@@ -143,10 +143,10 @@ export default class UserGameLibrariesService {
 
       // Parcourir les OrderProduct pour vérifier si l'utilisateur a payé pour au moins une commande
       for (const orderProduct of orderProducts) {
-        const order: Order | null = await OrderService.getOrderById(orderProduct.orders_id)
+        const order: Order | null = await OrderService.getOrderById(orderProduct.ordersId)
 
         // Vérifiez si l'order est payé et appartient à l'utilisateur
-        if (order && order.status_order === 'Paid' && order.users_id === userId) {
+        if (order && order.statusOrder === 'Paid' && order.usersId === userId) {
           userPaidValid = true
           break
         }

@@ -22,7 +22,7 @@ export default class MaintenanceWebSiteService {
       const maintenanceWebSite: MaintenanceWebSite = await MaintenanceWebSite.firstOrFail()
 
       // Vérifie si le site est en maintenance
-      if (maintenanceWebSite.is_maintenance) {
+      if (maintenanceWebSite.isMaintenance) {
         return true
       } else {
         return false
@@ -52,7 +52,7 @@ export default class MaintenanceWebSiteService {
       // Met à jour l'état de maintenance et renvoie l'enregistrement mis à jour
       return await maintenanceWebSite
         .merge({
-          is_maintenance: updatedIsMaintenance,
+          isMaintenance: updatedIsMaintenance,
         })
         .save()
     } catch (error: any) {

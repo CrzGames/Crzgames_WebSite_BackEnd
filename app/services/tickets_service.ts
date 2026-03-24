@@ -22,7 +22,7 @@ export default class TicketsService {
   public static async updateTicketByIdForStatus(id: number, name: string): Promise<Ticket> {
     try {
       const ticket: Ticket = await Ticket.findOrFail(id)
-      ticket.ticket_statuses_id = await TicketStatusesService.getTicketStatusIdByName(name)
+      ticket.ticketStatusesId = await TicketStatusesService.getTicketStatusIdByName(name)
       return await ticket.save()
     } catch (error: any) {
       logger.error('updateTicketByIdForStatus error: ' + error.message)
@@ -54,9 +54,9 @@ export default class TicketsService {
     try {
       const ticket: Ticket = await Ticket.create({
         subject,
-        ticket_statuses_id,
-        ticket_categories_id,
-        users_id,
+        ticketStatusesId: ticket_statuses_id,
+        ticketCategoriesId: ticket_categories_id,
+        usersId: users_id,
       })
 
       await TicketResponsesService.createTicketResponses(description, users_id, ticket.id)
@@ -136,7 +136,7 @@ export default class TicketsService {
         .preload('user')
         .preload('ticketStatus')
         .preload('ticketCategory')
-        .where('users_id', userId)
+        .where('usersId', userId)
         .orderBy('created_at', 'desc')
         .exec()
 
@@ -169,7 +169,7 @@ export default class TicketsService {
   public static async getUserIdByTicketId(ticketId: number): Promise<number> {
     try {
       const ticket: Ticket = await Ticket.query().where('id', ticketId).firstOrFail()
-      return ticket.users_id
+      return ticket.usersId
     } catch (error: any) {
       logger.error('getUserIdByTicketId error: ' + error.message)
 

@@ -1,9 +1,9 @@
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
-const SeatyrantsController = () => import('#controllers/seatyrants_controller')
+import { controllers } from '#generated/controllers'
 
 router
   .group(() => {
-    router.get('/seatyrants/info-user', [SeatyrantsController, 'getInfoUser'])
+    router.get('/seatyrants/info-user', [controllers.Seatyrants, 'getInfoUser'])
   })
   .use(middleware.restrictCorsToSeatyrants())

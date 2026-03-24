@@ -5,26 +5,28 @@ import type OrderProduct from '#models/order_product'
 
 export default class OrderProductController {
   public async createOrderProduct({ request, response }: HttpContext): Promise<void> {
-    const payload: ProductOrderCommand = request.only([
-      'orders_id',
-      'products_id',
-      'quantity',
-      'game_servers_id',
-      'price',
-    ])
-    const productOrder: OrderProduct = await OrderProductService.createOrderProduct(payload)
+    const payload = request.only(['orders_id', 'products_id', 'quantity', 'game_servers_id', 'price'])
+    const command: ProductOrderCommand = {
+      ordersId: payload.orders_id,
+      productsId: payload.products_id,
+      quantity: payload.quantity,
+      gameServersId: payload.game_servers_id,
+      price: String(payload.price),
+    }
+    const productOrder: OrderProduct = await OrderProductService.createOrderProduct(command)
     return response.created(productOrder)
   }
 
   public async updateOrderProduct({ params, request, response }: HttpContext): Promise<void> {
-    const payload: ProductOrderCommand = request.only([
-      'orders_id',
-      'products_id',
-      'quantity',
-      'game_servers_id',
-      'price',
-    ])
-    const productOrder: OrderProduct = await OrderProductService.updateOrderProduct(params.id, payload)
+    const payload = request.only(['orders_id', 'products_id', 'quantity', 'game_servers_id', 'price'])
+    const command: ProductOrderCommand = {
+      ordersId: payload.orders_id,
+      productsId: payload.products_id,
+      quantity: payload.quantity,
+      gameServersId: payload.game_servers_id,
+      price: String(payload.price),
+    }
+    const productOrder: OrderProduct = await OrderProductService.updateOrderProduct(params.id, command)
     return response.status(200).json(productOrder)
   }
 

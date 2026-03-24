@@ -14,17 +14,17 @@ import type ProductCategory from '#models/product_category'
  * @typedef {object} ProductCommand
  * @property {string} name - Le nom du produit
  * @property {string} description - La description du produit
- * @property {number} image_files_id - L'identifiant du fichier image associé au produit
- * @property {number} games_id - L'identifiant du jeu associé au produit
- * @property {number} product_categories_id - L'identifiant de la catégorie de produit associée
+ * @property {number} imageFilesId - L'identifiant du fichier image associé au produit
+ * @property {number} gamesId - L'identifiant du jeu associé au produit
+ * @property {number} productCategoriesId - L'identifiant de la catégorie de produit associée
  * @property {number} price - Le prix du produit
  */
 export type ProductCommand = {
   name: string
   description: string
-  image_files_id: number
-  games_id: number
-  product_categories_id: number
+  imageFilesId: number
+  gamesId: number
+  productCategoriesId: number
   price: number
 }
 
@@ -59,7 +59,7 @@ export class ProductService {
     try {
       // Create the file in the database
       const file: File = await CloudStorageS3Service.createFileInDB(bucketFileCommand)
-      productData.image_files_id = file.id
+      productData.imageFilesId = file.id
 
       // Create the product in the database
       return await Product.create({
@@ -87,7 +87,7 @@ export class ProductService {
       const product: Product = await Product.findOrFail(productId)
 
       // Update the file in the database
-      await CloudStorageS3Service.updateFileInDB(bucketData, productData.image_files_id)
+      await CloudStorageS3Service.updateFileInDB(bucketData, productData.imageFilesId)
 
       // Update the product in the database
       return await product.merge(productData).save()
@@ -205,7 +205,7 @@ export class ProductService {
   public static async getProductByGameIdAndProductCategoryGame(gameId: number): Promise<Product | null> {
     try {
       return Product.query()
-        .where('games_id', gameId)
+        .where('gamesId', gameId)
         .andWhereHas(
           'productCategory',
           (queryProductCategory: RelationSubQueryBuilderContract<typeof ProductCategory>): void => {
@@ -236,7 +236,7 @@ export class ProductService {
      * Check si le jeu est considéré comme un produit, si c'est le cas, vérifie si le produit est payant
      */
     const gameProduct: Product | null = await Product.query()
-      .where('games_id', gameId)
+      .where('gamesId', gameId)
       .whereHas(
         'productCategory',
         (queryProductCategory: RelationSubQueryBuilderContract<typeof ProductCategory>): void => {
@@ -249,14 +249,14 @@ export class ProductService {
      * On vérifie si l'utilisateur possède le jeu
      */
     const userOwnsGame: UserGameLibrary | null = await UserGameLibrary.query()
-      .where('users_id', userId)
-      .where('games_id', gameId)
+      .where('usersId', userId)
+      .where('gamesId', gameId)
       .first()
 
     /**
      * On détermine si le jeu est payant et possédé par l'utilisateur
      */
-    const isPaid: boolean = gameProduct ? gameProduct.price > 0 : false
+    const isPaid: boolean = gameProduct ? Number(gameProduct.price) > 0 : false
     const isOwned: boolean = !!userOwnsGame
 
     // On retourne le résultat
@@ -277,29 +277,23 @@ export class ProductService {
       .whereHas('productCategory', (queryProductCategory: RelationSubQueryBuilderContract<typeof ProductCategory>) => {
         queryProductCategory.where('name', 'game')
       })
-      .select('games_id', 'price')
+      .select('gamesId', 'price')
 
     // Récupère tous les jeux possédés par l'utilisateur (jeux gratuits et payants)
-    const userGamesLibrary: UserGameLibrary[] = await UserGameLibrary.query()
-      .where('users_id', userId)
-      .select('games_id')
+    const userGamesLibrary: UserGameLibrary[] = await UserGameLibrary.query().where('usersId', userId).select('gamesId')
 
     // Création d'un Set pour savoir quels jeux sont possédés
     const ownedGamesSet: Set<number> = new Set(
-      userGamesLibrary.map((userGameLibrary: UserGameLibrary): number => userGameLibrary.games_id),
+      userGamesLibrary
+        .map((userGameLibrary: UserGameLibrary): number | null => userGameLibrary.gamesId)
+        .filter((gameId: number | null): gameId is number => gameId !== null),
     )
 
     // Création d'une Map pour stocker les jeux payants trouvés dans `gameProducts`
     const productsMap: Map<number, Product> = new Map(
       gameProducts
-        .filter((product: Product): product is Product & { games_id: number } => product.games_id !== null)
-        .map(
-          (
-            product: Product & {
-              games_id: number
-            },
-          ) => [product.games_id, product],
-        ),
+        .filter((product: Product): product is Product & { gamesId: number } => product.gamesId !== null)
+        .map((product: Product & { gamesId: number }) => [product.gamesId, product]),
     )
 
     // Récupération de **tous** les games_id possibles (payants et gratuits)
@@ -313,7 +307,7 @@ export class ProductService {
       const product: Product | undefined = productsMap.get(gameId) // Récupère le produit s'il existe (sinon undefined)
       return {
         gameId,
-        isPaid: product ? product.price > 0 : false, // Si pas trouvé dans productsMap, alors jeu gratuit
+        isPaid: product ? Number(product.price) > 0 : false, // Si pas trouvé dans productsMap, alors jeu gratuit
         isOwned: ownedGamesSet.has(gameId), // Vérifie si le jeu est possédé
       } as GamePaidAndOwnedStatus
     })

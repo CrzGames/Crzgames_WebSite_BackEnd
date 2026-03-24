@@ -30,9 +30,9 @@ export default class PasswordResetTokenService {
 
       // Créer le token de réinitialisation de mot de passe dans la base de données
       return await PasswordResetToken.create({
-        users_id: user.id,
+        usersId: user.id,
         token: token,
-        expires_at: expiresAt,
+        expiresAt: expiresAt,
       })
     } catch (error: any) {
       logger.error('Error creating password reset token: ' + error.message)
@@ -68,7 +68,7 @@ export default class PasswordResetTokenService {
    */
   public static async getPasswordResetTokenByUserId(userId: number): Promise<PasswordResetToken> {
     try {
-      return await PasswordResetToken.findByOrFail('users_id', userId)
+      return await PasswordResetToken.findByOrFail('usersId', userId)
     } catch (error: any) {
       logger.error('Error getting password reset token by userId: ' + error.message)
 

@@ -9,10 +9,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - dev.example.api.flapi.org
+        - dev.api.crzgames.com
       secretName: dev-customerName-projectName-backend-tls
   rules:
-    - host: dev.example.api.flapi.org
+    - host: dev.api.crzgames.com
       http:
         paths:
           - pathType: Prefix

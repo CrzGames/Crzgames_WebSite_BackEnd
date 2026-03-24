@@ -1,5 +1,5 @@
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
-const UserRolesController = () => import('#controllers/user_roles_controller')
+import { controllers } from '#generated/controllers'
 
-router.get('/user-roles', [UserRolesController, 'getAllUserRoles']).use([middleware.auth()])
+router.get('/user-roles', [controllers.UserRoles, 'getAllUserRoles']).use([middleware.auth()])

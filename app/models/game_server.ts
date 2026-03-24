@@ -1,28 +1,17 @@
-import { BaseModel, column, manyToMany } from '@adonisjs/lucid/orm'
+import { manyToMany } from '@adonisjs/lucid/orm'
 import Product from '#models/product'
-import { DateTime } from 'luxon'
+
 import type { ManyToMany } from '@adonisjs/lucid/types/relations'
 
-export default class GameServer extends BaseModel {
-  @column({ isPrimary: true })
-  declare public id: number
+import { GameServerSchema } from '#database/schema'
 
-  @column()
-  declare public name: string
-
-  @column()
-  declare public region: string | null
-
+export default class GameServer extends GameServerSchema {
   @manyToMany(() => Product, {
     pivotTable: 'product_game_servers',
+
     pivotForeignKey: 'game_servers_id',
+
     pivotRelatedForeignKey: 'products_id',
   })
   declare public products: ManyToMany<typeof Product>
-
-  @column.dateTime({ autoCreate: true })
-  declare public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare public updatedAt: DateTime
 }

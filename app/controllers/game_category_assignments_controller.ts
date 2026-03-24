@@ -1,8 +1,8 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import GameCategoryAssignmentsService from '#services/game_category_assignments_service'
 import type GameCategoryAssignment from '#models/game_category_assignment'
-import { getAllGameCategoryAssignmentByCategoryIdValidator } from '#validators/GameCategoryAssignment/GetAllGameCategoryAssignmentByCategoryIdValidator'
-import { getAllGameCategoryAssignmentByGameIdValidator } from '#validators/GameCategoryAssignment/GetAllGameCategoryAssignmentByGameIdValidator'
+import { getAllGameCategoryAssignmentByCategoryIdValidator } from '#validators/game_category_assignment/get_all_game_category_assignment_by_category_id_validator'
+import { getAllGameCategoryAssignmentByGameIdValidator } from '#validators/game_category_assignment/get_all_game_category_assignment_by_game_id_validator'
 export default class GameCategoryAssignmentsController {
   //function to get all categories of a game
   public async getAllGameCategoryAssignmentByGameId({ request, response }: HttpContext): Promise<void> {

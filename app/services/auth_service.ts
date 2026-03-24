@@ -51,11 +51,11 @@ export default class AuthService {
         username: data.username,
         email: data.email,
         password: data.password, // Automatiquement haché par le modèle User
-        roles_id: clientRole.id,
-        currency_code: data.currency_code,
-        ip_address: data.ip_address,
-        ip_region: null,
-        active_code: activeCode,
+        rolesId: clientRole.id,
+        currencyCode: data.currency_code,
+        ipAddress: data.ip_address,
+        ipRegion: null,
+        activeCode: activeCode,
       })
 
       // Envoyer un e-mail de bienvenue à l'utilisateur avec le code d'activation.
@@ -64,7 +64,7 @@ export default class AuthService {
         'welcome',
         {
           username: user.username,
-          code: user.active_code,
+          code: user.activeCode,
           redirect_uri:
             env.get('FRONTEND_APP_BASE_URL') + env.get('FRONTEND_APP_REDIRECT_URI_ACCOUNT_VALIDATE') + user.email,
         },
@@ -94,7 +94,7 @@ export default class AuthService {
       let user: User = await User.findByOrFail('email', data.email)
 
       // Vérifier si le compte est activé
-      if (!user.is_active) {
+      if (!user.isActive) {
         throw new BadRequestException('Account is not active')
       }
 
@@ -163,7 +163,7 @@ export default class AuthService {
       const activeCode: number = Math.floor(100000 + Math.random() * 900000)
 
       // Mettre à jour le code d'activation de l'utilisateur en base de données avec le nouveau code généré
-      await user.merge({ active_code: activeCode }).save()
+      await user.merge({ activeCode: activeCode }).save()
 
       // Envoyer un e-mail à l'utilisateur avec le nouveau code d'activation
       await MailService.sendMail(
@@ -171,7 +171,7 @@ export default class AuthService {
         'welcome',
         {
           username: user.username,
-          code: user.active_code,
+          code: user.activeCode,
           redirect_uri:
             env.get('FRONTEND_APP_BASE_URL') + env.get('FRONTEND_APP_REDIRECT_URI_ACCOUNT_VALIDATE') + user.email,
         },
@@ -201,12 +201,12 @@ export default class AuthService {
       const user: User = await User.findByOrFail('email', data.email)
 
       // Vérifier si le code d'activation correspond à celui de l'utilisateur en base de données
-      if (user.active_code !== data.code) {
+      if (user.activeCode !== data.code) {
         throw new BadRequestException('Invalid activation code')
       }
 
       // Mettre à jour l'utilisateur pour indiquer que le compte est activé
-      await user.merge({ is_active: true }).save()
+      await user.merge({ isActive: true }).save()
     } catch (error: any) {
       logger.error('Verify code error: ' + error.message)
 
@@ -290,17 +290,17 @@ export default class AuthService {
       )
 
       // Si le token n'a pas de date d'expiration, lancer une exception
-      if (!passwordResetToken.expires_at) {
+      if (!passwordResetToken.expiresAt) {
         throw new BadRequestException('Token does not have an expiration date')
       }
 
       // Checker si le token est expiré
-      if (passwordResetToken.expires_at < DateTime.now()) {
+      if (passwordResetToken.expiresAt < DateTime.now()) {
         throw new BadRequestException('Token expired')
       }
 
       // Récupérer l'utilisateur par son ID depuis le token de réinitialisation de mot de passe
-      const user: User = await User.findOrFail(passwordResetToken.users_id)
+      const user: User = await User.findOrFail(passwordResetToken.usersId)
 
       // Vérifier si le nouveau mot de passe est identique à l'ancien
       const isSamePassword: boolean = await hash.verify(user.password, data.newPassword)
@@ -392,17 +392,17 @@ export default class AuthService {
       )
 
       // Checker si le token a une date d'expiration
-      if (!passwordResetToken.expires_at) {
+      if (!passwordResetToken.expiresAt) {
         throw new BadRequestException('Token does not have an expiration date')
       }
 
       // Checker si le token est expiré
-      if (passwordResetToken.expires_at < DateTime.now()) {
+      if (passwordResetToken.expiresAt < DateTime.now()) {
         throw new BadRequestException('Token expired')
       }
 
       // Rrécupérer l'utilisateur par son ID depuis le token de réinitialisation d'email
-      const user: User = await User.findOrFail(passwordResetToken.users_id)
+      const user: User = await User.findOrFail(passwordResetToken.usersId)
 
       // Checker si le nouvel email est identique à l'ancien email
       if (user.email === data.newEmail) {

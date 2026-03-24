@@ -1,11 +1,11 @@
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
-const GamesController = () => import('#controllers/games_controller')
+import { controllers } from '#generated/controllers'
 
-router.post('/game', [GamesController, 'createGames']).use([middleware.auth()])
-router.get('/game/:id', [GamesController, 'getGamesById'])
-router.get('/games/title/:title', [GamesController, 'getAllGamesByTitle'])
-router.get('/game', [GamesController, 'getGameByTitle'])
-router.get('/games', [GamesController, 'getAllGames'])
-router.put('/game/:id', [GamesController, 'updateGames']).use([middleware.auth()])
-router.delete('/game/:id', [GamesController, 'deleteGames']).use([middleware.auth()])
+router.post('/game', [controllers.Games, 'createGames']).use([middleware.auth()])
+router.get('/game/:id', [controllers.Games, 'getGamesById'])
+router.get('/games/title/:title', [controllers.Games, 'getAllGamesByTitle'])
+router.get('/game', [controllers.Games, 'getGameByTitle'])
+router.get('/games', [controllers.Games, 'getAllGames'])
+router.put('/game/:id', [controllers.Games, 'updateGames']).use([middleware.auth()])
+router.delete('/game/:id', [controllers.Games, 'deleteGames']).use([middleware.auth()])

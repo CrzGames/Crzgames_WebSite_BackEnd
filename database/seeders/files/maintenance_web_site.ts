@@ -8,7 +8,7 @@ export default class extends BaseSeeder {
     // Write your database queries here
     await MaintenanceWebSite.firstOrCreate(
       { name: 'crzgames-website-frontend' },
-      { name: 'crzgames-website-frontend', is_maintenance: false },
+      { name: 'crzgames-website-frontend', isMaintenance: false },
     )
   }
 }

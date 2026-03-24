@@ -1,19 +1,3 @@
-import { BaseModel, column } from '@adonisjs/lucid/orm'
-import { DateTime } from 'luxon'
+import { LanguageSchema } from '#database/schema'
 
-export default class Language extends BaseModel {
-  @column({ isPrimary: true })
-  declare public id: number
-
-  @column()
-  declare public code: string
-
-  @column()
-  declare public name: string
-
-  @column.dateTime({ autoCreate: true })
-  declare public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare public updatedAt: DateTime
-}
+export default class Language extends LanguageSchema {}

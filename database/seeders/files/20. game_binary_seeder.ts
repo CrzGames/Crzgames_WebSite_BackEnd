@@ -82,8 +82,8 @@ export default class GameBinarySeeder extends BaseSeeder {
     })
 
     const gameBinary: GameBinary = new GameBinary()
-    gameBinary.game_platforms_id = platform.id
-    gameBinary.files_id = binaryFile.id
+    gameBinary.gamePlatformsId = platform.id
+    gameBinary.filesId = binaryFile.id
     await gameBinary.save()
 
     await game.related('gameBinary').attach([gameBinary.id])

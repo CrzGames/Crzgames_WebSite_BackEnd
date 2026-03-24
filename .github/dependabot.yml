@@ -16,7 +16,7 @@ updates:
     directory: '/' # Location of package manifests
     schedule:
       interval: 'daily'
-      
+
   - package-ecosystem: 'github-actions'
     directory: '/.github/workflows' # Chemin vers le répertoire contenant vos fichiers de workflow GitHub Actions
     schedule:

@@ -1,4 +1,4 @@
 import router from '@adonisjs/core/services/router'
-const LanguagesController = () => import('#controllers/languages_controller')
+import { controllers } from '#generated/controllers'
 
-router.get('/languages', [LanguagesController, 'getAllLanguages'])
+router.get('/languages', [controllers.Languages, 'getAllLanguages'])

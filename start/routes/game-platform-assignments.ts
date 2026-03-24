@@ -1,8 +1,8 @@
 import router from '@adonisjs/core/services/router'
-const GamePlatformAssignmentsController = () => import('#controllers/game_platform_assignments_controller')
+import { controllers } from '#generated/controllers'
 
-router.get('/game/:gameId/platforms', [GamePlatformAssignmentsController, 'getAllGamePlatformAssignmentByGameId'])
+router.get('/game/:gameId/platforms', [controllers.GamePlatformAssignments, 'getAllGamePlatformAssignmentByGameId'])
 router.get('/game/platforms/:platformId', [
-  GamePlatformAssignmentsController,
+  controllers.GamePlatformAssignments,
   'getAllGamePlatformAssignmentByPlatformId',
 ])

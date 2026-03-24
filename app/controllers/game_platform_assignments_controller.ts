@@ -32,7 +32,7 @@ export default class GamePlatformAssignmentsController {
     const games: Game[] = []
 
     for (const gamePlatformAssignment of gamePlatformAssignments.map(
-      (gamePlatformAssignment: GamePlatformAssignment) => gamePlatformAssignment.games_id,
+      (gamePlatformAssignment: GamePlatformAssignment) => gamePlatformAssignment.gamesId,
     )) {
       const game: Game = await GamesService.getGamesById(gamePlatformAssignment)
       games.push(game)

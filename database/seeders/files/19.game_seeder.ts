@@ -307,27 +307,27 @@ export default class extends BaseSeeder {
         let gameConfigurationMinimal: GameConfiguration, gameConfigurationRecommended: GameConfiguration
         try {
           gameConfigurationMinimal = await GameConfiguration.create({
-            cpu_intel: fakeGame.minimal_config.cpu_intel,
-            cpu_amd: fakeGame.minimal_config.cpu_amd,
-            gpu_nvidia: fakeGame.minimal_config.gpu_nvidia,
-            gpu_amd: fakeGame.minimal_config.gpu_amd,
+            cpuIntel: fakeGame.minimal_config.cpu_intel,
+            cpuAmd: fakeGame.minimal_config.cpu_amd,
+            gpuNvidia: fakeGame.minimal_config.gpu_nvidia,
+            gpuAmd: fakeGame.minimal_config.gpu_amd,
             ram: fakeGame.minimal_config.ram,
             storage: fakeGame.minimal_config.storage,
             os: fakeGame.minimal_config.os,
             internet: fakeGame.minimal_config.internet,
-            additional_notes: fakeGame.minimal_config.additional_notes,
+            additionalNotes: fakeGame.minimal_config.additional_notes,
           })
 
           gameConfigurationRecommended = await GameConfiguration.create({
-            cpu_intel: fakeGame.recommended_config.cpu_intel,
-            cpu_amd: fakeGame.recommended_config.cpu_amd,
-            gpu_nvidia: fakeGame.recommended_config.gpu_nvidia,
-            gpu_amd: fakeGame.recommended_config.gpu_amd,
+            cpuIntel: fakeGame.recommended_config.cpu_intel,
+            cpuAmd: fakeGame.recommended_config.cpu_amd,
+            gpuNvidia: fakeGame.recommended_config.gpu_nvidia,
+            gpuAmd: fakeGame.recommended_config.gpu_amd,
             ram: fakeGame.recommended_config.ram,
             storage: fakeGame.recommended_config.storage,
             os: fakeGame.recommended_config.os,
             internet: fakeGame.recommended_config.internet,
-            additional_notes: fakeGame.recommended_config.additional_notes,
+            additionalNotes: fakeGame.recommended_config.additional_notes,
           })
         } catch (err) {
           logger.error(`Error creating minimalConfig for ${fakeGame.title}:` + err)
@@ -338,20 +338,20 @@ export default class extends BaseSeeder {
         let game: Game
         try {
           game = await Game.create({
-            upcoming_game: fakeGame.upcoming_game,
-            new_game: fakeGame.new_game,
+            upcomingGame: fakeGame.upcoming_game,
+            newGame: fakeGame.new_game,
             title: fakeGame.title,
             description: 'Generated test game',
-            trailer_files_id: trailerFile.id,
-            picture_files_id: pictureFile.id,
-            logo_files_id: logoFile.id,
-            release_date: DateTime.fromISO(fakeGame.release_date),
-            game_mode: fakeGame.game_mode,
+            trailerFilesId: trailerFile.id,
+            pictureFilesId: pictureFile.id,
+            logoFilesId: logoFile.id,
+            releaseDate: DateTime.fromISO(fakeGame.release_date),
+            gameMode: fakeGame.game_mode,
             publisher: fakeGame.publisher,
             developer: fakeGame.developer,
-            game_configurations_minimal_id: gameConfigurationMinimal.id,
-            game_configurations_recommended_id: gameConfigurationRecommended.id,
-            pegi_rating: fakeGame.pegi_rating,
+            gameConfigurationsMinimalId: gameConfigurationMinimal.id,
+            gameConfigurationsRecommendedId: gameConfigurationRecommended.id,
+            pegiRating: fakeGame.pegi_rating,
           })
         } catch (err) {
           logger.error(`Error creating game ${fakeGame.title}:` + err)

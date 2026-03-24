@@ -51,9 +51,9 @@ export default class TicketResponsesService {
 
       return await TicketResponse.create({
         content,
-        users_id,
-        tickets_id,
-        is_support: isSupport,
+        usersId: users_id,
+        ticketsId: tickets_id,
+        isSupport: isSupport,
       })
     } catch (error: any) {
       logger.error('createTicketResponses error: ' + error.message)
@@ -72,7 +72,7 @@ export default class TicketResponsesService {
   public static async getAllTicketsResponsesByTicketId(ticketId: number): Promise<TicketResponse[]> {
     try {
       const ticketResponses: TicketResponse[] = await TicketResponse.query()
-        .where('tickets_id', ticketId)
+        .where('ticketsId', ticketId)
         .preload('user')
 
       if (ticketResponses.length === 0) {

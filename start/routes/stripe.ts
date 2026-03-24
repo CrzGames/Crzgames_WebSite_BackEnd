@@ -1,7 +1,7 @@
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
-const StripeController = () => import('#controllers/stripe_controller')
+import { controllers } from '#generated/controllers'
 
-router.post('/stripe/create-payment-intent', [StripeController, 'createPaymentIntentStripe']).use(middleware.auth())
-router.post('/proxy-check-io', [StripeController, 'checkProxyVPN'])
-router.post('/stripe/webhooks', [StripeController, 'handleWebhookStripe'])
+router.post('/stripe/create-payment-intent', [controllers.Stripe, 'createPaymentIntentStripe']).use(middleware.auth())
+router.post('/proxy-check-io', [controllers.Stripe, 'checkProxyVPN'])
+router.post('/stripe/webhooks', [controllers.Stripe, 'handleWebhookStripe'])

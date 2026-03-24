@@ -24,8 +24,8 @@ export default class GamePlatformAssignmentsService {
       const gamePlatformAssignments: Promise<GamePlatformAssignment>[] = gamePlatformIds.map(
         async (gamePlatformId: number): Promise<GamePlatformAssignment> => {
           return await GamePlatformAssignment.create({
-            games_id: gameId,
-            game_platforms_id: gamePlatformId,
+            gamesId: gameId,
+            gamePlatformsId: gamePlatformId,
           })
         },
       )

@@ -1,5 +1,5 @@
 import router from '@adonisjs/core/services/router'
-const LauncherCrzController = () => import('#controllers/launcher_crz_controller')
+import { controllers } from '#generated/controllers'
 
 /**
  * Requete fait par le launcher pour savoir si une mise à jour est disponible en ce basant sur le fichier manifest
@@ -8,7 +8,7 @@ const LauncherCrzController = () => import('#controllers/launcher_crz_controller
  * {{archSystem}}: L'architecture de la machine (l'un des x86_64, i686, aarch64 ou armv7).
  */
 router.get('/launcher/updater-manifest/:os/:archSystem/:currentVersion', [
-  LauncherCrzController,
+  controllers.LauncherCrz,
   'checkIsAvailableVersionLauncher',
 ])
 
@@ -17,4 +17,4 @@ router.get('/launcher/updater-manifest/:os/:archSystem/:currentVersion', [
  * telechargement du launcher pour la premiere fois (via le siteweb)
  * {{nameBundle}}: CrzGamesSetup_x64.msi.zip (updaterbundle), CrzGamesSetup_x64.msi (standardappbundle) ..
  */
-router.get('/launcher/download/:nameBundle', [LauncherCrzController, 'downloadLauncher'])
+router.get('/launcher/download/:nameBundle', [controllers.LauncherCrz, 'downloadLauncher'])

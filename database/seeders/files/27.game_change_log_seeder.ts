@@ -18,16 +18,16 @@ export default class extends BaseSeeder {
     // Crée des change log pour chaque jeu
     for (const game of games) {
       await GameChangeLog.create({
-        games_id: game.id,
+        gamesId: game.id,
         version: 'v1.0.0',
-        release_date: DateTime.now(),
+        releaseDate: DateTime.now(),
         content: 'Initial game release.',
       })
 
       await GameChangeLog.create({
-        games_id: game.id,
+        gamesId: game.id,
         version: 'v1.0.1',
-        release_date: DateTime.now().plus({ days: 7 }), // Simule une mise à jour une semaine plus tard
+        releaseDate: DateTime.now().plus({ days: 7 }), // Simule une mise à jour une semaine plus tard
         content: 'Bug fixes and performance improvements.',
       })
     }

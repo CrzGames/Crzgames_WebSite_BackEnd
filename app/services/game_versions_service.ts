@@ -199,7 +199,7 @@ export default class GameVersionsService {
       const gameVersion: GameVersion = await this.getGameVersion(gameId, gameVersionId)
       return gameVersion
         .merge({
-          is_available: updateDataForIsAvailable,
+          isAvailable: updateDataForIsAvailable,
         })
         .save()
     } catch (error: any) {

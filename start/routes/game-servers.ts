@@ -1,10 +1,10 @@
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
-const GameServerController = () => import('#controllers/game_server_controller')
+import { controllers } from '#generated/controllers'
 
 router
   .group((): void => {
-    router.get('/game-servers', [GameServerController, 'getAllGameServers'])
-    router.post('/game-servers', [GameServerController, 'createGameServer'])
+    router.get('/game-servers', [controllers.GameServer, 'getAllGameServers'])
+    router.post('/game-servers', [controllers.GameServer, 'createGameServer'])
   })
   .use(middleware.auth())

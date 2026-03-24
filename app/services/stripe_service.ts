@@ -80,11 +80,11 @@ export class StripeService {
       const idempotencyKey: string = uuidv4()
 
       // Si c'est la première fois qu'il paye un produit, ajoutée un stripe customer id au compte user
-      if (user.stripe_customer_id === null) {
+      if (user.stripeCustomerId === null) {
         user = await this.createStripeCustomer(user.id)
 
         // On vérifie si l'utilisateur a un stripe_customer_id a nouveau
-        if (user.stripe_customer_id === null) {
+        if (user.stripeCustomerId === null) {
           return null
         }
       }
@@ -106,7 +106,7 @@ export class StripeService {
           amount: Math.round(totalAmount * 100), // Les montants sont exprimés en centimes
           currency: 'eur', // Pour éviter des frais de conversion, on met la devise en euro
           use_stripe_sdk: true,
-          customer: user.stripe_customer_id,
+          customer: user.stripeCustomerId,
           automatic_payment_methods: {
             enabled: true,
           },
@@ -162,10 +162,10 @@ export class StripeService {
 
         const discount: ProductDiscount | undefined = product.productDiscounts.find(
           (productDiscount: ProductDiscount): boolean =>
-            productDiscount.currency.toLowerCase() === user.currency_code?.toLowerCase(),
+            productDiscount.currency.toLowerCase() === user.currencyCode?.toLowerCase(),
         )
         if (discount) {
-          productPrice *= 1 - discount.discount_percent / 100
+          productPrice *= 1 - discount.discountPercent / 100
         }
 
         totalAmount += productPrice
@@ -179,8 +179,8 @@ export class StripeService {
       }
 
       const orderMetadataStripe: OrderMetadataStripe = await OrderMetadataStripe.create({
-        users_id: user.id,
-        processed_items: JSON.stringify(processedItems),
+        usersId: user.id,
+        processedItems: JSON.stringify(processedItems),
       })
 
       return { totalAmount, orderMetadataStripeId: orderMetadataStripe.id }
@@ -214,7 +214,7 @@ export class StripeService {
       const customer: Stripe.Response<Stripe.Customer> = await stripe.customers.create(params)
 
       // On met à jour le stripe_customer_id de l'utilisateur dans la table 'users'
-      await user.merge({ stripe_customer_id: customer.id }).save()
+      await user.merge({ stripeCustomerId: customer.id }).save()
 
       logger.info('CreateStripeCustomer Stripe customer created successfully')
 
@@ -246,7 +246,7 @@ export class StripeService {
     const orderMetadataStripeId: number = parseInt(paymentIntent.metadata.order_metadata_stripe_id)
 
     const orderMetadataStripe: OrderMetadataStripe = await OrderMetadataStripe.findOrFail(orderMetadataStripeId)
-    const processedItems: ProcessedCartItem[] = JSON.parse(orderMetadataStripe.processed_items)
+    const processedItems: ProcessedCartItem[] = JSON.parse(orderMetadataStripe.processedItems)
 
     try {
       // Vérifiez si une commande avec le même paymentIntent.id existe déjà
@@ -261,9 +261,9 @@ export class StripeService {
 
       // Créer la commande
       const order: Order = await Order.create({
-        users_id: userId,
+        usersId: userId,
         currency: paymentIntent.currency,
-        total_price: paymentIntent.amount / 100, // convertir en unité monétaire
+        totalPrice: paymentIntent.amount / 100, // convertir en unité monétaire
         status_order: orderStatus,
         payment_intent_id: paymentIntent.id,
       })
@@ -289,8 +289,8 @@ export class StripeService {
         const product: Product = await ProductService.getProductById(item.products_id)
         if (product.productCategory.name === 'game') {
           await UserGameLibrary.create({
-            users_id: userId,
-            games_id: product.game.id,
+            usersId: userId,
+            gamesId: product.game.id,
           })
         }
       }

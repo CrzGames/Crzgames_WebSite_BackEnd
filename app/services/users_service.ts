@@ -180,7 +180,7 @@ export default class UsersService {
       const user: User = await User.findOrFail(userId)
 
       // Mettre à jour le rôle de l'utilisateur avec l'ID du nouveau rôle
-      await user.merge({ roles_id: roleId }).save()
+      await user.merge({ rolesId: roleId }).save()
     } catch (error: any) {
       logger.error('updateUsersRole error: ' + error.message)
 

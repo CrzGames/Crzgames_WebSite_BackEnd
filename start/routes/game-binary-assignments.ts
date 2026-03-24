@@ -1,4 +1,4 @@
 import router from '@adonisjs/core/services/router'
-const GameBinaryAssignmentsController = () => import('#controllers/game_binary_assignments_controller')
+import { controllers } from '#generated/controllers'
 
-router.get('/game/:gameId/binaries', [GameBinaryAssignmentsController, 'getAllGameBinaryAssignmentByGameId'])
+router.get('/game/:gameId/binaries', [controllers.GameBinaryAssignments, 'getAllGameBinaryAssignmentByGameId'])

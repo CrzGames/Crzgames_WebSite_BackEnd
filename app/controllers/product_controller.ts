@@ -26,10 +26,10 @@ export default class ProductController {
     const productCommand: ProductCommand = {
       name: payload.name,
       description: payload.description,
-      games_id: payload.games_id,
+      gamesId: payload.games_id,
       price: payload.price,
-      image_files_id: -1,
-      product_categories_id: payload.product_categories_id,
+      imageFilesId: -1,
+      productCategoriesId: payload.product_categories_id,
     }
 
     const product: Product = await ProductService.createProduct(productCommand, bucketFileCommand)
@@ -70,10 +70,10 @@ export default class ProductController {
     const productCommand: ProductCommand = {
       name: payload.name,
       description: payload.description,
-      games_id: payload.games_id,
+      gamesId: payload.games_id,
       price: payload.price,
-      image_files_id: payload.image_files_id,
-      product_categories_id: payload.product_categories_id,
+      imageFilesId: payload.image_files_id,
+      productCategoriesId: payload.product_categories_id,
     }
 
     const product: Product = await ProductService.updateProduct(params.id, productCommand, bucketFileCommand)

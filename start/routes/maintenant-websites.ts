@@ -1,5 +1,5 @@
 import router from '@adonisjs/core/services/router'
-const MaintenanceWebSiteController = () => import('#controllers/maintenance_web_site_controller')
+import { controllers } from '#generated/controllers'
 
-router.put('/maintenance-websites/is-maintenance', [MaintenanceWebSiteController, 'updateIsMaintenance'])
-router.get('/maintenance-websites/is-maintenance', [MaintenanceWebSiteController, 'isMaintenance'])
+router.put('/maintenance-websites/is-maintenance', [controllers.MaintenanceWebSite, 'updateIsMaintenance'])
+router.get('/maintenance-websites/is-maintenance', [controllers.MaintenanceWebSite, 'isMaintenance'])

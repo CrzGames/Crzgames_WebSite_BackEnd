@@ -1,23 +1,8 @@
-import { BaseModel, column } from '@adonisjs/lucid/orm'
-import { DateTime } from 'luxon'
 import { ModelObject } from '@adonisjs/lucid/types/model'
 
-export default class MaintenanceWebSite extends BaseModel {
-  @column({ isPrimary: true })
-  declare public id: number
+import { MaintenanceWebSiteSchema } from '#database/schema'
 
-  @column()
-  declare public is_maintenance: boolean
-
-  @column()
-  declare public name: string
-
-  @column.dateTime({ autoCreate: true })
-  declare public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare public updatedAt: DateTime
-
+export default class MaintenanceWebSite extends MaintenanceWebSiteSchema {
   /**
    * Surcharge de la sérialisation pour convertir les champs en booléens explicites
    * lors de la sérialisation en JSON de la response

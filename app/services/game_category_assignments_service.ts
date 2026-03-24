@@ -24,8 +24,8 @@ export default class GameCategoryAssignmentsService {
       const gameCategoryAssignments: Promise<GameCategoryAssignment>[] = gameCategoryIds.map(
         async (gameCategoryId: number): Promise<GameCategoryAssignment> => {
           return await GameCategoryAssignment.create({
-            games_id: gameId,
-            game_categories_id: gameCategoryId,
+            gamesId: gameId,
+            gameCategoriesId: gameCategoryId,
           })
         },
       )

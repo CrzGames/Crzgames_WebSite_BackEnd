@@ -1,11 +1,11 @@
 import router from '@adonisjs/core/services/router'
-const CloudStorageS3Controller = () => import('#controllers/cloud_storage_s3_controller')
+import { controllers } from '#generated/controllers'
 
-router.get('/cloud-storage-s3/buckets', [CloudStorageS3Controller, 'getAllBuckets'])
-router.post('/cloud-storage-s3/list-files', [CloudStorageS3Controller, 'getListFilesObjectInBucket'])
-router.post('/cloud-storage-s3/upload', [CloudStorageS3Controller, 'uploadFileOrFolderInBucket'])
-router.get('/cloud-storage-s3/download', [CloudStorageS3Controller, 'downloadFileOrFolderInBucket'])
-router.get('/cloud-storage-s3/launcher/download', [CloudStorageS3Controller, 'streamDownloadFileInBucketForLauncher'])
-router.post('/cloud-storage-s3/delete', [CloudStorageS3Controller, 'deleteInBucketAndDB'])
-router.post('/cloud-storage-s3/file-or-folder/size', [CloudStorageS3Controller, 'getTotalSizeFileOrFolderInBucket'])
-router.post('/cloud-storage-s3/content', [CloudStorageS3Controller, 'getFileContentInBucket'])
+router.get('/cloud-storage-s3/buckets', [controllers.CloudStorageS3, 'getAllBuckets'])
+router.post('/cloud-storage-s3/list-files', [controllers.CloudStorageS3, 'getListFilesObjectInBucket'])
+router.post('/cloud-storage-s3/upload', [controllers.CloudStorageS3, 'uploadFileOrFolderInBucket'])
+router.get('/cloud-storage-s3/download', [controllers.CloudStorageS3, 'downloadFileOrFolderInBucket'])
+router.get('/cloud-storage-s3/launcher/download', [controllers.CloudStorageS3, 'streamDownloadFileInBucketForLauncher'])
+router.post('/cloud-storage-s3/delete', [controllers.CloudStorageS3, 'deleteInBucketAndDB'])
+router.post('/cloud-storage-s3/file-or-folder/size', [controllers.CloudStorageS3, 'getTotalSizeFileOrFolderInBucket'])
+router.post('/cloud-storage-s3/content', [controllers.CloudStorageS3, 'getFileContentInBucket'])

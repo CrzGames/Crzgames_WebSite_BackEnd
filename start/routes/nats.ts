@@ -1,5 +1,5 @@
 import router from '@adonisjs/core/services/router'
-const NatsController = () => import('#controllers/nats_controller')
+import { controllers } from '#generated/controllers'
 
-router.post('/publish', [NatsController, 'publish'])
-router.post('/subscribe', [NatsController, 'subscribe'])
+router.post('/publish', [controllers.Nats, 'publish'])
+router.post('/subscribe', [controllers.Nats, 'subscribe'])

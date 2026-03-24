@@ -267,7 +267,7 @@ export default class CloudStorageS3Service {
 
     // Enregistrer le fichier dans une base de données
     const file: File = await File.create({
-      buckets_id: bucket.id,
+      bucketsId: bucket.id,
       pathfilename: bucketFile.pathFilename,
       url: bucketFile.pathFilename,
       size: totalSize,
@@ -326,7 +326,7 @@ export default class CloudStorageS3Service {
     const file: File = await File.query().preload('bucket').where('id', id).firstOrFail()
     await file
       .merge({
-        buckets_id: bucket.id,
+        bucketsId: bucket.id,
         pathfilename: bucketFile.pathFilename,
         url: bucketFile.pathFilename,
         size: totalSize,

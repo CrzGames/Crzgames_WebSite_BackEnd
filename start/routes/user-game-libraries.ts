@@ -1,10 +1,10 @@
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
-const UserGameLibrariesController = () => import('#controllers/user_game_libraries_controller')
+import { controllers } from '#generated/controllers'
 
 router
   .group((): void => {
-    router.get('/user-game-libraries/:userId', [UserGameLibrariesController, 'getAllUsersGamesLibrariesByUserId'])
-    router.post('/user-game-libraries', [UserGameLibrariesController, 'addGameToUserGameLibraries'])
+    router.get('/user-game-libraries/:userId', [controllers.UserGameLibraries, 'getAllUsersGamesLibrariesByUserId'])
+    router.post('/user-game-libraries', [controllers.UserGameLibraries, 'addGameToUserGameLibraries'])
   })
   .use([middleware.auth()])

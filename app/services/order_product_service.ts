@@ -17,11 +17,11 @@ import type { RelationQueryBuilderContract } from '@adonisjs/lucid/types/relatio
  * @property {number} price - Le prix du produit commandé.
  */
 export type ProductOrderCommand = {
-  orders_id: number
-  products_id: number
+  ordersId: number
+  productsId: number
   quantity: number
-  game_servers_id?: number
-  price: number
+  gameServersId?: number
+  price: string
 }
 
 /**
@@ -98,7 +98,7 @@ export class OrderProductService {
   public static async getAllOrderProductsByOrderId(orderId: number): Promise<OrderProduct[]> {
     try {
       return OrderProduct.query()
-        .where('orders_id', orderId)
+        .where('ordersId', orderId)
         .preload('product', (queryProduct: RelationQueryBuilderContract<typeof Product, any>): void => {
           queryProduct.preload('imageFile', (queryImageFile: RelationQueryBuilderContract<typeof File, any>): void => {
             queryImageFile.preload('bucket')
@@ -122,7 +122,7 @@ export class OrderProductService {
   public static getAllOrderProductsByProductId(productId: number): Promise<OrderProduct[]> {
     try {
       return OrderProduct.query()
-        .where('products_id', productId)
+        .where('productsId', productId)
         .preload('product', (queryProduct: RelationQueryBuilderContract<typeof Product, any>): void => {
           queryProduct.preload('imageFile', (queryImageFile: RelationQueryBuilderContract<typeof File, any>): void => {
             queryImageFile.preload('bucket')

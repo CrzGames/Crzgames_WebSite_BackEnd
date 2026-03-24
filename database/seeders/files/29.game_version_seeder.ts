@@ -12,15 +12,15 @@ export default class extends BaseSeeder {
     for (const game of games) {
       // Crée les versions pour chaque jeu
       await GameVersion.create({
-        games_id: game.id,
+        gamesId: game.id,
         version: 'v1.0.0',
-        is_available: true,
+        isAvailable: true,
       })
 
       await GameVersion.create({
-        games_id: game.id,
+        gamesId: game.id,
         version: 'v1.0.1',
-        is_available: false,
+        isAvailable: false,
       })
     }
   }

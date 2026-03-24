@@ -36,7 +36,7 @@ export default class GameChangeLogService {
     try {
       // Créer un nouveau journal de modifications de jeu dans la base de données
       return await GameChangeLog.create({
-        games_id: newGameChangeLog.games_id,
+        gamesId: newGameChangeLog.games_id,
         version: newGameChangeLog.version,
         content: newGameChangeLog.content,
       })
@@ -99,7 +99,13 @@ export default class GameChangeLogService {
       const gameChangeLogUpdated: GameChangeLog = await GameChangeLog.findOrFail(gameChangeLog.id)
 
       // Mettre à jour le journal de modifications de jeu avec les nouvelles informations
-      await gameChangeLogUpdated.merge(gameChangeLog).save()
+      await gameChangeLogUpdated
+        .merge({
+          gamesId: gameChangeLog.games_id,
+          version: gameChangeLog.version,
+          content: gameChangeLog.content,
+        })
+        .save()
     } catch (error: any) {
       logger.error('updateGameChangeLog error: ' + error.message)
 
@@ -157,7 +163,7 @@ export default class GameChangeLogService {
             trailerFileQuery.preload('bucket')
           })
         })
-        .where('games_id', gameId)
+        .where('gamesId', gameId)
         .orderBy('version', 'desc')
 
       // Vérifier si des journaux de modifications de jeu ont été trouvés pour l'ID du jeu donné

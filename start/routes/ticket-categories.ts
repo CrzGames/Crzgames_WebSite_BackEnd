@@ -1,5 +1,5 @@
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
-const TicketCategoriesController = () => import('#controllers/ticket_categories_controller')
+import { controllers } from '#generated/controllers'
 
-router.get('/ticket-categories', [TicketCategoriesController, 'getAllTicketCategories']).use([middleware.auth()])
+router.get('/ticket-categories', [controllers.TicketCategories, 'getAllTicketCategories']).use([middleware.auth()])

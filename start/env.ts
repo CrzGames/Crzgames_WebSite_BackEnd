@@ -20,6 +20,7 @@ export default await Env.create(new URL('../', import.meta.url), {
   LOG_LEVEL: Env.schema.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']),
   HASH_DRIVER: Env.schema.enum(['scrypt', 'argon', 'bcrypt'] as const),
   CACHE_VIEWS: Env.schema.boolean(),
+  DB_CONNECTION: Env.schema.string(),
   DB_HOST: Env.schema.string({ format: 'host' }),
   DB_PORT: Env.schema.number(),
   DB_USER: Env.schema.string(),

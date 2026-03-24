@@ -76,10 +76,10 @@ export default class extends BaseSeeder {
       await Carousel.create({
         title: carouselData.title,
         content: carouselData.content,
-        button_url: carouselData.button_url,
-        button_content: carouselData.button_content,
-        image_files_id: imageFile.id,
-        logo_files_id: logoFile.id,
+        buttonUrl: carouselData.button_url,
+        buttonContent: carouselData.button_content,
+        imageFilesId: imageFile.id,
+        logoFilesId: logoFile.id,
       })
 
       index++

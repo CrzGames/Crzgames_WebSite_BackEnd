@@ -24,8 +24,8 @@ export default class GameBinaryAssignmentsService {
       const binaries: Promise<GameBinaryAssignment>[] = gameBinaryIds.map(
         async (gameBinaryId: number): Promise<GameBinaryAssignment> => {
           return await GameBinaryAssignment.create({
-            games_id: gameId,
-            game_binaries_id: gameBinaryId,
+            gamesId: gameId,
+            gameBinariesId: gameBinaryId,
           })
         },
       )
@@ -81,8 +81,8 @@ export default class GameBinaryAssignmentsService {
     try {
       // Créer une assignation de binaire de jeu
       return await GameBinaryAssignment.create({
-        games_id: gameId,
-        game_binaries_id: gameBinaryId,
+        gamesId: gameId,
+        gameBinariesId: gameBinaryId,
       })
     } catch (error: any) {
       logger.error('createGameBinaryAssignment error: ' + error.message)

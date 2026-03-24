@@ -41,8 +41,8 @@ export default class GameBinariesService {
 
       // Créer le binaire de jeu dans la base de données avec l'ID de la plateforme et l'ID du fichier
       return await GameBinary.create({
-        game_platforms_id: gameBinaryCommand.platformId,
-        files_id: file.id,
+        gamePlatformsId: gameBinaryCommand.platformId,
+        filesId: file.id,
       })
     } catch (error: any) {
       logger.error('createGameBinary error: ' + error.message)
@@ -93,13 +93,13 @@ export default class GameBinariesService {
         pathFilename: bucketCommand.pathfilename,
         bucketName: bucketCommand.bucketName,
       }
-      await CloudStorageS3Service.updateFileInDB(bucketFileCommand, gameBinary.files_id)
+      await CloudStorageS3Service.updateFileInDB(bucketFileCommand, gameBinary.filesId)
 
       // Mettre à jour le binaire de jeu avec l'ID de la plateforme et l'ID du fichier
       return await gameBinary
         .merge({
-          game_platforms_id: bucketCommand.platformId,
-          files_id: gameBinary.files_id,
+          gamePlatformsId: bucketCommand.platformId,
+          filesId: gameBinary.filesId,
         })
         .save()
     } catch (error: any) {

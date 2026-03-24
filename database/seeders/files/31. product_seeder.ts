@@ -112,9 +112,9 @@ export default class extends BaseSeeder {
         name: productData.name,
         description: productData.description,
         price: productData.price,
-        games_id: productData.games_id,
-        product_categories_id: productData.product_categories_id,
-        image_files_id: imageFile.id,
+        gamesId: productData.games_id,
+        productCategoriesId: productData.product_categories_id,
+        imageFilesId: imageFile.id,
       })
 
       // Associating game servers
@@ -126,9 +126,9 @@ export default class extends BaseSeeder {
       if (productData.discounts) {
         for (const discount of productData.discounts) {
           await ProductDiscount.create({
-            products_id: product.id,
+            productsId: product.id,
             currency: discount.currency,
-            discount_percent: discount.discount_percent,
+            discountPercent: discount.discount_percent,
           })
         }
       }

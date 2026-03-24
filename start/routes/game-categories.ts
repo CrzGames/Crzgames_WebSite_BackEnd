@@ -1,4 +1,4 @@
 import router from '@adonisjs/core/services/router'
-const GameCategoriesController = () => import('#controllers/game_categories_controller')
+import { controllers } from '#generated/controllers'
 
-router.get('/game-categories', [GameCategoriesController, 'getAllGameCategories'])
+router.get('/game-categories', [controllers.GameCategories, 'getAllGameCategories'])

@@ -126,10 +126,10 @@ export default class CarouselService {
       return await Carousel.create({
         title: title,
         content: content,
-        button_url: button_url,
-        button_content: button_content,
-        image_files_id: carouselImageFileInstance.id,
-        logo_files_id: carouselLogoFileInstance?.id ? carouselLogoFileInstance.id : null,
+        buttonUrl: button_url,
+        buttonContent: button_content,
+        imageFilesId: carouselImageFileInstance.id,
+        logoFilesId: carouselLogoFileInstance?.id ? carouselLogoFileInstance.id : null,
       })
     } catch (error: any) {
       logger.error('createCarousel error: ' + error.message)
@@ -193,10 +193,10 @@ export default class CarouselService {
         .merge({
           title: title,
           content: content,
-          button_url: button_url,
-          button_content: button_content,
-          image_files_id: image_files_id,
-          logo_files_id: logo_files_id,
+          buttonUrl: button_url,
+          buttonContent: button_content,
+          imageFilesId: image_files_id,
+          logoFilesId: logo_files_id,
         })
         .save()
     } catch (error: any) {
