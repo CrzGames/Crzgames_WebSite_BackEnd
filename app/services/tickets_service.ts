@@ -76,7 +76,12 @@ export default class TicketsService {
    */
   public static async getTicketsById(id: number): Promise<Ticket> {
     try {
-      return await Ticket.query().preload('user').where('id', id).firstOrFail()
+      return await Ticket.query()
+        .preload('user')
+        .preload('ticketStatus')
+        .preload('ticketCategory')
+        .where('id', id)
+        .firstOrFail()
     } catch (error: any) {
       logger.error('getTicketsById error: ' + error.message)
 

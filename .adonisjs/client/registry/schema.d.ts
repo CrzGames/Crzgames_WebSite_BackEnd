@@ -1139,10 +1139,10 @@ export interface Registry {
     methods: ["POST"]
     pattern: '/ticket-response'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/ticket_response/create_ticket_responses_validator').default)>>
+      body: ExtractBody<InferInput<(typeof import('#validators/TicketResponse/CreateTicketResponsesValidator').createTicketResponsesValidator)>>
       paramsTuple: []
       params: {}
-      query: ExtractQuery<InferInput<(typeof import('#validators/ticket_response/create_ticket_responses_validator').default)>>
+      query: ExtractQuery<InferInput<(typeof import('#validators/TicketResponse/CreateTicketResponsesValidator').createTicketResponsesValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/ticket_responses_controller').default['createTicketResponses']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/ticket_responses_controller').default['createTicketResponses']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
@@ -1154,9 +1154,9 @@ export interface Registry {
       body: {}
       paramsTuple: [ParamValue]
       params: { ticketId: ParamValue }
-      query: ExtractQueryForGet<InferInput<(typeof import('#validators/TicketResponse/GetAllTicketsResponsesByTicketIdValidator').getAllTicketsResponsesByTicketIdValidator)>>
+      query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/ticket_responses_controller').default['getAllTicketsResponsesByTicketId']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/ticket_responses_controller').default['getAllTicketsResponsesByTicketId']>>> | { status: 422; response: { errors: SimpleError[] } }
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/ticket_responses_controller').default['getAllTicketsResponsesByTicketId']>>>
     }
   }
   'tickets.create_tickets': {

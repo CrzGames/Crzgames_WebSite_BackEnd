@@ -26,11 +26,12 @@ export default class TicketResponse extends TicketResponseSchema {
    */
   public serialize(): ModelObject {
     const serialized: ModelObject = super.serialize()
+    const isSupport: boolean = Boolean(serialized.isSupport ?? serialized.is_support)
 
     return {
       ...serialized,
-      is_support: !!serialized.is_support,
+      isSupport,
+      is_support: isSupport,
     } as ModelObject
   }
 }
-

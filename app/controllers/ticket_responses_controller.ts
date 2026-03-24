@@ -1,14 +1,14 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import CreateTicketResponsesValidator from '#validators/ticket_response/create_ticket_responses_validator'
+import { createTicketResponsesValidator } from '#validators/TicketResponse/CreateTicketResponsesValidator'
 import TicketResponsesService from '#services/ticket_responses_service'
 import type TicketResponse from '#models/ticket_response'
-import { getAllTicketsResponsesByTicketIdValidator } from '#validators/TicketResponse/GetAllTicketsResponsesByTicketIdValidator'
+import BadRequestException from '#exceptions/bad_request_exception'
 
 export default class TicketResponsesController {
   public async createTicketResponses({ request, response }: HttpContext): Promise<void> {
     // Récupération des données de la requête
     const payload: { content: string; userId: number; ticketId: number } =
-      await request.validateUsing(CreateTicketResponsesValidator)
+      await request.validateUsing(createTicketResponsesValidator)
 
     // Création du ticket en utilisant le service TicketsResponseService
     await TicketResponsesService.createTicketResponses(payload.content, payload.userId, payload.ticketId)
@@ -17,12 +17,13 @@ export default class TicketResponsesController {
     response.status(201)
   }
 
-  public async getAllTicketsResponsesByTicketId({ request, response }: HttpContext): Promise<void> {
-    const payload: { ticketId: number } = await request.validateUsing(getAllTicketsResponsesByTicketIdValidator)
+  public async getAllTicketsResponsesByTicketId({ params, response }: HttpContext): Promise<void> {
+    const ticketId: number = Number(params.ticketId)
+    if (Number.isNaN(ticketId)) {
+      throw new BadRequestException('Invalid ticket id')
+    }
 
-    const ticketsResponse: TicketResponse[] = await TicketResponsesService.getAllTicketsResponsesByTicketId(
-      payload.ticketId,
-    )
+    const ticketsResponse: TicketResponse[] = await TicketResponsesService.getAllTicketsResponsesByTicketId(ticketId)
 
     response.status(200).json(ticketsResponse)
   }
