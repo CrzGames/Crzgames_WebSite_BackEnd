@@ -27,4 +27,3 @@ export default class GameVersion extends GameVersionSchema {
     } as ModelObject
   }
 }
-

@@ -45,4 +45,3 @@ export default class File extends FileSchema {
   })
   declare public bucket: BelongsTo<typeof Bucket>
 }
-

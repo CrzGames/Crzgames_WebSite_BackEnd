@@ -19,4 +19,3 @@ export default class ProductGameServer extends ProductGameServerSchema {
   })
   declare public gameServer: BelongsTo<typeof GameServer>
 }
-

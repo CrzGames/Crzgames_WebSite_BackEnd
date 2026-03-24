@@ -18,4 +18,3 @@ export default class GameBinaryAssignment extends GameBinaryAssignmentSchema {
   })
   declare public gameBinary: BelongsTo<typeof GameBinary>
 }
-

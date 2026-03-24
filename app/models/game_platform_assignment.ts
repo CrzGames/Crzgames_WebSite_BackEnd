@@ -18,4 +18,3 @@ export default class GamePlatformAssignment extends GamePlatformAssignmentSchema
   })
   declare public gamePlatform: BelongsTo<typeof GamePlatform>
 }
-

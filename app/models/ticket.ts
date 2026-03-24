@@ -25,4 +25,3 @@ export default class Ticket extends TicketSchema {
   })
   declare public ticketCategory: BelongsTo<typeof TicketCategory>
 }
-

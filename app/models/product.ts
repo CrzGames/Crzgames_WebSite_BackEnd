@@ -54,4 +54,3 @@ export default class Product extends ProductSchema {
   })
   declare public orderProducts: HasMany<typeof OrderProduct>
 }
-

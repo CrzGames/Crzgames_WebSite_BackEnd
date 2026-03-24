@@ -18,4 +18,3 @@ export default class GameCategoryAssignment extends GameCategoryAssignmentSchema
   })
   declare public gameCategory: BelongsTo<typeof GameCategory>
 }
-

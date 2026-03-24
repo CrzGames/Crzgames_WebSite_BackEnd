@@ -29,4 +29,3 @@ export default class GameBinary extends GameBinarySchema {
   })
   declare public file: BelongsTo<typeof File>
 }
-

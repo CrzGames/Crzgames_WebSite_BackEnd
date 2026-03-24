@@ -58,4 +58,3 @@ export default class User extends compose(UserSchema, withAuthFinder(hash)) {
    */
   declare public currentAccessToken?: AccessToken
 }
-

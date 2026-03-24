@@ -11,4 +11,3 @@ export default class GameChangeLog extends GameChangeLogSchema {
   })
   declare public game: BelongsTo<typeof Game>
 }
-

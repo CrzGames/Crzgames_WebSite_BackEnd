@@ -25,4 +25,3 @@ export default class OrderProduct extends OrderProductSchema {
   })
   declare public gameServer: BelongsTo<typeof GameServer>
 }
-

@@ -18,4 +18,3 @@ export default class UserGameWishlist extends UserGameWishlistSchema {
   })
   declare public game: BelongsTo<typeof Game>
 }
-

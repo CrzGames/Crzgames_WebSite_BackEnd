@@ -20,4 +20,3 @@ export default class Order extends OrderSchema {
   })
   declare public orderProducts: HasMany<typeof OrderProduct>
 }
-

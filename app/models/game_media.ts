@@ -18,4 +18,3 @@ export default class GameMedia extends GameMediaSchema {
   })
   declare public file: BelongsTo<typeof File>
 }
-

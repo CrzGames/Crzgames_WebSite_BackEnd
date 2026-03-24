@@ -11,4 +11,3 @@ export default class ProductDiscount extends ProductDiscountSchema {
   })
   declare public product: BelongsTo<typeof Product>
 }
-

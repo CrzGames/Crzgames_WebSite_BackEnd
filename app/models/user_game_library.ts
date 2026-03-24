@@ -18,4 +18,3 @@ export default class UserGameLibrary extends UserGameLibrarySchema {
   })
   declare public game: BelongsTo<typeof Game>
 }
-

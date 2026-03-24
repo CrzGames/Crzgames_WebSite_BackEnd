@@ -11,4 +11,3 @@ export default class ProductCategory extends ProductCategorySchema {
   })
   declare public products: HasMany<typeof Product>
 }
-
