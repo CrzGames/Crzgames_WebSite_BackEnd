@@ -27,18 +27,23 @@ export default class GameChangeLogsController {
 
   //function to update a game change log
   public async updateGameChangeLog({ request, response }: HttpContext): Promise<void> {
-    const payload: { id: number; games_id: number; version: string; content: string } =
+    const payload: { params: { id: number }; games_id: number; version: string; content: string } =
       await request.validateUsing(updateGameChangeLogValidator)
 
-    await GameChangeLogService.updateGameChangeLog(payload)
+    await GameChangeLogService.updateGameChangeLog({
+      id: payload.params.id,
+      games_id: payload.games_id,
+      version: payload.version,
+      content: payload.content,
+    })
 
     response.status(204).noContent()
   }
 
   //function to delete a game change log
   public async deleteGameChangeLog({ request, response }: HttpContext): Promise<void> {
-    const payload: { id: number } = await request.validateUsing(deleteGameChangeLogValidator)
-    await GameChangeLogService.deleteGameChangeLog(payload.id)
+    const payload: { params: { id: number } } = await request.validateUsing(deleteGameChangeLogValidator)
+    await GameChangeLogService.deleteGameChangeLog(payload.params.id)
     response.status(204).noContent()
   }
 
@@ -50,8 +55,8 @@ export default class GameChangeLogsController {
   }
 
   public async getGameChangeLogById({ request, response }: HttpContext): Promise<void> {
-    const payload: { id: number } = await request.validateUsing(getGameChangeLogByIdValidator)
-    const gameChangeLog: GameChangeLog = await GameChangeLogService.getGameChangeLogById(payload.id)
+    const payload: { params: { id: number } } = await request.validateUsing(getGameChangeLogByIdValidator)
+    const gameChangeLog: GameChangeLog = await GameChangeLogService.getGameChangeLogById(payload.params.id)
     response.status(200).json(gameChangeLog)
   }
 
