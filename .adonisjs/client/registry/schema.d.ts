@@ -1250,9 +1250,9 @@ export interface Registry {
       body: {}
       paramsTuple: [ParamValue]
       params: { userId: ParamValue }
-      query: ExtractQueryForGet<InferInput<(typeof import('#validators/UserGameLibrary/GetAllUsersGamesLibrariesByUserIdValidator').getAllUsersGamesLibrariesByUserIdValidator)>>
+      query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/user_game_libraries_controller').default['getAllUsersGamesLibrariesByUserId']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/user_game_libraries_controller').default['getAllUsersGamesLibrariesByUserId']>>> | { status: 422; response: { errors: SimpleError[] } }
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/user_game_libraries_controller').default['getAllUsersGamesLibrariesByUserId']>>>
     }
   }
   'user_game_libraries.add_game_to_user_game_libraries': {
