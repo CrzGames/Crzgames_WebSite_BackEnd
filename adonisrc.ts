@@ -29,7 +29,7 @@ export default defineConfig({
     () => import('@adonisjs/lucid/commands'),
     () => import('@adonisjs/session/commands'),
     () => import('@foadonis/crypt/commands'),
-    () => import('@adonisjs/mail/commands')
+    () => import('@adonisjs/mail/commands'),
   ],
 
   /*
