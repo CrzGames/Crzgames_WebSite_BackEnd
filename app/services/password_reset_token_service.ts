@@ -66,15 +66,11 @@ export default class PasswordResetTokenService {
    * @param {number} userId - L'ID de l'utilisateur pour lequel le token est récupéré
    * @returns {Promise<PasswordResetToken>} - Le token de réinitialisation de mot de passe associé à l'utilisateur
    */
-  public static async getPasswordResetTokenByUserId(userId: number): Promise<PasswordResetToken> {
+  public static async getPasswordResetTokenByUserId(userId: number): Promise<PasswordResetToken | null> {
     try {
-      return await PasswordResetToken.findByOrFail('usersId', userId)
+      return await PasswordResetToken.findBy('usersId', userId)
     } catch (error: any) {
       logger.error('Error getting password reset token by userId: ' + error.message)
-
-      if (error instanceof lucidErrors.E_ROW_NOT_FOUND) {
-        throw new NotFoundException('Password reset token not found for user ID: ' + userId)
-      }
 
       throw new InternalServerErrorException('Failed to retrieve password reset token')
     }

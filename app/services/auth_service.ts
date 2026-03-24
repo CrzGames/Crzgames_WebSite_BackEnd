@@ -152,7 +152,10 @@ export default class AuthService {
   public static async resendNewCodeVerificationAccount(data: ResendNewCodeVerificationAccountData): Promise<void> {
     try {
       // Récupérer l'utilisateur par son email
-      const user: User = await User.findByOrFail('email', data.email)
+      const user: User | null = await User.findBy('email', data.email)
+      if (!user) {
+        throw new NotFoundException('User not found')
+      }
 
       /**
        * Vu que le premier code d'activation à déjà était générer lors de l'incription
@@ -198,7 +201,10 @@ export default class AuthService {
   public static async verifyCode(data: VerifyCodeData): Promise<void> {
     try {
       // Récupérer l'utilisateur par son email
-      const user: User = await User.findByOrFail('email', data.email)
+      const user: User | null = await User.findBy('email', data.email)
+      if (!user) {
+        throw new NotFoundException('User not found')
+      }
 
       // Vérifier si le code d'activation correspond à celui de l'utilisateur en base de données
       if (user.activeCode !== data.code) {
@@ -233,7 +239,10 @@ export default class AuthService {
   public static async forgotPassword(data: ForgotPasswordData): Promise<void> {
     try {
       // Récupére l'utilisateur par son email
-      const user: User = await User.findByOrFail('email', data.email)
+      const user: User | null = await User.findBy('email', data.email)
+      if (!user) {
+        throw new NotFoundException('User not found')
+      }
 
       /**
        * Check si l'utilisateur a déjà un token de réinitialisation de mot de passe
@@ -241,12 +250,13 @@ export default class AuthService {
        * Cela permet de s'assurer que l'utilisateur ne peut pas utiliser un ancien token pour réinitialiser son mot de passe
        * et de garantir que seul le dernier token envoyé est valide
        */
-      const oldPasswordResetToken: PasswordResetToken = await PasswordResetTokenService.getPasswordResetTokenByUserId(
-        user.id,
-      )
+      const oldPasswordResetToken: PasswordResetToken | null =
+        await PasswordResetTokenService.getPasswordResetTokenByUserId(user.id)
 
       // Supprimer l'ancien token de réinitialisation de mot de passe
-      await PasswordResetTokenService.deletePasswordResetToken(oldPasswordResetToken.id)
+      if (oldPasswordResetToken) {
+        await PasswordResetTokenService.deletePasswordResetToken(oldPasswordResetToken.id)
+      }
 
       // Créer un nouveau token de réinitialisation de mot de passe
       const passwordResetToken: PasswordResetToken = await PasswordResetTokenService.createPasswordResetToken(user)
@@ -340,15 +350,19 @@ export default class AuthService {
   public static async sendMailToModifyEmail(data: SendMailToModifyEmailData): Promise<void> {
     try {
       // Récupérer l'utilisateur par son ancien email
-      const user: User = await User.findByOrFail('email', data.oldEmail)
+      const user: User | null = await User.findBy('email', data.oldEmail)
+      if (!user) {
+        throw new NotFoundException('User not found')
+      }
 
       // Checker si l'utilisateur a déjà un token de réinitialisation de mot de passe
-      const oldPasswordResetToken: PasswordResetToken = await PasswordResetTokenService.getPasswordResetTokenByUserId(
-        user.id,
-      )
+      const oldPasswordResetToken: PasswordResetToken | null =
+        await PasswordResetTokenService.getPasswordResetTokenByUserId(user.id)
 
       // Supprimer l'ancien token de réinitialisation de mot de passe
-      await PasswordResetTokenService.deletePasswordResetToken(oldPasswordResetToken.id)
+      if (oldPasswordResetToken) {
+        await PasswordResetTokenService.deletePasswordResetToken(oldPasswordResetToken.id)
+      }
 
       // Créer un nouveau token de réinitialisation de mot de passe
       const passwordResetToken: PasswordResetToken = await PasswordResetTokenService.createPasswordResetToken(user)
@@ -447,3 +461,4 @@ export default class AuthService {
     }
   }
 }
+
