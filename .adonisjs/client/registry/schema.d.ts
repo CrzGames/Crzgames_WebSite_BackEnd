@@ -434,9 +434,9 @@ export interface Registry {
       body: {}
       paramsTuple: [ParamValue]
       params: { gameId: ParamValue }
-      query: {}
+      query: ExtractQueryForGet<InferInput<(typeof import('#validators/GameChangeLog/GetAllGameChangeLogByGameIdValidator').getAllGameChangeLogByGameIdValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/game_change_logs_controller').default['getAllGameChangeLogByGameId']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/game_change_logs_controller').default['getAllGameChangeLogByGameId']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/game_change_logs_controller').default['getAllGameChangeLogByGameId']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'game_change_logs.get_game_change_log_by_id': {

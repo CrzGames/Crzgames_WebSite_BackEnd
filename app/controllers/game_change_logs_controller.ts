@@ -2,6 +2,7 @@ import GameChangeLogService from '#services/game_change_log_service'
 import type { HttpContext } from '@adonisjs/core/http'
 import type GameChangeLog from '#models/game_change_log'
 import { getAllGameChangeLogByTitleValidator } from '#validators/GameChangeLog/GetAllGameChangeLogByTitleValidator'
+import { getAllGameChangeLogByGameIdValidator } from '#validators/GameChangeLog/GetAllGameChangeLogByGameIdValidator'
 import { createGameChangeLogValidator } from '#validators/GameChangeLog/CreateGameChangeLogValidator'
 import { updateGameChangeLogValidator } from '#validators/GameChangeLog/UpdateGameChangeLogValidator'
 import { deleteGameChangeLogValidator } from '#validators/GameChangeLog/DeleteGameChangeLogValidator'
@@ -43,8 +44,8 @@ export default class GameChangeLogsController {
 
   //function to get a game change log by id game
   public async getAllGameChangeLogByGameId({ request, response }: HttpContext): Promise<void> {
-    const payload: { gameId: number } = await request.validateUsing(this.getAllGameChangeLogByGameId)
-    const gameChangeLogs: GameChangeLog[] = await GameChangeLogService.getAllGameChangeLogByGameId(payload.gameId)
+    const payload: { params: { gameId: number } } = await request.validateUsing(getAllGameChangeLogByGameIdValidator)
+    const gameChangeLogs: GameChangeLog[] = await GameChangeLogService.getAllGameChangeLogByGameId(payload.params.gameId)
     response.status(200).json(gameChangeLogs)
   }
 
@@ -55,9 +56,9 @@ export default class GameChangeLogsController {
   }
 
   public async getAllGameChangeLogByGameTitle({ request, response }: HttpContext): Promise<void> {
-    const payload: { title: string } = await request.validateUsing(getAllGameChangeLogByTitleValidator)
-    payload.title = decodeURIComponent(payload.title)
-    const gameChangeLogs: GameChangeLog[] = await GameChangeLogService.getAllGameChangeLogByGameTitle(payload.title)
+    const payload: { params: { title: string } } = await request.validateUsing(getAllGameChangeLogByTitleValidator)
+    const decodedTitle: string = decodeURIComponent(payload.params.title).replace(/\+/g, ' ').trim()
+    const gameChangeLogs: GameChangeLog[] = await GameChangeLogService.getAllGameChangeLogByGameTitle(decodedTitle)
     response.status(200).json(gameChangeLogs)
   }
 }
