@@ -7,8 +7,7 @@ import type Game from '#models/game'
 import type { GameBinaryCommand } from '#services/game_binaries_service'
 import { updateGameValidator } from '#validators/game/update_game_validator'
 import { createGameValidator } from '#validators/game/create_game_validator'
-import { deleteGamesValidator } from '#validators/game/delete_games_validator'
-import { getGamesByIdValidator } from '#validators/game/get_games_by_id_validator'
+import BadRequestException from '#exceptions/bad_request_exception'
 
 export default class GamesController {
   public async createGames({ request, response }: HttpContext): Promise<void> {
@@ -60,10 +59,14 @@ export default class GamesController {
     response.status(201)
   }
 
-  public async updateGames({ request, response }: HttpContext): Promise<void> {
+  public async updateGames({ params, request, response }: HttpContext): Promise<void> {
+    const gameId: number = Number(params.id)
+    if (Number.isNaN(gameId)) {
+      throw new BadRequestException('Invalid game id')
+    }
+
     // Récupération des données de la requête
     const payload: {
-      id: number
       title: string
       upcomingGame: boolean
       newGame: boolean
@@ -84,7 +87,7 @@ export default class GamesController {
 
     // Update du game en utilisant le service GamesService
     const updatedGame: Game = await GamesService.updateGames(
-      payload.id,
+      gameId,
       payload.title,
       payload.upcomingGame,
       payload.newGame,
@@ -123,15 +126,23 @@ export default class GamesController {
     response.status(204).noContent()
   }
 
-  public async deleteGames({ request, response }: HttpContext): Promise<void> {
-    const payload: { id: number } = await request.validateUsing(deleteGamesValidator)
-    await GamesService.deleteGames(payload.id)
+  public async deleteGames({ params, response }: HttpContext): Promise<void> {
+    const gameId: number = Number(params.id)
+    if (Number.isNaN(gameId)) {
+      throw new BadRequestException('Invalid game id')
+    }
+
+    await GamesService.deleteGames(gameId)
     response.status(204).noContent()
   }
 
-  public async getGamesById({ request, response }: HttpContext): Promise<void> {
-    const payload: { id: number } = await request.validateUsing(getGamesByIdValidator)
-    const game: Game = await GamesService.getGamesById(payload.id)
+  public async getGamesById({ params, response }: HttpContext): Promise<void> {
+    const gameId: number = Number(params.id)
+    if (Number.isNaN(gameId)) {
+      throw new BadRequestException('Invalid game id')
+    }
+
+    const game: Game = await GamesService.getGamesById(gameId)
     return response.status(200).json(game)
   }
 

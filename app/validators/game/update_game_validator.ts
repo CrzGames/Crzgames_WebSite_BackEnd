@@ -5,9 +5,6 @@ import vine from '@vinejs/vine'
  */
 export const updateGameValidator = vine.compile(
   vine.object({
-    params: vine.object({
-      id: vine.number().exists({ table: 'games', column: 'id' }),
-    }),
     title: vine.string(),
     upcomingGame: vine.boolean(),
     newGame: vine.boolean(),

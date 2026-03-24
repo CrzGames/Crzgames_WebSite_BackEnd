@@ -518,9 +518,9 @@ export interface Registry {
       body: {}
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
-      query: ExtractQueryForGet<InferInput<(typeof import('#validators/game/get_games_by_id_validator').getGamesByIdValidator)>>
+      query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/games_controller').default['getGamesById']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/games_controller').default['getGamesById']>>> | { status: 422; response: { errors: SimpleError[] } }
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/games_controller').default['getGamesById']>>>
     }
   }
   'games.get_all_games_by_title': {
@@ -575,12 +575,12 @@ export interface Registry {
     methods: ["DELETE"]
     pattern: '/game/:id'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/game/delete_games_validator').deleteGamesValidator)>>
+      body: {}
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
-      query: ExtractQuery<InferInput<(typeof import('#validators/game/delete_games_validator').deleteGamesValidator)>>
+      query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/games_controller').default['deleteGames']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/games_controller').default['deleteGames']>>> | { status: 422; response: { errors: SimpleError[] } }
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/games_controller').default['deleteGames']>>>
     }
   }
   'game_server.get_all_game_servers': {

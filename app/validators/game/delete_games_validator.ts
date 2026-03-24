@@ -5,8 +5,6 @@ import vine from '@vinejs/vine'
  */
 export const deleteGamesValidator = vine.compile(
   vine.object({
-    params: vine.object({
-      id: vine.number().exists({ table: 'games', column: 'id' }),
-    }),
+    id: vine.number().exists({ table: 'games', column: 'id' }),
   }),
 )
