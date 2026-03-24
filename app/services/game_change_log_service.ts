@@ -1,6 +1,7 @@
 import GameChangeLog from '#models/game_change_log'
 import NotFoundException from '#exceptions/not_found_exception'
 import InternalServerErrorException from '#exceptions/internal_server_error_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
 import Game from '#models/game'
 import type File from '#models/file'
 import logger from '@adonisjs/core/services/logger'
@@ -111,6 +112,10 @@ export default class GameChangeLogService {
 
       if (error instanceof lucidErrors.E_ROW_NOT_FOUND) {
         throw new NotFoundException('Game Change Log not found')
+      }
+
+      if (error?.code === 'ER_DUP_ENTRY') {
+        throw new BadRequestException('A changelog with this version already exists for the selected game')
       }
 
       throw new InternalServerErrorException('Failed to update game change log')

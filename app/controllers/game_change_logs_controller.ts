@@ -7,6 +7,7 @@ import { createGameChangeLogValidator } from '#validators/GameChangeLog/CreateGa
 import { updateGameChangeLogValidator } from '#validators/GameChangeLog/UpdateGameChangeLogValidator'
 import { deleteGameChangeLogValidator } from '#validators/GameChangeLog/DeleteGameChangeLogValidator'
 import { getGameChangeLogByIdValidator } from '#validators/GameChangeLog/GetGameChangeLogByIdValidator'
+import BadRequestException from '#exceptions/bad_request_exception'
 
 export default class GameChangeLogsController {
   //function to create a game change log
@@ -26,12 +27,17 @@ export default class GameChangeLogsController {
   }
 
   //function to update a game change log
-  public async updateGameChangeLog({ request, response }: HttpContext): Promise<void> {
-    const payload: { params: { id: number }; games_id: number; version: string; content: string } =
+  public async updateGameChangeLog({ request, params, response }: HttpContext): Promise<void> {
+    const gameChangeLogId: number = Number(params.id)
+    if (Number.isNaN(gameChangeLogId)) {
+      throw new BadRequestException('Invalid game change log id')
+    }
+
+    const payload: { games_id: number; version: string; content: string } =
       await request.validateUsing(updateGameChangeLogValidator)
 
     await GameChangeLogService.updateGameChangeLog({
-      id: payload.params.id,
+      id: gameChangeLogId,
       games_id: payload.games_id,
       version: payload.version,
       content: payload.content,
@@ -50,7 +56,9 @@ export default class GameChangeLogsController {
   //function to get a game change log by id game
   public async getAllGameChangeLogByGameId({ request, response }: HttpContext): Promise<void> {
     const payload: { params: { gameId: number } } = await request.validateUsing(getAllGameChangeLogByGameIdValidator)
-    const gameChangeLogs: GameChangeLog[] = await GameChangeLogService.getAllGameChangeLogByGameId(payload.params.gameId)
+    const gameChangeLogs: GameChangeLog[] = await GameChangeLogService.getAllGameChangeLogByGameId(
+      payload.params.gameId,
+    )
     response.status(200).json(gameChangeLogs)
   }
 
