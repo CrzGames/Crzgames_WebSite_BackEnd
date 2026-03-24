@@ -203,29 +203,34 @@ export default class GamesService {
     sortBy: string = 'releaseDate',
   ): Promise<GamesResponse> {
     try {
-      const query: ModelQueryBuilderContract<typeof Game, Game> = Game.query()
-        .preload('pictureFile', (pictureFileQuery): void => {
-          pictureFileQuery.preload('bucket')
-        })
-        .preload('logoFile', (logoFileQuery): void => {
-          logoFileQuery.preload('bucket')
-        })
-        .preload('trailerFile', (trailerFile): void => {
-          trailerFile.preload('bucket')
-        })
-        .preload('gamePlatform')
-        .preload('gameBinary', (gameBinaryQuery): void => {
-          gameBinaryQuery.preload('gamePlatform')
-          gameBinaryQuery.preload('file', (fileQuery): void => {
-            fileQuery.preload('bucket')
+      const applyGamePreloads = (
+        queryBuilder: ModelQueryBuilderContract<typeof Game, Game>,
+      ): ModelQueryBuilderContract<typeof Game, Game> =>
+        queryBuilder
+          .preload('pictureFile', (pictureFileQuery): void => {
+            pictureFileQuery.preload('bucket')
           })
-        })
-        .preload('gameCategory')
-        .preload('gameConfigurationMinimal')
-        .preload('gameConfigurationRecommended')
-        .preload('languages')
-        .preload('gameVersions')
-        .preload('gameMedias')
+          .preload('logoFile', (logoFileQuery): void => {
+            logoFileQuery.preload('bucket')
+          })
+          .preload('trailerFile', (trailerFile): void => {
+            trailerFile.preload('bucket')
+          })
+          .preload('gamePlatform')
+          .preload('gameBinary', (gameBinaryQuery): void => {
+            gameBinaryQuery.preload('gamePlatform')
+            gameBinaryQuery.preload('file', (fileQuery): void => {
+              fileQuery.preload('bucket')
+            })
+          })
+          .preload('gameCategory')
+          .preload('gameConfigurationMinimal')
+          .preload('gameConfigurationRecommended')
+          .preload('languages')
+          .preload('gameVersions')
+          .preload('gameMedias')
+
+      const query: ModelQueryBuilderContract<typeof Game, Game> = Game.query()
 
       // Filtre par titre
       if (title) {
@@ -286,19 +291,21 @@ export default class GamesService {
 
       // Si la pagination n'est pas demandée, on renvoie simplement les jeux
       if (!page || !perPage) {
-        return await query.exec()
+        return await applyGamePreloads(query).exec()
       }
 
       // Pagination activée : on récupère le total des jeux
-      const total: any = await query
-        .clone()
-        .count('* as total')
-        .then((games: Game[]): any => games[0].$extras.total)
+      const total: number = Number(
+        await query
+          .clone()
+          .count('* as total')
+          .then((games: Game[]): any => games[0].$extras.total),
+      )
       const from: number = (page - 1) * perPage + 1
       const to: number = Math.min(from + perPage - 1, total)
 
       // Récupérer les jeux avec pagination
-      const games: Game[] = await query.forPage(page, perPage).exec()
+      const games: Game[] = await applyGamePreloads(query.clone()).forPage(page, perPage).exec()
 
       return {
         data: games,
