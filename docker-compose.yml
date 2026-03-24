@@ -112,7 +112,7 @@ services:
     logging:
       driver: 'none' # disable saving logs
     environment:
-      - MH_USERNAME=support@develop.crzgames.com
+      - MH_USERNAME=fakeusername
       - MH_PASSWORD=fakepassword
     ports:
       - '1025:1025' # smtp server
