@@ -53,6 +53,7 @@
     "@adonisjs/drive": "^4.0.0",
     "@adonisjs/lucid": "^22.2.0",
     "@adonisjs/mail": "^10.1.0",
+    "@adonisjs/session": "^8.0.0",
     "@adonisjs/shield": "^9.0.0",
     "@aws-sdk/client-s3": "^3.1015.0",
     "@aws-sdk/s3-request-presigner": "^3.1015.0",

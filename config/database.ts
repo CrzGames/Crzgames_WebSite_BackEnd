@@ -35,6 +35,14 @@ const dbConfig = defineConfig({
          */
         paths: ['database/migrations'],
       },
+      seeders: {
+        /**
+         * Restrict seeder discovery to executable seeder files only.
+         * Avoid scanning static assets (json, media) under database/seeders.
+         */
+        paths: ['database/seeders/files'],
+        naturalSort: true,
+      },
 
       schemaGeneration: {
         /**
@@ -85,6 +93,14 @@ const dbConfig = defineConfig({
       migrations: {
         naturalSort: true,
         paths: ['database/migrations'],
+      },
+      seeders: {
+        /**
+         * Restrict seeder discovery to executable seeder files only.
+         * Avoid scanning static assets (json, media) under database/seeders.
+         */
+        paths: ['database/seeders/files'],
+        naturalSort: true,
       },
       schemaGeneration: {
         enabled: true,
