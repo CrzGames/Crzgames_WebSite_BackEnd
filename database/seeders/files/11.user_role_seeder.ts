@@ -6,8 +6,7 @@ export default class UserRoleSeeder extends BaseSeeder {
   public static environment: string[] = ['development', 'test', 'staging', 'production']
 
   public async run(): Promise<void> {
-    for (const role in UserRoles) {
-      const roleName: string = UserRoles[role]
+    for (const roleName of Object.values(UserRoles)) {
       const data = { name: roleName }
       await UserRole.firstOrCreate({ name: data.name }, data)
     }

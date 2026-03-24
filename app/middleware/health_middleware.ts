@@ -12,7 +12,7 @@ export default class HealthMiddleware {
    * @param {() => Promise<void>} next - The next middleware
    * @returns {Promise<void>}
    */
-  public async handle({ request, response }: HttpContext, next: () => Promise<void>): Promise<void> {
+  public async handle({ request, response }: HttpContext, next: () => Promise<void>) {
     if (request.header('x-health-secret') === env.get('HEALTH')) {
       // Si la clé de santé est correcte, passe au middleware suivant ou au contrôleur
       await next()

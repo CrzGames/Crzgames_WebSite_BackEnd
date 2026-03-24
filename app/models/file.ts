@@ -41,7 +41,8 @@ export default class File extends FileSchema {
   }
 
   @belongsTo(() => Bucket, {
-    foreignKey: 'buckets_id',
+    foreignKey: 'bucketsId',
   })
   declare public bucket: BelongsTo<typeof Bucket>
 }
+

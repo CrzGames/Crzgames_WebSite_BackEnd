@@ -9,7 +9,7 @@ import { GameVersionSchema } from '#database/schema'
 
 export default class GameVersion extends GameVersionSchema {
   @belongsTo(() => Game, {
-    foreignKey: 'games_id',
+    foreignKey: 'gamesId',
   })
   declare public game: BelongsTo<typeof Game>
 
@@ -27,3 +27,4 @@ export default class GameVersion extends GameVersionSchema {
     } as ModelObject
   }
 }
+

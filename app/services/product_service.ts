@@ -64,6 +64,7 @@ export class ProductService {
       // Create the product in the database
       return await Product.create({
         ...productData,
+        price: productData.price.toString(),
       })
     } catch (error: any) {
       logger.error('createProduct error: ' + error.message)
@@ -90,7 +91,12 @@ export class ProductService {
       await CloudStorageS3Service.updateFileInDB(bucketData, productData.imageFilesId)
 
       // Update the product in the database
-      return await product.merge(productData).save()
+      return await product
+        .merge({
+          ...productData,
+          price: productData.price.toString(),
+        })
+        .save()
     } catch (error: any) {
       logger.error('updateProduct error: ' + error.message)
 

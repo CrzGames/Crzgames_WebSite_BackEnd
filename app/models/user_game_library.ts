@@ -9,12 +9,13 @@ import { UserGameLibrarySchema } from '#database/schema'
 
 export default class UserGameLibrary extends UserGameLibrarySchema {
   @belongsTo(() => User, {
-    foreignKey: 'users_id',
+    foreignKey: 'usersId',
   })
   declare public user: BelongsTo<typeof User>
 
   @belongsTo(() => Game, {
-    foreignKey: 'games_id',
+    foreignKey: 'gamesId',
   })
   declare public game: BelongsTo<typeof Game>
 }
+

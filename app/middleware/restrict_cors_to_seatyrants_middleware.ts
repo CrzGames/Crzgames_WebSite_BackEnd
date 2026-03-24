@@ -13,7 +13,7 @@ export default class RestrictCorsToSeaTyrantsMiddleware {
    * @param {Function} next - The next middleware function
    * @returns {Promise<void>} - A promise that resolves with no return value
    */
-  public async handle({ request, response }: HttpContext, next: () => Promise<void>): Promise<void> {
+  public async handle({ request, response }: HttpContext, next: () => Promise<void>) {
     if (env.get('NODE_ENV') === 'test' || env.get('NODE_ENV') === 'development') {
       // Si la variable d'environnement NODE_ENV est 'test' ou 'development', on passe au middleware suivant ou au contrôleur
       await next()

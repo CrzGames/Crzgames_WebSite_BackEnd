@@ -7,7 +7,8 @@ import { ProductCategorySchema } from '#database/schema'
 
 export default class ProductCategory extends ProductCategorySchema {
   @hasMany(() => Product, {
-    foreignKey: 'product_categories_id',
+    foreignKey: 'productCategoriesId',
   })
   declare public products: HasMany<typeof Product>
 }
+

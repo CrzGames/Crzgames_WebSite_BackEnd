@@ -7,7 +7,8 @@ import { GameChangeLogSchema } from '#database/schema'
 
 export default class GameChangeLog extends GameChangeLogSchema {
   @belongsTo(() => Game, {
-    foreignKey: 'games_id',
+    foreignKey: 'gamesId',
   })
   declare public game: BelongsTo<typeof Game>
 }
+

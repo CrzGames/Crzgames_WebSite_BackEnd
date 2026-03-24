@@ -9,12 +9,13 @@ import { GameCategoryAssignmentSchema } from '#database/schema'
 
 export default class GameCategoryAssignment extends GameCategoryAssignmentSchema {
   @belongsTo(() => Game, {
-    foreignKey: 'games_id',
+    foreignKey: 'gamesId',
   })
   declare public game: BelongsTo<typeof Game>
 
   @belongsTo(() => GameCategory, {
-    foreignKey: 'game_categories_id',
+    foreignKey: 'gameCategoriesId',
   })
   declare public gameCategory: BelongsTo<typeof GameCategory>
 }
+

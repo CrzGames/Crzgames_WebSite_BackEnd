@@ -9,12 +9,13 @@ import { UserGameWishlistSchema } from '#database/schema'
 
 export default class UserGameWishlist extends UserGameWishlistSchema {
   @belongsTo(() => User, {
-    foreignKey: 'users_id',
+    foreignKey: 'usersId',
   })
   declare public user: BelongsTo<typeof User>
 
   @belongsTo(() => Game, {
-    foreignKey: 'games_id',
+    foreignKey: 'gamesId',
   })
   declare public game: BelongsTo<typeof Game>
 }
+

@@ -3,7 +3,7 @@ import vine from '@vinejs/vine'
 /**
  * Règle personnalisée pour valider le mot de passe avec une expression régulière
  */
-const strongPassword = vine.createRule((value, options, field) => {
+const strongPassword = vine.createRule((value, _options, field) => {
   if (typeof value !== 'string') return
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d\s])[A-Za-z\d\S]{8,}$/
   if (!regex.test(value)) {
@@ -25,7 +25,7 @@ export const signUpValidator = vine.compile(
       .trim()
       .minLength(4)
       .maxLength(22)
-      .unique(async (db, value, field) => {
+      .unique(async (db, value, _field) => {
         const user = await db.from('users').where('username', value).first()
         return !user
       }),
@@ -33,7 +33,7 @@ export const signUpValidator = vine.compile(
       .string()
       .trim()
       .email()
-      .unique(async (db, value, field) => {
+      .unique(async (db, value, _field) => {
         const user = await db.from('users').where('email', value).first()
         return !user
       }),

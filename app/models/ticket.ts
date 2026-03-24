@@ -11,17 +11,18 @@ import { TicketSchema } from '#database/schema'
 
 export default class Ticket extends TicketSchema {
   @belongsTo(() => TicketStatus, {
-    foreignKey: 'ticket_statuses_id',
+    foreignKey: 'ticketStatusesId',
   })
   declare public ticketStatus: BelongsTo<typeof TicketStatus>
 
   @belongsTo(() => User, {
-    foreignKey: 'users_id',
+    foreignKey: 'usersId',
   })
   declare public user: BelongsTo<typeof User>
 
   @belongsTo(() => TicketCategory, {
-    foreignKey: 'ticket_categories_id',
+    foreignKey: 'ticketCategoriesId',
   })
   declare public ticketCategory: BelongsTo<typeof TicketCategory>
 }
+

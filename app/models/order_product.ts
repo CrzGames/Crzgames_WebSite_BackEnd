@@ -11,17 +11,18 @@ import { OrderProductSchema } from '#database/schema'
 
 export default class OrderProduct extends OrderProductSchema {
   @belongsTo(() => Order, {
-    foreignKey: 'orders_id',
+    foreignKey: 'ordersId',
   })
   declare public order: BelongsTo<typeof Order>
 
   @belongsTo(() => Product, {
-    foreignKey: 'products_id',
+    foreignKey: 'productsId',
   })
   declare public product: BelongsTo<typeof Product>
 
   @belongsTo(() => GameServer, {
-    foreignKey: 'game_servers_id',
+    foreignKey: 'gameServersId',
   })
   declare public gameServer: BelongsTo<typeof GameServer>
 }
+

@@ -30,6 +30,8 @@ import { BucketSchema } from '#database/schema'
  */
 
 export default class Bucket extends BucketSchema {
-  @hasMany(() => File)
+  @hasMany(() => File, {
+    foreignKey: 'bucketsId',
+  })
   declare public file: HasMany<typeof File>
 }

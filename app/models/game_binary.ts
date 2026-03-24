@@ -13,17 +13,20 @@ import { GameBinarySchema } from '#database/schema'
 
 export default class GameBinary extends GameBinarySchema {
   @belongsTo(() => GamePlatform, {
-    foreignKey: 'game_platforms_id',
+    foreignKey: 'gamePlatformsId',
   })
   declare public gamePlatform: BelongsTo<typeof GamePlatform>
 
   @manyToMany(() => Game, {
     pivotTable: 'game_binary_assignments',
+    pivotForeignKey: 'game_binaries_id',
+    pivotRelatedForeignKey: 'games_id',
   })
   declare public game: ManyToMany<typeof Game>
 
   @belongsTo(() => File, {
-    foreignKey: 'files_id',
+    foreignKey: 'filesId',
   })
   declare public file: BelongsTo<typeof File>
 }
+

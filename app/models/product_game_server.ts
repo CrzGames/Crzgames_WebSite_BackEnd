@@ -10,12 +10,13 @@ import { ProductGameServerSchema } from '#database/schema'
 
 export default class ProductGameServer extends ProductGameServerSchema {
   @belongsTo(() => Product, {
-    foreignKey: 'products_id',
+    foreignKey: 'productsId',
   })
   declare public product: BelongsTo<typeof Product>
 
   @belongsTo(() => GameServer, {
-    foreignKey: 'game_servers_id',
+    foreignKey: 'gameServersId',
   })
   declare public gameServer: BelongsTo<typeof GameServer>
 }
+

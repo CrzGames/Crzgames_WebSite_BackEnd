@@ -93,6 +93,9 @@ export default class GameBinariesService {
         pathFilename: bucketCommand.pathfilename,
         bucketName: bucketCommand.bucketName,
       }
+      if (gameBinary.filesId === null) {
+        throw new InternalServerErrorException('Game binary file ID is missing')
+      }
       await CloudStorageS3Service.updateFileInDB(bucketFileCommand, gameBinary.filesId)
 
       // Mettre à jour le binaire de jeu avec l'ID de la plateforme et l'ID du fichier

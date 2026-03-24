@@ -27,7 +27,7 @@ import { GameSchema } from '#database/schema'
 
 export default class Game extends GameSchema {
   @hasMany(() => GameVersion, {
-    foreignKey: 'games_id',
+    foreignKey: 'gamesId',
   })
   declare public gameVersions: HasMany<typeof GameVersion>
 
@@ -56,24 +56,24 @@ export default class Game extends GameSchema {
   })
   declare public gameCategory: ManyToMany<typeof GameCategory>
   @belongsTo(() => File, {
-    foreignKey: 'trailer_files_id',
+    foreignKey: 'trailerFilesId',
   })
   declare public trailerFile: BelongsTo<typeof File>
 
   @belongsTo(() => File, {
-    foreignKey: 'picture_files_id',
+    foreignKey: 'pictureFilesId',
   })
   declare public pictureFile: BelongsTo<typeof File>
 
   @belongsTo(() => File, {
-    foreignKey: 'logo_files_id',
+    foreignKey: 'logoFilesId',
   })
   declare public logoFile: BelongsTo<typeof File>
 
-  @belongsTo(() => GameConfiguration, { foreignKey: 'game_configurations_minimal_id' })
+  @belongsTo(() => GameConfiguration, { foreignKey: 'gameConfigurationsMinimalId' })
   declare public gameConfigurationMinimal: BelongsTo<typeof GameConfiguration>
 
-  @belongsTo(() => GameConfiguration, { foreignKey: 'game_configurations_recommended_id' })
+  @belongsTo(() => GameConfiguration, { foreignKey: 'gameConfigurationsRecommendedId' })
   declare public gameConfigurationRecommended: BelongsTo<typeof GameConfiguration>
 
   @manyToMany(() => Language, {
@@ -85,7 +85,7 @@ export default class Game extends GameSchema {
   })
   declare public languages: ManyToMany<typeof Language>
   @hasMany(() => GameMedia, {
-    foreignKey: 'games_id',
+    foreignKey: 'gamesId',
   })
   declare public gameMedias: HasMany<typeof GameMedia>
 
@@ -104,3 +104,4 @@ export default class Game extends GameSchema {
     } as ModelObject
   }
 }
+

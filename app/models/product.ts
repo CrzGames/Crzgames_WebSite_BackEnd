@@ -21,7 +21,7 @@ import { ProductSchema } from '#database/schema'
 
 export default class Product extends ProductSchema {
   @belongsTo(() => ProductCategory, {
-    foreignKey: 'product_categories_id',
+    foreignKey: 'productCategoriesId',
   })
   declare public productCategory: BelongsTo<typeof ProductCategory>
 
@@ -35,22 +35,23 @@ export default class Product extends ProductSchema {
   declare public gameServers: ManyToMany<typeof GameServer>
 
   @belongsTo(() => File, {
-    foreignKey: 'image_files_id',
+    foreignKey: 'imageFilesId',
   })
   declare public imageFile: BelongsTo<typeof File>
 
   @belongsTo(() => Game, {
-    foreignKey: 'games_id',
+    foreignKey: 'gamesId',
   })
   declare public game: BelongsTo<typeof Game>
 
   @hasMany(() => ProductDiscount, {
-    foreignKey: 'products_id',
+    foreignKey: 'productsId',
   })
   declare public productDiscounts: HasMany<typeof ProductDiscount>
 
   @hasMany(() => OrderProduct, {
-    foreignKey: 'products_id',
+    foreignKey: 'productsId',
   })
   declare public orderProducts: HasMany<typeof OrderProduct>
 }
+

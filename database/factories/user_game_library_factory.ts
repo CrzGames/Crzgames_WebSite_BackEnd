@@ -12,8 +12,8 @@ export const UserGameLibraryFactory = factory
     const randomGameId: number = faker.helpers.arrayElement(gameIds)
 
     return {
-      users_id: randomUserId,
-      games_id: randomGameId,
+      usersId: randomUserId,
+      gamesId: randomGameId,
     }
   })
   .build()

@@ -169,6 +169,9 @@ export default class TicketsService {
   public static async getUserIdByTicketId(ticketId: number): Promise<number> {
     try {
       const ticket: Ticket = await Ticket.query().where('id', ticketId).firstOrFail()
+      if (ticket.usersId === null) {
+        throw new InternalServerErrorException(`Ticket with ID ${ticketId} has no associated user`)
+      }
       return ticket.usersId
     } catch (error: any) {
       logger.error('getUserIdByTicketId error: ' + error.message)

@@ -9,12 +9,13 @@ import { GameMediaSchema } from '#database/schema'
 
 export default class GameMedia extends GameMediaSchema {
   @belongsTo(() => Game, {
-    foreignKey: 'games_id',
+    foreignKey: 'gamesId',
   })
   declare public game: BelongsTo<typeof Game>
 
   @belongsTo(() => File, {
-    foreignKey: 'files_id',
+    foreignKey: 'filesId',
   })
   declare public file: BelongsTo<typeof File>
 }
+

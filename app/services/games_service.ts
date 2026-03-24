@@ -6,7 +6,6 @@ import type { BucketFileCommand } from '#services/cloud_storage_s3_service'
 import CloudStorageS3Service from '#services/cloud_storage_s3_service'
 import type File from '#models/file'
 import type { ModelQueryBuilderContract } from '@adonisjs/lucid/types/model'
-import { errors as lucidErrors } from '@adonisjs/lucid'
 
 /**
  * Type pour la méta-donnée de pagination

@@ -9,12 +9,13 @@ import { GamePlatformAssignmentSchema } from '#database/schema'
 
 export default class GamePlatformAssignment extends GamePlatformAssignmentSchema {
   @belongsTo(() => Game, {
-    foreignKey: 'games_id',
+    foreignKey: 'gamesId',
   })
   declare public game: BelongsTo<typeof Game>
 
   @belongsTo(() => GamePlatform, {
-    foreignKey: 'game_platforms_id',
+    foreignKey: 'gamePlatformsId',
   })
   declare public gamePlatform: BelongsTo<typeof GamePlatform>
 }
+

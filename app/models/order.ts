@@ -11,12 +11,13 @@ import { OrderSchema } from '#database/schema'
 
 export default class Order extends OrderSchema {
   @belongsTo(() => User, {
-    foreignKey: 'users_id',
+    foreignKey: 'usersId',
   })
   declare public user: BelongsTo<typeof User>
 
   @hasMany(() => OrderProduct, {
-    foreignKey: 'orders_id',
+    foreignKey: 'ordersId',
   })
   declare public orderProducts: HasMany<typeof OrderProduct>
 }
+

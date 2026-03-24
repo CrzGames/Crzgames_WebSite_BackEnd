@@ -6,6 +6,8 @@ import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import { PasswordResetTokenSchema } from '#database/schema'
 
 export default class PasswordResetToken extends PasswordResetTokenSchema {
-  @belongsTo(() => User)
+  @belongsTo(() => User, {
+    foreignKey: 'usersId',
+  })
   declare public user: BelongsTo<typeof User>
 }

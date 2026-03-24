@@ -134,9 +134,8 @@ export default class NatsService {
    * @returns {void} - Une promesse qui se résout lorsque tous les désabonnements sont effectués.
    */
   public unsubscribeAll(): void {
-    for (const [subject, subscription] of this.subscriptions) {
-      subscription.unsubscribe()
-      console.log(`Unsubscribed from ${subject}`)
+    for (const [subject] of this.subscriptions) {
+      this.unsubscribe(subject)
     }
 
     this.subscriptions.clear()

@@ -9,12 +9,13 @@ import { GameBinaryAssignmentSchema } from '#database/schema'
 
 export default class GameBinaryAssignment extends GameBinaryAssignmentSchema {
   @belongsTo(() => Game, {
-    foreignKey: 'games_id',
+    foreignKey: 'gamesId',
   })
   declare public game: BelongsTo<typeof Game>
 
   @belongsTo(() => GameBinary, {
-    foreignKey: 'game_binaries_id',
+    foreignKey: 'gameBinariesId',
   })
   declare public gameBinary: BelongsTo<typeof GameBinary>
 }
+

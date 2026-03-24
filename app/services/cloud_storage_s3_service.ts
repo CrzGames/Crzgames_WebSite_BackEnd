@@ -41,7 +41,6 @@ import type { HttpContext } from '@adonisjs/core/http'
 import type { ObjectMetaData } from '@adonisjs/drive/types'
 import type { Readable } from 'stream'
 import { errors as lucidErrors } from '@adonisjs/lucid'
-import { log } from 'console'
 import { RelationSubQueryBuilderContract } from '@adonisjs/lucid/types/relations'
 
 const readFile: any = promisify(fs.readFile)
@@ -170,6 +169,8 @@ export default class CloudStorageS3Service {
       if (error instanceof InternalServerErrorException) {
         throw error
       }
+
+      throw new InternalServerErrorException('Error while fetching file content')
     }
   }
 
@@ -851,13 +852,8 @@ export default class CloudStorageS3Service {
       }
 
       // Récupérez les données de visibilité pour chaque bucket
-      const dataBucketsUpdated: (
-        | ExtendedBucket
-        | {
-            name: undefined
-          }
-      )[] = await Promise.all(
-        data.Buckets.map(async (bucket: Bucket) => {
+      const dataBucketsUpdated: ExtendedBucket[] = await Promise.all(
+        data.Buckets.map(async (bucket: Bucket): Promise<ExtendedBucket> => {
           let dbBucket: MyBucket | null = null
 
           if (bucket.Name !== undefined) {
@@ -892,8 +888,8 @@ export default class CloudStorageS3Service {
               id: dbBucket?.id,
               name: bucket.Name,
               visibility: dbBucket?.visibility,
-              createdAt: dbBucket?.createdAt,
-              updatedAt: dbBucket?.updatedAt,
+              createdAt: dbBucket?.createdAt ?? undefined,
+              updatedAt: dbBucket?.updatedAt ?? undefined,
               totalObjects: totalObjects,
               totalSize: totalSize,
               access: access,
@@ -904,14 +900,12 @@ export default class CloudStorageS3Service {
 
           // If no dbBucket info, just return the basic bucket data in ExtendedBucket format.
           return {
-            name: bucket.Name,
+            name: '',
           }
         }),
       )
 
-      return dataBucketsUpdated.filter(
-        (bucket: ExtendedBucket): boolean => bucket.name !== undefined,
-      ) as ExtendedBucket[]
+      return dataBucketsUpdated.filter((bucket: ExtendedBucket): boolean => bucket.name !== '')
     } catch (error: any) {
       logger.error(`getAllBuckets Error retrieving buckets: ${error.message}`)
     }

@@ -7,7 +7,8 @@ import { ProductDiscountSchema } from '#database/schema'
 
 export default class ProductDiscount extends ProductDiscountSchema {
   @belongsTo(() => Product, {
-    foreignKey: 'products_id',
+    foreignKey: 'productsId',
   })
   declare public product: BelongsTo<typeof Product>
 }
+

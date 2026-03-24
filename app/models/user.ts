@@ -22,7 +22,7 @@ export default class User extends compose(UserSchema, withAuthFinder(hash)) {
    * @type {BelongsTo<typeof UserRole>}
    */
   @belongsTo(() => UserRole, {
-    foreignKey: 'roles_id',
+    foreignKey: 'rolesId',
   })
   declare public userRole: BelongsTo<typeof UserRole>
 
@@ -58,3 +58,4 @@ export default class User extends compose(UserSchema, withAuthFinder(hash)) {
    */
   declare public currentAccessToken?: AccessToken
 }
+

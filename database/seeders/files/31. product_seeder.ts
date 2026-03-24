@@ -111,7 +111,7 @@ export default class extends BaseSeeder {
       const product: Product = await Product.create({
         name: productData.name,
         description: productData.description,
-        price: productData.price,
+        price: productData.price.toString(),
         gamesId: productData.games_id,
         productCategoriesId: productData.product_categories_id,
         imageFilesId: imageFile.id,
@@ -128,7 +128,7 @@ export default class extends BaseSeeder {
           await ProductDiscount.create({
             productsId: product.id,
             currency: discount.currency,
-            discountPercent: discount.discount_percent,
+            discountPercent: discount.discount_percent.toString(),
           })
         }
       }

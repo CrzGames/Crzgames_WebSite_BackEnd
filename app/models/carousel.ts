@@ -7,12 +7,13 @@ import { CarouselSchema } from '#database/schema'
 
 export default class Carousel extends CarouselSchema {
   @belongsTo(() => File, {
-    foreignKey: 'image_files_id',
+    foreignKey: 'imageFilesId',
   })
   declare public imageFile: BelongsTo<typeof File>
 
   @belongsTo(() => File, {
-    foreignKey: 'logo_files_id',
+    foreignKey: 'logoFilesId',
   })
   declare public logoFile: BelongsTo<typeof File>
 }
+

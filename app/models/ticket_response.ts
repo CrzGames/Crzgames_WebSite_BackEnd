@@ -10,12 +10,12 @@ import { TicketResponseSchema } from '#database/schema'
 
 export default class TicketResponse extends TicketResponseSchema {
   @belongsTo(() => User, {
-    foreignKey: 'users_id',
+    foreignKey: 'usersId',
   })
   declare public user: BelongsTo<typeof User>
 
   @belongsTo(() => Ticket, {
-    foreignKey: 'tickets_id',
+    foreignKey: 'ticketsId',
   })
   declare public ticket: BelongsTo<typeof Ticket>
 
@@ -33,3 +33,4 @@ export default class TicketResponse extends TicketResponseSchema {
     } as ModelObject
   }
 }
+

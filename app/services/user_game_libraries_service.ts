@@ -43,7 +43,9 @@ export default class UserGameLibrariesService {
       }
 
       // Extraire les IDs des jeux à partir des bibliothèques de jeux de l'utilisateur
-      const gameIds: number[] = userGameLibraries.map((userGameLibrary: UserGameLibrary) => userGameLibrary.gamesId)
+      const gameIds: number[] = userGameLibraries
+        .map((userGameLibrary: UserGameLibrary): number | null => userGameLibrary.gamesId)
+        .filter((gameId: number | null): gameId is number => gameId !== null)
 
       // Préparer la requête de base pour récupérer les jeux
       const baseQuery: ModelQueryBuilderContract<typeof Game, Game> = Game.query()
@@ -143,6 +145,9 @@ export default class UserGameLibrariesService {
 
       // Parcourir les OrderProduct pour vérifier si l'utilisateur a payé pour au moins une commande
       for (const orderProduct of orderProducts) {
+        if (orderProduct.ordersId === null) {
+          continue
+        }
         const order: Order | null = await OrderService.getOrderById(orderProduct.ordersId)
 
         // Vérifiez si l'order est payé et appartient à l'utilisateur
