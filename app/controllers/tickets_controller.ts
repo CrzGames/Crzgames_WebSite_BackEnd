@@ -3,8 +3,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import type Ticket from '#models/ticket'
 import { updateTicketByIdForStatusValidator } from '#validators/ticket/update_ticket_by_id_for_status_validator'
 import { createTicketsValidator } from '#validators/ticket/CreateTicketsValidator'
-import { getTicketsByIdValidator } from '#validators/ticket/GetTicketsByIdValidator'
-import { getAllTicketsByUserIdValidator } from '#validators/ticket/GetAllTicketsByUserIdValidator'
+import BadRequestException from '#exceptions/bad_request_exception'
 
 export default class TicketsController {
   public async createTickets({ request, response }: HttpContext): Promise<void> {
@@ -30,17 +29,25 @@ export default class TicketsController {
     response.status(201).json(ticket)
   }
 
-  public async getTicketsById({ request, response }: HttpContext): Promise<void> {
-    const payload: { id: number } = await request.validateUsing(getTicketsByIdValidator)
-    const ticket: Ticket = await TicketsService.getTicketsById(payload.id)
+  public async getTicketsById({ params, response }: HttpContext): Promise<void> {
+    const id: number = Number(params.id)
+    if (Number.isNaN(id)) {
+      throw new BadRequestException('Invalid ticket id')
+    }
+
+    const ticket: Ticket = await TicketsService.getTicketsById(id)
     response.status(200).json(ticket)
   }
 
-  public async getAllTicketsByUserId({ request, response }: HttpContext): Promise<void> {
+  public async getAllTicketsByUserId({ request, response, params }: HttpContext): Promise<void> {
     const start: number = request.input('start')
     const end: number = request.input('end')
-    const payload: { userId: number } = await request.validateUsing(getAllTicketsByUserIdValidator)
-    const tickets: Ticket[] = await TicketsService.getAllTicketsByUserId(payload.userId, start, end)
+    const userId: number = Number(params.userId)
+    if (Number.isNaN(userId)) {
+      throw new BadRequestException('Invalid user id')
+    }
+
+    const tickets: Ticket[] = await TicketsService.getAllTicketsByUserId(userId, start, end)
     response.status(200).json(tickets)
   }
 

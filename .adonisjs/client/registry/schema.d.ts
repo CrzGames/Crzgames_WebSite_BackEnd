@@ -1178,9 +1178,9 @@ export interface Registry {
       body: {}
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
-      query: ExtractQueryForGet<InferInput<(typeof import('#validators/ticket/GetTicketsByIdValidator').getTicketsByIdValidator)>>
+      query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/tickets_controller').default['getTicketsById']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/tickets_controller').default['getTicketsById']>>> | { status: 422; response: { errors: SimpleError[] } }
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/tickets_controller').default['getTicketsById']>>>
     }
   }
   'tickets.get_all_tickets': {
@@ -1202,9 +1202,9 @@ export interface Registry {
       body: {}
       paramsTuple: [ParamValue]
       params: { userId: ParamValue }
-      query: ExtractQueryForGet<InferInput<(typeof import('#validators/ticket/GetAllTicketsByUserIdValidator').getAllTicketsByUserIdValidator)>>
+      query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/tickets_controller').default['getAllTicketsByUserId']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/tickets_controller').default['getAllTicketsByUserId']>>> | { status: 422; response: { errors: SimpleError[] } }
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/tickets_controller').default['getAllTicketsByUserId']>>>
     }
   }
   'tickets.update_ticket_by_id_for_status': {
