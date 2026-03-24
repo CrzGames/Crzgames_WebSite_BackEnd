@@ -1,0 +1,41 @@
+<mjml>
+  <mj-body background-color="#111827">
+    <mj-section background-color="#1F2937" padding-bottom="20px">
+      <mj-column>
+        <mj-image width="120px;" src="https://crzgames.com/images/logo_fond_transparent_whitout_text.png" align="center" padding="10px 0">
+        </mj-image>
+        <mj-text align="center" color="#ffffff" font-size="20px" font-weight="bold" padding="20px">
+          Crz Games
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#ffffff" padding="15px">
+      <mj-column width="400px">
+        <mj-text font-size="20px" color="#1F2937" font-weight="bold">
+          Email Address Reset
+        </mj-text>
+        <mj-divider border-width="1px" border-style="dashed" border-color="lightgrey"></mj-divider>
+        <mj-text font-size="15px" color="#000000">
+          Hello {{ username }},
+          <br /><br />
+          You have requested to reset the email address associated with your Crz Games account. Please click on the link below to confirm this action. This link is valid for 30 minutes.
+        </mj-text>
+        <mj-text font-size="15px" color="#1F2937">
+          <a href="{{ redirect_uri }}">{{ redirect_uri }}</a>
+        </mj-text>
+        <mj-text font-size="15px" color="#000000">
+          If you did not request this reset, please disregard this email or contact us for further security at support@crzgames.com.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#1F2937" padding-top="20px">
+      <mj-column>
+        <mj-text align="center" color="#ffffff" font-size="12px">
+          Sincerely,
+          <br />
+          The CRZ Games Support Team
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

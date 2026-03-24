@@ -42,8 +42,8 @@ export default class MailService {
           Messages: [
             {
               From: {
-                Email: env.get('MAIL_USERNAME'),
-                Name: 'CrzGames',
+                Email: env.get('MAIL_FROM_ADDRESS'),
+                Name: env.get('MAIL_FROM_NAME'),
               },
               To: toRecipients,
               Subject: emailSubject,
@@ -60,7 +60,7 @@ export default class MailService {
         // Si c'est 1 seul utilisateur, on envoie à l'utilisateur
         if (typeof emailUsers === 'string') {
           await mail.sendLater((message: Message): void => {
-            message.from(env.get('MAIL_USERNAME')).to(emailUsers).subject(emailSubject).html(htmlRender)
+            message.from(env.get('MAIL_FROM_ADDRESS')).to(emailUsers).subject(emailSubject).html(htmlRender)
           })
         }
         // Si c'est un tableau d'utilisateurs, on envoie à chaque utilisateur
@@ -68,7 +68,7 @@ export default class MailService {
           await Promise.all(
             emailUsers.map((emailUser: string): Promise<void> => {
               return mail.sendLater((message: Message) => {
-                message.from(env.get('MAIL_USERNAME')).to(emailUser).subject(emailSubject).html(htmlRender)
+                message.from(env.get('MAIL_FROM_ADDRESS')).to(emailUser).subject(emailSubject).html(htmlRender)
               })
             }),
           )
