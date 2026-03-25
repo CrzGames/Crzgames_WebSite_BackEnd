@@ -8,6 +8,7 @@ import {
   GetBucketAclCommand,
   DeleteObjectsCommand,
 } from '@aws-sdk/client-s3'
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import type {
   DeleteBucketCommandOutput,
   CreateBucketCommandOutput,
@@ -584,6 +585,37 @@ export default class CloudStorageS3Service {
   }
 
   /**
+   * Génère une URL pré-signée de téléchargement pour le launcher.
+   * Cette méthode évite de proxifier le flux binaire via l'API backend.
+   * @param {string} bucketName - Nom du bucket S3
+   * @param {string} pathFilename - Chemin complet de l'objet dans S3
+   * @param {number} [expiresIn=900] - Durée de validité de l'URL en secondes
+   * @returns {Promise<string>} - URL pré-signée
+   */
+  public static async getPresignedDownloadUrlForLauncher(
+    bucketName: string,
+    pathFilename: string,
+    expiresIn: number = 900,
+  ): Promise<string> {
+    const bucket: MyBucket = await this.getBucketByName(bucketName)
+    await this.setBucketCurrent(bucket.name)
+    await this.setVisibilityBucketCurrent(bucket.visibility)
+
+    const normalizedExpiresIn: number = Math.max(60, Math.min(expiresIn, 3600))
+
+    if (!(await drive.use().exists(pathFilename))) {
+      throw new NotFoundException(`File not found for presign: ${pathFilename}`)
+    }
+
+    const command: GetObjectCommand = new GetObjectCommand({
+      Bucket: bucketName,
+      Key: pathFilename,
+    })
+
+    return await getSignedUrl(s3Client, command, { expiresIn: normalizedExpiresIn })
+  }
+
+  /**
    * Méthode pour obtenir un flux d'objet depuis S3
    * @param {string} bucketName - Le nom du bucket S3
    * @param {string} key - La clé de l'objet S3
@@ -636,6 +668,28 @@ export default class CloudStorageS3Service {
       }
 
       throw new NotFoundException('Fichier ZIP non trouvé')
+    }
+
+    // Pour le launcher (et tout client), si pathFilename cible un fichier,
+    // on stream le binaire directement sans compression à la volée.
+    if (!pathFilename.endsWith('/')) {
+      logger.info(`Téléchargement direct d un fichier détecté: ${pathFilename}`)
+
+      if (await drive.use().exists(pathFilename)) {
+        const fileStream: Readable = await drive.use().getStream(pathFilename)
+        const { contentLength } = await drive.use().getMetaData(pathFilename)
+
+        ctx.response.response.setHeader('Content-Type', 'application/octet-stream')
+        ctx.response.response.setHeader(
+          'Content-Disposition',
+          `attachment; filename="${pathFilename.split('/').pop()}"`,
+        )
+        ctx.response.response.setHeader('Content-Length', contentLength.toString())
+
+        return ctx.response.stream(fileStream)
+      }
+
+      throw new NotFoundException('Fichier non trouvé')
     }
 
     // Utilisation directe de l'objet response natif de Node.js pour CORS ou autres en-têtes critiques

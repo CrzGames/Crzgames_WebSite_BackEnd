@@ -126,6 +126,12 @@ const routes = {
     tokens: [{"old":"/cloud-storage-s3/launcher/download","type":0,"val":"cloud-storage-s3","end":""},{"old":"/cloud-storage-s3/launcher/download","type":0,"val":"launcher","end":""},{"old":"/cloud-storage-s3/launcher/download","type":0,"val":"download","end":""}],
     types: placeholder as Registry['cloud_storage_s_3.stream_download_file_in_bucket_for_launcher']['types'],
   },
+  'cloud_storage_s_3.get_presigned_download_url_for_launcher': {
+    methods: ["GET","HEAD"],
+    pattern: '/cloud-storage-s3/launcher/presign',
+    tokens: [{"old":"/cloud-storage-s3/launcher/presign","type":0,"val":"cloud-storage-s3","end":""},{"old":"/cloud-storage-s3/launcher/presign","type":0,"val":"launcher","end":""},{"old":"/cloud-storage-s3/launcher/presign","type":0,"val":"presign","end":""}],
+    types: placeholder as Registry['cloud_storage_s_3.get_presigned_download_url_for_launcher']['types'],
+  },
   'cloud_storage_s_3.delete_in_bucket_and_db': {
     methods: ["POST"],
     pattern: '/cloud-storage-s3/delete',

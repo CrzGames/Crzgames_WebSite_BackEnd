@@ -44,6 +44,28 @@ export default class CloudStorageS3Controller {
   }
 
   /**
+   * Retourne une URL pré-signée de téléchargement S3 pour le launcher
+   * @param {HttpContext} ctx
+   * @returns {Promise<void>}
+   */
+  public async getPresignedDownloadUrlForLauncher({ request, response }: HttpContext): Promise<void> {
+    const payload: Record<string, any> = request.all()
+    const expiresIn: number = Number(payload.expiresIn) || 900
+    const presignedUrl: string = await CloudStorageS3Service.getPresignedDownloadUrlForLauncher(
+      payload.bucketName,
+      payload.pathFilename,
+      expiresIn,
+    )
+
+    response.status(200).json({
+      url: presignedUrl,
+      expiresIn: Math.max(60, Math.min(expiresIn, 3600)),
+      bucketName: payload.bucketName,
+      pathFilename: payload.pathFilename,
+    })
+  }
+
+  /**
    * Download file or folder in bucket
    * Via le site crzgames et le launcher deux choses bien diffèrent
    * @param ctx

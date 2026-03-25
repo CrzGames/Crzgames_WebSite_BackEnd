@@ -247,6 +247,18 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/cloud_storage_s3_controller').default['streamDownloadFileInBucketForLauncher']>>>
     }
   }
+  'cloud_storage_s_3.get_presigned_download_url_for_launcher': {
+    methods: ["GET","HEAD"]
+    pattern: '/cloud-storage-s3/launcher/presign'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/cloud_storage_s3_controller').default['getPresignedDownloadUrlForLauncher']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/cloud_storage_s3_controller').default['getPresignedDownloadUrlForLauncher']>>>
+    }
+  }
   'cloud_storage_s_3.delete_in_bucket_and_db': {
     methods: ["POST"]
     pattern: '/cloud-storage-s3/delete'
