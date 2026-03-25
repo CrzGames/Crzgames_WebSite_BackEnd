@@ -287,6 +287,41 @@
       "size": 20929
     },
     {
+      "name": "assets/sounds/sound1.mp3",
+      "hash": "d0219d33a590177a200e9a1418f3d843ae3f1298478557ab3f18212f1feff5ab",
+      "size": 291015
+    },
+    {
+      "name": "assets/sounds/sound_menu.mp3",
+      "hash": "cc1e65d0118b1b3a4339b8bc4ca4f10be41f6eb27322d05cbf7e8181612f1be9",
+      "size": 2402566
+    },
+    {
+      "name": "assets/videos/SplashScreen_SeaTyrants_1080p.mp4",
+      "hash": "70aac5f80252dcb109ed4f5d81bf89f010ba0791685a5dd9214628bb2a290fc9",
+      "size": 11567054
+    },
+    {
+      "name": "assets/videos/SplashScreen_SeaTyrants_4K.mp4",
+      "hash": "c1374fdf66ccfcf1d6bd5ae8463bf1a509a3749c4b6f0b3ea936ec65fcabd809",
+      "size": 10214069
+    },
+    {
+      "name": "assets/videos/SplashScreen_Studio_1080p.mp4",
+      "hash": "0563fd3d09d3c36874514b2a4bcb20bdf50b132cbc95a328865c09e32f23bc3e",
+      "size": 3172259
+    },
+    {
+      "name": "assets/videos/SplashScreen_Studio_4K.mp4",
+      "hash": "e1bb678896a822f5ccc0def3316efd923a4cc8bcd4923c9650f3193840ef6f03",
+      "size": 2491785
+    },
+    {
+      "name": "assets/videos/background-login.mp4",
+      "hash": "7bb8415092dc64a74f39e7c1992b2834f4e912c8b41f22b81f2359644d1c1484",
+      "size": 22156798
+    },
+    {
       "name": "shaders/compiled/dxil/fogofwar.fragment.dxil",
       "hash": "2d12158bbcdbe749235e801814717dea8c2898a2993cf6e2336931b0ea426786",
       "size": 4308
