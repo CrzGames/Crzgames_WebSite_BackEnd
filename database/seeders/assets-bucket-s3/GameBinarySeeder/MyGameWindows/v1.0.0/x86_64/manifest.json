@@ -1,0 +1,375 @@
+{
+  "version": "v1.0.0",
+  "files": [
+    {
+      "name": "DirectML.dll",
+      "hash": "9c9e6d822561c6c41b90e6994b3e8857cf1d66dbfb1e0c4c799c7c89b4e92da1",
+      "size": 18527776
+    },
+    {
+      "name": "SDL3.dll",
+      "hash": "818f18f10fc3f6f5be188a8d2af1a7a3dc6bfa49a84a26d456c16844240c7831",
+      "size": 2718208
+    },
+    {
+      "name": "SDL3_image.dll",
+      "hash": "9b577ed88b67ddbf2ddb1c1a84e2d19b623e510649815d818418be31d0a1e357",
+      "size": 130048
+    },
+    {
+      "name": "SDL3_mixer.dll",
+      "hash": "83a2c1cc4a698e09b334655756e1c8fe731d10b242538d122402b9cae0f0ea09",
+      "size": 95232
+    },
+    {
+      "name": "SDL3_ttf.dll",
+      "hash": "cfb4555118ecd9e8796b37f708e7cead5764dc54fdf0f79471f4e1be95cf4f92",
+      "size": 1814528
+    },
+    {
+      "name": "avcodec-62.dll",
+      "hash": "da5175d7f1d210f778303e8c331582d267f42a5fe19dc8e1aa2d7e25079d9fc3",
+      "size": 78225408
+    },
+    {
+      "name": "avdevice-62.dll",
+      "hash": "46db617b091a8924d3cca23b36ac8de76d221e57a3b01c91653025c51454b730",
+      "size": 3140608
+    },
+    {
+      "name": "avfilter-11.dll",
+      "hash": "21ac5b2de658bd31f46de5871e003b63540f686b4a7917a14d50a2dbf435b301",
+      "size": 57065472
+    },
+    {
+      "name": "avformat-62.dll",
+      "hash": "794b2291320000985118d9339f7067e06f6f1c191ef3335479930672e0a88761",
+      "size": 21244928
+    },
+    {
+      "name": "avutil-60.dll",
+      "hash": "b68ef6b12c7de77ed34940c5984f3e47a44ce509e8ef51b5ff073714a63afca2",
+      "size": 2932224
+    },
+    {
+      "name": "concrt140.dll",
+      "hash": "b2faf3b85b23c840b654e57d5497a0ad31acd02fb01856cad4725a1715d5f78e",
+      "size": 321696
+    },
+    {
+      "name": "libpng16-16.dll",
+      "hash": "ecf167f3af0af21e9d436ae30237b8025b68297018d9d01bee01d31f88f1c0e1",
+      "size": 241664
+    },
+    {
+      "name": "msvcp140.dll",
+      "hash": "def46aa6a8f72f27bafac0c43334419486a4d1dcdb6c479a8ef7034b3e1fa4cb",
+      "size": 553552
+    },
+    {
+      "name": "msvcp140_1.dll",
+      "hash": "2dd670f874562fbdca5b022df1943d70a57ba91fde559280e3a1daebe4db2380",
+      "size": 35488
+    },
+    {
+      "name": "msvcp140_2.dll",
+      "hash": "1d60da3ac2b06482912ca852fa7047436e6e474b4cfffa3bf77f4598cfbf454c",
+      "size": 278608
+    },
+    {
+      "name": "msvcp140_atomic_wait.dll",
+      "hash": "e7963645e0d1db08e300614d4c5fa7194bd8173e9ab7a5558859e6b232ed3241",
+      "size": 48800
+    },
+    {
+      "name": "msvcp140_codecvt_ids.dll",
+      "hash": "ae8d922b00cdd93e3ebecc37beb46c800f383ebdeb9f9e5b84e04a72428b6fb3",
+      "size": 31392
+    },
+    {
+      "name": "ogg-0.dll",
+      "hash": "264849d5cee206e8fa90a70ea671484d51cc7ceec750443a96d25ed41ab1b2e5",
+      "size": 31232
+    },
+    {
+      "name": "onnxruntime.dll",
+      "hash": "aeb7fc11c5b3f5968fc840fcaacb7a23bec33ff0711e6af7d7b1f959043e24ef",
+      "size": 21215744
+    },
+    {
+      "name": "onnxruntime_providers_shared.dll",
+      "hash": "741bc3f8d464bcfb7d639e3ff3c9880d7db9e8b66c75f01ab0ce080b23ee535f",
+      "size": 10752
+    },
+    {
+      "name": "opus-0.dll",
+      "hash": "6e1e0858ca2037803b665baa391ab76ab5ecd3f2b73dda245df1500c367897fe",
+      "size": 427008
+    },
+    {
+      "name": "opusfile-0.dll",
+      "hash": "546fd98ae8a1c5c9d8e681f72c853ffc0f5b47357ea22f10602afb601d9417c5",
+      "size": 50176
+    },
+    {
+      "name": "rc2d-game-template.exe",
+      "hash": "010ab89939e3ecefe1a0eb10202f3f3a0dff1f068d22f3e3de9691f222eceab2",
+      "size": 6315008
+    },
+    {
+      "name": "swresample-6.dll",
+      "hash": "92f04a68da945fba145b42df6a4205dce97c0b4fffdf6dee2307d68afc0780a4",
+      "size": 721920
+    },
+    {
+      "name": "swscale-9.dll",
+      "hash": "c8cc0166ba8baca3440bb4b19710c9a50088e64018c040e892c78fb3a09afffa",
+      "size": 1909248
+    },
+    {
+      "name": "vccorlib140.dll",
+      "hash": "6b8d8a76c3e6664293407553650e60b94df9aaafc7c92057ea83032bd228e44f",
+      "size": 350880
+    },
+    {
+      "name": "vcruntime140.dll",
+      "hash": "184146852727a9db4eea06178716bec3cdbb1015c911f6b0f915b184ad7775b2",
+      "size": 123472
+    },
+    {
+      "name": "vcruntime140_1.dll",
+      "hash": "e6bfb3662ab4b1969a73441dbe35c96d51441b6bff8cf1fe7430bd5b246ca605",
+      "size": 47264
+    },
+    {
+      "name": "vcruntime140_threads.dll",
+      "hash": "a6222020b500a9a86b36e040c2dbd0e459716db1bf2810a11cd7512ea9b8d89b",
+      "size": 37456
+    },
+    {
+      "name": "version.txt",
+      "hash": "5d70bafc484635d4ce9a21cbfbd6f162b87b7568e95fb8c513c311affa9810f8",
+      "size": 23
+    },
+    {
+      "name": "vorbis-0.dll",
+      "hash": "9037e7e1e489605a9dd7a1bb8edf0d5d3c5afde9f96e83073c9b177a8a71ad39",
+      "size": 738816
+    },
+    {
+      "name": "vorbisfile-3.dll",
+      "hash": "c54a4bb30a04134fb8989efdda7b1698b4800b6e4a7110211438f315b3f664b0",
+      "size": 36864
+    },
+    {
+      "name": "assets/atlas/elite24/elite24.json",
+      "hash": "db8438f197a97745b63a02d227263b3c9055c4457046e98bc4f69ebab9b01659",
+      "size": 1968
+    },
+    {
+      "name": "assets/atlas/elite24/elite24.png",
+      "hash": "c84f76d230328c8ab21ca34f2d6db9185903e26413ea7b048089d45bb2f75bca",
+      "size": 430752
+    },
+    {
+      "name": "assets/atlas/elite27/elite27.json",
+      "hash": "e09072cdacae9646f4cbc8c3f7bfa1ab3044f9403f531fd81c727877f49b354c",
+      "size": 1972
+    },
+    {
+      "name": "assets/atlas/elite27/elite27.png",
+      "hash": "11f32de35e1adf443f99947d2f7aa35c92b80c448ef059134262f833605dfd61",
+      "size": 1086941
+    },
+    {
+      "name": "assets/atlas/redcosar_lvl1/redcosar_lvl1.json",
+      "hash": "7d23b360c8adfb839a957ce159153294b642431d3b6b55ec9670812e3ed9d9bc",
+      "size": 1905
+    },
+    {
+      "name": "assets/atlas/redcosar_lvl1/redcosar_lvl1.png",
+      "hash": "db2433cd1a8245a81e125c73fef07e5d3f353e5fad8b5f0d8fc4b1268ef873eb",
+      "size": 42960
+    },
+    {
+      "name": "assets/data/version.txt",
+      "hash": "92521fc3cbd964bdc9f584a991b89fddaa5754ed1cc96d6d42445338669c1305",
+      "size": 5
+    },
+    {
+      "name": "assets/fonts/SIXTY.TTF",
+      "hash": "2828f2d97d3973fa00a9c90694ad9de2852f1d285a9a60825bffa052119cd3b7",
+      "size": 16824
+    },
+    {
+      "name": "assets/fonts/TradeWinds-Regular.ttf",
+      "hash": "b8d8ac0be4a262e8473b25b8b7f90d5909c8780648285b3edc44b5dff6341bb0",
+      "size": 85744
+    },
+    {
+      "name": "assets/images/CloudNoise.png",
+      "hash": "a4b80b457b1e607090b4e93b2caa25c8d9bdbc628cea15c7e1007708412ef904",
+      "size": 851795
+    },
+    {
+      "name": "assets/images/Matthias_HalloweenNoise.png",
+      "hash": "b006ec60106153c74def89523a01d252b830b318302560ea34b3d8e19a6dcbea",
+      "size": 91262
+    },
+    {
+      "name": "assets/images/background-login.png",
+      "hash": "c19101b01fd7ed847a1c6255d3be706f45803176c5c718378f27888c55960662",
+      "size": 1245373
+    },
+    {
+      "name": "assets/images/background-ui-ingame.png",
+      "hash": "0614b78db0fa4b4aad0581c3d2ed61d377ed877f720707974981ebe8e97ab6aa",
+      "size": 1516029
+    },
+    {
+      "name": "assets/images/barre-action-ingame.png",
+      "hash": "7390f60abda3000dc6cda3c1c503844fbd7ff6a06542fcb7148df2743a247e85",
+      "size": 162548
+    },
+    {
+      "name": "assets/images/button-centermap-ingame.png",
+      "hash": "4a2bec0e4f7331c25d01a777a2fa9184f999934c6deffc06a0c203e0ddf90389",
+      "size": 4841
+    },
+    {
+      "name": "assets/images/button-login.png",
+      "hash": "d2467ed1edef638beaf6c341c7ab0ba01d7f32e104268c5fb024cd5df20567b1",
+      "size": 154116
+    },
+    {
+      "name": "assets/images/input-email-login.png",
+      "hash": "02c7cb7d4b28e5d43f47d0fb10105163f476e77ea050fb95670390faa5fd74a8",
+      "size": 37869
+    },
+    {
+      "name": "assets/images/input-password-login.png",
+      "hash": "3eb6d06269c384dd30678260d4f152b9aacd64ab30dd807d5377113256a8bb11",
+      "size": 38014
+    },
+    {
+      "name": "assets/images/logost-login.png",
+      "hash": "dc5e067036dc1bacf7af3597c03b676d4f24314f09ef12746be2e8bc258292ff",
+      "size": 204174
+    },
+    {
+      "name": "assets/images/minimap.png",
+      "hash": "289bc6f8bd0ec06de1103d9722ec18aa4e920f0790a84ae48a2e1e471ad00cf5",
+      "size": 17274
+    },
+    {
+      "name": "assets/images/tile-caustic.png",
+      "hash": "9312ac534ccfe661f052e751693da00ff33fe477ffa1db6595d370e7ccdc1342",
+      "size": 23073
+    },
+    {
+      "name": "assets/images/tile-ilo1.png",
+      "hash": "33590a1b9c219c0ceab029a0811f2af02d9b47f2936df057d533f7d1a5a7de7d",
+      "size": 348027
+    },
+    {
+      "name": "assets/images/tile-water.png",
+      "hash": "e3ccf9d11221c52cfb006e73d7d7e2e7c64b598d0590576d4e2284e2930c3a8b",
+      "size": 26118
+    },
+    {
+      "name": "assets/images/tile-water2.png",
+      "hash": "6081c30a567eba8276675279d785481a7f0c868b7c8f6b7ef6297465628b1f2d",
+      "size": 38599
+    },
+    {
+      "name": "assets/images/tile-watercaustic.png",
+      "hash": "af78b2c3330b8744ab33b5ea389e3e10f22374f490334cdf52676374af563a16",
+      "size": 20929
+    },
+    {
+      "name": "assets/sounds/sound1.mp3",
+      "hash": "d0219d33a590177a200e9a1418f3d843ae3f1298478557ab3f18212f1feff5ab",
+      "size": 291015
+    },
+    {
+      "name": "assets/sounds/sound_menu.mp3",
+      "hash": "cc1e65d0118b1b3a4339b8bc4ca4f10be41f6eb27322d05cbf7e8181612f1be9",
+      "size": 2402566
+    },
+    {
+      "name": "assets/videos/SplashScreen_SeaTyrants_1080p.mp4",
+      "hash": "70aac5f80252dcb109ed4f5d81bf89f010ba0791685a5dd9214628bb2a290fc9",
+      "size": 11567054
+    },
+    {
+      "name": "assets/videos/SplashScreen_SeaTyrants_4K.mp4",
+      "hash": "c1374fdf66ccfcf1d6bd5ae8463bf1a509a3749c4b6f0b3ea936ec65fcabd809",
+      "size": 10214069
+    },
+    {
+      "name": "assets/videos/SplashScreen_Studio_1080p.mp4",
+      "hash": "0563fd3d09d3c36874514b2a4bcb20bdf50b132cbc95a328865c09e32f23bc3e",
+      "size": 3172259
+    },
+    {
+      "name": "assets/videos/SplashScreen_Studio_4K.mp4",
+      "hash": "e1bb678896a822f5ccc0def3316efd923a4cc8bcd4923c9650f3193840ef6f03",
+      "size": 2491785
+    },
+    {
+      "name": "assets/videos/background-login.mp4",
+      "hash": "7bb8415092dc64a74f39e7c1992b2834f4e912c8b41f22b81f2359644d1c1484",
+      "size": 22156798
+    },
+    {
+      "name": "shaders/compiled/dxil/fogofwar.fragment.dxil",
+      "hash": "2d12158bbcdbe749235e801814717dea8c2898a2993cf6e2336931b0ea426786",
+      "size": 4308
+    },
+    {
+      "name": "shaders/compiled/dxil/water.fragment.dxil",
+      "hash": "bde0361f91358c4fcb72d87d819c94ba06b5ae7c19bc825b6b0fc2e92ae72fbc",
+      "size": 5008
+    },
+    {
+      "name": "shaders/compiled/msl/fogofwar.fragment.msl",
+      "hash": "4e2923fe690dc5cf5923818609c895631d7cc916b0e74638665bcf69088cbc93",
+      "size": 734
+    },
+    {
+      "name": "shaders/compiled/msl/water.fragment.msl",
+      "hash": "d61d8d7af121afafe5261693720fbcc5c5004702e84f0472686a58a7d4ffe513",
+      "size": 1759
+    },
+    {
+      "name": "shaders/compiled/pssl/fogofwar.fragment.hlsl",
+      "hash": "b47eafd816e9926272f70a8b970405db35724bff9b63931b0ab06ea16d9f9de2",
+      "size": 969
+    },
+    {
+      "name": "shaders/compiled/pssl/water.fragment.hlsl",
+      "hash": "853b605379d92d8ccf28ccf3e47281679522488965e57f39625747c36d0c2e9d",
+      "size": 2104
+    },
+    {
+      "name": "shaders/compiled/spirv/fogofwar.fragment.spv",
+      "hash": "1b5163142254d8ec9aae7f31b4ebf65e342e4ef1fded17b88c2fb900d5144675",
+      "size": 1628
+    },
+    {
+      "name": "shaders/compiled/spirv/water.fragment.spv",
+      "hash": "4a2c2325e14b110f90ac5609bcf190bb516475f3ca81ae52176468720c32046e",
+      "size": 3128
+    },
+    {
+      "name": "shaders/reflection/fogofwar.fragment.json",
+      "hash": "960397c2c0575db197c6b165046e21bc5e430019c58fd47fb63e6244951da4dd",
+      "size": 241
+    },
+    {
+      "name": "shaders/reflection/water.fragment.json",
+      "hash": "bb675314dc3854af2ac1eba5c37ad3860cbfb971871170fd520cc6a160216efc",
+      "size": 303
+    }
+  ]
+}

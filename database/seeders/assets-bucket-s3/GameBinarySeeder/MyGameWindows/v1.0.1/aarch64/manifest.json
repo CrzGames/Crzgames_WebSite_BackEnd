@@ -1,0 +1,340 @@
+{
+  "version": "v1.0.1",
+  "files": [
+    {
+      "name": "DirectML.dll",
+      "hash": "77b0db83ff903f2323f5caf538499d75af6038bbea23b7959f7d232d9a4ab9d4",
+      "size": 18444832
+    },
+    {
+      "name": "SDL3.dll",
+      "hash": "7bec3cd949d95e1c52e42e469fed2c2be15839a456e4ed47ca672e6d1867fd29",
+      "size": 2580992
+    },
+    {
+      "name": "SDL3_image.dll",
+      "hash": "459ed4f50b2e27b921eec5d1d319c345d58a6a7f25e5d8eaaa1c91711e0adf97",
+      "size": 123392
+    },
+    {
+      "name": "SDL3_mixer.dll",
+      "hash": "de4494a66bfabf48a4fbb7da0604e0761f4c64bd08a50f36bc0c708f27bc6a19",
+      "size": 93184
+    },
+    {
+      "name": "SDL3_ttf.dll",
+      "hash": "c950e9395e255fc23d57f7085f3ad0e441522ca5823e3842052555644d8d576e",
+      "size": 1715712
+    },
+    {
+      "name": "avcodec-62.dll",
+      "hash": "94c2d4c8a95b50cf0ba56758bbbb01f67b90d6290f1cf427aa11301b3ffab448",
+      "size": 40218112
+    },
+    {
+      "name": "avdevice-62.dll",
+      "hash": "477f1dba3e98070b497cb977644e937edd9286d99d20b5d182d8f7d1e7858fed",
+      "size": 2598400
+    },
+    {
+      "name": "avfilter-11.dll",
+      "hash": "4d5df9c68b29d81231fe5e010c041e257f6ff1bb66e18f400b75864d531c3f6e",
+      "size": 49223680
+    },
+    {
+      "name": "avformat-62.dll",
+      "hash": "3ae7232d30ff59369d99b6dc5fa028eb0bf431069329776b55ba63e023ab3e8b",
+      "size": 13767168
+    },
+    {
+      "name": "avutil-60.dll",
+      "hash": "a88c3d310744c3ec1718d1b2f94ed9e5fd5adcd944ce1e223c92f42d0a885b4b",
+      "size": 1167360
+    },
+    {
+      "name": "concrt140.dll",
+      "hash": "5d0291046e7857bec45b8e0d73d70ca69613b49523db16e6db51af72f0751d65",
+      "size": 725536
+    },
+    {
+      "name": "libpng16-16.dll",
+      "hash": "e8d2f57de547593ade62648b79210ee4e166032c6e8a9eec590a9aa55837c2c0",
+      "size": 234496
+    },
+    {
+      "name": "msvcp140.dll",
+      "hash": "530975b54f72d211cced62ad4bb5498e0f5786a7cc448da9a35e2d1738cbee1a",
+      "size": 1380424
+    },
+    {
+      "name": "msvcp140_1.dll",
+      "hash": "4df56b7e12140a0dd582c01995e63df52bc110cc67301509f3b2204d9a84b4e9",
+      "size": 50720
+    },
+    {
+      "name": "msvcp140_2.dll",
+      "hash": "8a4051bd06fe83972f2bb9fd27d8f2e4b46720ec26a10461a6ec21519a2f1603",
+      "size": 520224
+    },
+    {
+      "name": "msvcp140_atomic_wait.dll",
+      "hash": "0770873cb51463e8e8bad8da214484d6d74878b10cad5477f1426c95e228d58e",
+      "size": 85576
+    },
+    {
+      "name": "msvcp140_codecvt_ids.dll",
+      "hash": "176d6b8d055cfe5ba3f002dccd41a73143c9b9814ee38ea99dd91024f4629425",
+      "size": 41544
+    },
+    {
+      "name": "ogg-0.dll",
+      "hash": "48ea5735e86ec8945bc589bdb1127d6822bfd8452c2e090c4c8fb7c2b44b14af",
+      "size": 30208
+    },
+    {
+      "name": "onnxruntime.dll",
+      "hash": "a3931a00a5106e4a25062c57e64fb963b158c779d394f9dca36b34f4b592c753",
+      "size": 20396544
+    },
+    {
+      "name": "onnxruntime_providers_shared.dll",
+      "hash": "09e802c997d997d13d70a5a198245624b5a58d81baefd61ac411d457db57c3e0",
+      "size": 10752
+    },
+    {
+      "name": "opus-0.dll",
+      "hash": "9a67b411c64ed63df922bb9faa9a99b821ba557a4429166fc42de35574793280",
+      "size": 326656
+    },
+    {
+      "name": "opusfile-0.dll",
+      "hash": "c635a33793c3035c68d54799cf77bd0511eee89f60fba17dfe792c524e1b0a68",
+      "size": 49152
+    },
+    {
+      "name": "rc2d-game-template.exe",
+      "hash": "a5e00823911a8354caa301f6e5aeb49c9e9752802514974ababba500f435cc2a",
+      "size": 4813824
+    },
+    {
+      "name": "swresample-6.dll",
+      "hash": "fabdff22bac5d0e3e1c5e1cede6d684f967fb4a74fbaa24268ea202d66073360",
+      "size": 243712
+    },
+    {
+      "name": "swscale-9.dll",
+      "hash": "1877ccfc1632495977f5d591b8ce7148df72c34a66a6769e7bd2b0c7ff20a79b",
+      "size": 922112
+    },
+    {
+      "name": "vccorlib140.dll",
+      "hash": "7b6e1e63558541bc81dd3eed62d60d809a00d806497c48e71cd3c85c5056eed4",
+      "size": 880160
+    },
+    {
+      "name": "vcruntime140.dll",
+      "hash": "6d987d8cb2a47cff9c29c1fcbb853e7ef273c545f7d822728f7d2d448ca18758",
+      "size": 203336
+    },
+    {
+      "name": "vcruntime140_1.dll",
+      "hash": "f4d66bdd6789aaed53341dc3153655e0ef2a9201c3652400443896a592e795b6",
+      "size": 53280
+    },
+    {
+      "name": "vcruntime140_threads.dll",
+      "hash": "5c1cdc64b0eb6962419aaf11a7196c0ae1614d9c8a5e63a1f45f78424a8ddaaf",
+      "size": 62488
+    },
+    {
+      "name": "version.txt",
+      "hash": "5d70bafc484635d4ce9a21cbfbd6f162b87b7568e95fb8c513c311affa9810f8",
+      "size": 23
+    },
+    {
+      "name": "vorbis-0.dll",
+      "hash": "f25e39e77afa91661835811e0f5829601a97187d62062ef5d6dc24b40d5fed7a",
+      "size": 707072
+    },
+    {
+      "name": "vorbisfile-3.dll",
+      "hash": "e5798f672b3ca323c0ccc2f89adfe1d30bb8d27aaec2470d500cbf3775fb734a",
+      "size": 34816
+    },
+    {
+      "name": "assets/atlas/elite24/elite24.json",
+      "hash": "db8438f197a97745b63a02d227263b3c9055c4457046e98bc4f69ebab9b01659",
+      "size": 1968
+    },
+    {
+      "name": "assets/atlas/elite24/elite24.png",
+      "hash": "c84f76d230328c8ab21ca34f2d6db9185903e26413ea7b048089d45bb2f75bca",
+      "size": 430752
+    },
+    {
+      "name": "assets/atlas/elite27/elite27.json",
+      "hash": "e09072cdacae9646f4cbc8c3f7bfa1ab3044f9403f531fd81c727877f49b354c",
+      "size": 1972
+    },
+    {
+      "name": "assets/atlas/elite27/elite27.png",
+      "hash": "11f32de35e1adf443f99947d2f7aa35c92b80c448ef059134262f833605dfd61",
+      "size": 1086941
+    },
+    {
+      "name": "assets/atlas/redcosar_lvl1/redcosar_lvl1.json",
+      "hash": "7d23b360c8adfb839a957ce159153294b642431d3b6b55ec9670812e3ed9d9bc",
+      "size": 1905
+    },
+    {
+      "name": "assets/atlas/redcosar_lvl1/redcosar_lvl1.png",
+      "hash": "db2433cd1a8245a81e125c73fef07e5d3f353e5fad8b5f0d8fc4b1268ef873eb",
+      "size": 42960
+    },
+    {
+      "name": "assets/data/version.txt",
+      "hash": "92521fc3cbd964bdc9f584a991b89fddaa5754ed1cc96d6d42445338669c1305",
+      "size": 5
+    },
+    {
+      "name": "assets/fonts/SIXTY.TTF",
+      "hash": "2828f2d97d3973fa00a9c90694ad9de2852f1d285a9a60825bffa052119cd3b7",
+      "size": 16824
+    },
+    {
+      "name": "assets/fonts/TradeWinds-Regular.ttf",
+      "hash": "b8d8ac0be4a262e8473b25b8b7f90d5909c8780648285b3edc44b5dff6341bb0",
+      "size": 85744
+    },
+    {
+      "name": "assets/images/CloudNoise.png",
+      "hash": "a4b80b457b1e607090b4e93b2caa25c8d9bdbc628cea15c7e1007708412ef904",
+      "size": 851795
+    },
+    {
+      "name": "assets/images/Matthias_HalloweenNoise.png",
+      "hash": "b006ec60106153c74def89523a01d252b830b318302560ea34b3d8e19a6dcbea",
+      "size": 91262
+    },
+    {
+      "name": "assets/images/background-login.png",
+      "hash": "c19101b01fd7ed847a1c6255d3be706f45803176c5c718378f27888c55960662",
+      "size": 1245373
+    },
+    {
+      "name": "assets/images/background-ui-ingame.png",
+      "hash": "0614b78db0fa4b4aad0581c3d2ed61d377ed877f720707974981ebe8e97ab6aa",
+      "size": 1516029
+    },
+    {
+      "name": "assets/images/barre-action-ingame.png",
+      "hash": "7390f60abda3000dc6cda3c1c503844fbd7ff6a06542fcb7148df2743a247e85",
+      "size": 162548
+    },
+    {
+      "name": "assets/images/button-centermap-ingame.png",
+      "hash": "4a2bec0e4f7331c25d01a777a2fa9184f999934c6deffc06a0c203e0ddf90389",
+      "size": 4841
+    },
+    {
+      "name": "assets/images/button-login.png",
+      "hash": "d2467ed1edef638beaf6c341c7ab0ba01d7f32e104268c5fb024cd5df20567b1",
+      "size": 154116
+    },
+    {
+      "name": "assets/images/input-email-login.png",
+      "hash": "02c7cb7d4b28e5d43f47d0fb10105163f476e77ea050fb95670390faa5fd74a8",
+      "size": 37869
+    },
+    {
+      "name": "assets/images/input-password-login.png",
+      "hash": "3eb6d06269c384dd30678260d4f152b9aacd64ab30dd807d5377113256a8bb11",
+      "size": 38014
+    },
+    {
+      "name": "assets/images/logost-login.png",
+      "hash": "dc5e067036dc1bacf7af3597c03b676d4f24314f09ef12746be2e8bc258292ff",
+      "size": 204174
+    },
+    {
+      "name": "assets/images/minimap.png",
+      "hash": "289bc6f8bd0ec06de1103d9722ec18aa4e920f0790a84ae48a2e1e471ad00cf5",
+      "size": 17274
+    },
+    {
+      "name": "assets/images/tile-caustic.png",
+      "hash": "9312ac534ccfe661f052e751693da00ff33fe477ffa1db6595d370e7ccdc1342",
+      "size": 23073
+    },
+    {
+      "name": "assets/images/tile-ilo1.png",
+      "hash": "33590a1b9c219c0ceab029a0811f2af02d9b47f2936df057d533f7d1a5a7de7d",
+      "size": 348027
+    },
+    {
+      "name": "assets/images/tile-water.png",
+      "hash": "e3ccf9d11221c52cfb006e73d7d7e2e7c64b598d0590576d4e2284e2930c3a8b",
+      "size": 26118
+    },
+    {
+      "name": "assets/images/tile-water2.png",
+      "hash": "6081c30a567eba8276675279d785481a7f0c868b7c8f6b7ef6297465628b1f2d",
+      "size": 38599
+    },
+    {
+      "name": "assets/images/tile-watercaustic.png",
+      "hash": "af78b2c3330b8744ab33b5ea389e3e10f22374f490334cdf52676374af563a16",
+      "size": 20929
+    },
+    {
+      "name": "shaders/compiled/dxil/fogofwar.fragment.dxil",
+      "hash": "2d12158bbcdbe749235e801814717dea8c2898a2993cf6e2336931b0ea426786",
+      "size": 4308
+    },
+    {
+      "name": "shaders/compiled/dxil/water.fragment.dxil",
+      "hash": "bde0361f91358c4fcb72d87d819c94ba06b5ae7c19bc825b6b0fc2e92ae72fbc",
+      "size": 5008
+    },
+    {
+      "name": "shaders/compiled/msl/fogofwar.fragment.msl",
+      "hash": "4e2923fe690dc5cf5923818609c895631d7cc916b0e74638665bcf69088cbc93",
+      "size": 734
+    },
+    {
+      "name": "shaders/compiled/msl/water.fragment.msl",
+      "hash": "d61d8d7af121afafe5261693720fbcc5c5004702e84f0472686a58a7d4ffe513",
+      "size": 1759
+    },
+    {
+      "name": "shaders/compiled/pssl/fogofwar.fragment.hlsl",
+      "hash": "b47eafd816e9926272f70a8b970405db35724bff9b63931b0ab06ea16d9f9de2",
+      "size": 969
+    },
+    {
+      "name": "shaders/compiled/pssl/water.fragment.hlsl",
+      "hash": "853b605379d92d8ccf28ccf3e47281679522488965e57f39625747c36d0c2e9d",
+      "size": 2104
+    },
+    {
+      "name": "shaders/compiled/spirv/fogofwar.fragment.spv",
+      "hash": "1b5163142254d8ec9aae7f31b4ebf65e342e4ef1fded17b88c2fb900d5144675",
+      "size": 1628
+    },
+    {
+      "name": "shaders/compiled/spirv/water.fragment.spv",
+      "hash": "4a2c2325e14b110f90ac5609bcf190bb516475f3ca81ae52176468720c32046e",
+      "size": 3128
+    },
+    {
+      "name": "shaders/reflection/fogofwar.fragment.json",
+      "hash": "960397c2c0575db197c6b165046e21bc5e430019c58fd47fb63e6244951da4dd",
+      "size": 241
+    },
+    {
+      "name": "shaders/reflection/water.fragment.json",
+      "hash": "bb675314dc3854af2ac1eba5c37ad3860cbfb971871170fd520cc6a160216efc",
+      "size": 303
+    }
+  ]
+}
