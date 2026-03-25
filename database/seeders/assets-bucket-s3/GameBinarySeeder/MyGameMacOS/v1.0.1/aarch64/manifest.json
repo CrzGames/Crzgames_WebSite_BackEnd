@@ -312,21 +312,6 @@
       "size": 20929
     },
     {
-      "name": "rc2d-game-template.app/Contents/Resources/assets/sounds/sound1.mp3",
-      "hash": "d0219d33a590177a200e9a1418f3d843ae3f1298478557ab3f18212f1feff5ab",
-      "size": 291015
-    },
-    {
-      "name": "rc2d-game-template.app/Contents/Resources/assets/sounds/sound_menu.mp3",
-      "hash": "cc1e65d0118b1b3a4339b8bc4ca4f10be41f6eb27322d05cbf7e8181612f1be9",
-      "size": 2402566
-    },
-    {
-      "name": "rc2d-game-template.app/Contents/Resources/assets/videos/SplashScreen_Studio_1080p.mp4",
-      "hash": "0563fd3d09d3c36874514b2a4bcb20bdf50b132cbc95a328865c09e32f23bc3e",
-      "size": 3172259
-    },
-    {
       "name": "rc2d-game-template.app/Contents/Resources/shaders/compiled/dxil/fogofwar.fragment.dxil",
       "hash": "2d12158bbcdbe749235e801814717dea8c2898a2993cf6e2336931b0ea426786",
       "size": 4308
