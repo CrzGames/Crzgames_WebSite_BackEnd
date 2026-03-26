@@ -1,7 +1,6 @@
 import {
   S3Client,
   CreateBucketCommand,
-  ListBucketsCommand,
   DeleteBucketCommand,
   GetObjectCommand,
   ListObjectsV2Command,
@@ -12,8 +11,6 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import type {
   DeleteBucketCommandOutput,
   CreateBucketCommandOutput,
-  ListBucketsCommandOutput,
-  Bucket,
   GetObjectCommandOutput,
   ListObjectsV2CommandOutput,
   GetBucketAclCommandOutput,
@@ -23,7 +20,6 @@ import type {
   GetObjectCommandInput,
   ListObjectsV2CommandInput,
   DeleteObjectsCommandInput,
-  ListBucketsCommandInput,
 } from '@aws-sdk/client-s3'
 import logger from '@adonisjs/core/services/logger'
 import env from '#start/env'
@@ -45,6 +41,9 @@ import { errors as lucidErrors } from '@adonisjs/lucid'
 import type { RelationSubQueryBuilderContract } from '@adonisjs/lucid/types/relations'
 
 const readFile: any = promisify(fs.readFile)
+const PRESIGNED_URL_MIN_EXPIRATION_SECONDS: number = 60
+const PRESIGNED_URL_MAX_EXPIRATION_SECONDS: number = 60 * 60 * 24 * 7
+const PRESIGNED_URL_DEFAULT_EXPIRATION_SECONDS: number = 900
 
 /**
  * Documentation Client S3 AWS v3 for Node.js : https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/
@@ -443,6 +442,35 @@ export default class CloudStorageS3Service {
    */
   public static async getURLToFileInBucket(pathFilename: string): Promise<string | undefined> {
     try {
+      const file: File | null = await File.query().preload('bucket').where('pathfilename', pathFilename).first()
+
+      if (!file) {
+        logger.warn(`getFileInBucket pathfilename not found in database: ${pathFilename}`)
+        return undefined
+      }
+
+      const normalizedExpiresIn: number = Math.max(
+        PRESIGNED_URL_MIN_EXPIRATION_SECONDS,
+        Math.min(PRESIGNED_URL_DEFAULT_EXPIRATION_SECONDS, PRESIGNED_URL_MAX_EXPIRATION_SECONDS),
+      )
+
+      if (file.bucket.visibility === 'private') {
+        const command: GetObjectCommand = new GetObjectCommand({
+          Bucket: file.bucket.name,
+          Key: pathFilename,
+        })
+        const signedUrl: string = await getSignedUrl(s3Client, command, { expiresIn: normalizedExpiresIn })
+
+        if (env.get('NODE_ENV') === 'development' || env.get('NODE_ENV') === 'test') {
+          return this.replaceHostInUrl(signedUrl)
+        }
+
+        return signedUrl
+      }
+
+      await this.setBucketCurrent(file.bucket.name)
+      await this.setVisibilityBucketCurrent(file.bucket.visibility)
+
       if (await drive.use().exists(pathFilename)) {
         logger.info('getFileInBucket success pathfilename for file')
         const fileUrl: string = await drive.use().getUrl(pathFilename)
@@ -452,14 +480,15 @@ export default class CloudStorageS3Service {
           return this.replaceHostInUrl(fileUrl)
         }
 
-        // En production, on retourne l'URL telle quelle
         return fileUrl
-      } else {
-        logger.warn('getFileInBucket pathfilename no exist for file')
       }
-    } catch (error) {
-      logger.error(`Error getFileInBucket: ${error.message}`)
-      throw new Error(`Error getFileInBucket: ${error.message}`)
+
+      logger.warn(`getFileInBucket pathfilename no exist for file: ${pathFilename}`)
+      return undefined
+    } catch (error: unknown) {
+      const errorMessage: string = error instanceof Error ? error.message : 'Unknown error'
+      logger.error(`Error getFileInBucket: ${errorMessage}`)
+      throw new Error(`Error getFileInBucket: ${errorMessage}`)
     }
   }
 
@@ -597,13 +626,16 @@ export default class CloudStorageS3Service {
   public static async getPresignedDownloadUrlForLauncher(
     bucketName: string,
     pathFilename: string,
-    expiresIn: number = 900,
+    expiresIn: number = PRESIGNED_URL_DEFAULT_EXPIRATION_SECONDS,
   ): Promise<string> {
     const bucket: MyBucket = await this.getBucketByName(bucketName)
     await this.setBucketCurrent(bucket.name)
     await this.setVisibilityBucketCurrent(bucket.visibility)
 
-    const normalizedExpiresIn: number = Math.max(60, Math.min(expiresIn, 3600))
+    const normalizedExpiresIn: number = Math.max(
+      PRESIGNED_URL_MIN_EXPIRATION_SECONDS,
+      Math.min(expiresIn, PRESIGNED_URL_MAX_EXPIRATION_SECONDS),
+    )
 
     if (!(await drive.use().exists(pathFilename))) {
       throw new NotFoundException(`File not found for presign: ${pathFilename}`)
@@ -895,33 +927,25 @@ export default class CloudStorageS3Service {
    * @returns {Promise<ExtendedBucket[] | undefined>} - Liste des buckets étendus
    */
   public static async getAllBuckets(): Promise<ExtendedBucket[] | undefined> {
-    const input: ListBucketsCommandInput = {}
-    const command: ListBucketsCommand = new ListBucketsCommand(input)
-
     try {
-      const data: ListBucketsCommandOutput = await s3Client.send(command)
-      logger.info(`getAllBuckets Retrieved ${data.Buckets?.length} buckets`)
+      const bucketsInDatabase: MyBucket[] = await MyBucket.query().orderBy('id', 'asc')
+      logger.info(`getAllBuckets Retrieved ${bucketsInDatabase.length} buckets from database`)
 
-      // Si aucun bucket n'est trouvé, retournez simplement un tableau vide
-      if (!data.Buckets) {
+      if (bucketsInDatabase.length === 0) {
         return []
       }
 
-      // Récupérez les données de visibilité pour chaque bucket
       const dataBucketsUpdated: ExtendedBucket[] = await Promise.all(
-        data.Buckets.map(async (bucket: Bucket): Promise<ExtendedBucket> => {
-          if (bucket.Name !== undefined) {
-            const dbBucket: MyBucket = await this.getBucketByName(bucket.Name)
+        bucketsInDatabase.map(async (dbBucket: MyBucket): Promise<ExtendedBucket> => {
+          let totalObjects: number = 0
+          let totalSize: number = 0
+          let continuationToken: string | undefined
 
-            // Fetch number of objects and total size
-            let totalObjects: number = 0
-            let totalSize: number = 0
-            let continuationToken: string | undefined
-
-            do {
+          do {
+            try {
               const listObjectsCommand: ListObjectsV2Command = new ListObjectsV2Command({
-                Bucket: bucket.Name,
-                ContinuationToken: continuationToken, // Utilisez ContinuationToken pour la pagination
+                Bucket: dbBucket.name,
+                ContinuationToken: continuationToken,
               })
 
               const objectsData: ListObjectsV2CommandOutput = await s3Client.send(listObjectsCommand)
@@ -929,40 +953,46 @@ export default class CloudStorageS3Service {
               totalSize +=
                 objectsData.Contents?.reduce((acc: number, obj: _Object): number => acc + (obj.Size || 0), 0) || 0
               continuationToken = objectsData.NextContinuationToken
-            } while (continuationToken)
+            } catch (error: unknown) {
+              const errorMessage: string = error instanceof Error ? error.message : 'Unknown error'
+              logger.warn(
+                `getAllBuckets Cannot list objects for bucket "${dbBucket.name}": ${errorMessage}. Returning metadata only.`,
+              )
+              totalObjects = 0
+              totalSize = 0
+              continuationToken = undefined
+            }
+          } while (continuationToken)
 
-            // Fetch ACL
+          let access: Grant[] | undefined
+          try {
             const getAclCommand: GetBucketAclCommand = new GetBucketAclCommand({
-              Bucket: bucket.Name,
+              Bucket: dbBucket.name,
             })
             const aclData: GetBucketAclCommandOutput = await s3Client.send(getAclCommand)
-            const access: Grant[] | undefined = aclData.Grants
-
-            // Create the extended bucket data
-            const extendedBucket: ExtendedBucket = {
-              id: dbBucket.id,
-              name: bucket.Name,
-              visibility: dbBucket.visibility,
-              createdAt: dbBucket.createdAt ?? undefined,
-              updatedAt: dbBucket.updatedAt ?? undefined,
-              totalObjects: totalObjects,
-              totalSize: totalSize,
-              access: access,
-            }
-
-            return extendedBucket
+            access = aclData.Grants
+          } catch (error: unknown) {
+            const errorMessage: string = error instanceof Error ? error.message : 'Unknown error'
+            logger.warn(`getAllBuckets Cannot read ACL for bucket "${dbBucket.name}": ${errorMessage}`)
           }
 
-          // If no dbBucket info, just return the basic bucket data in ExtendedBucket format.
           return {
-            name: '',
+            id: dbBucket.id,
+            name: dbBucket.name,
+            visibility: dbBucket.visibility,
+            createdAt: dbBucket.createdAt ?? undefined,
+            updatedAt: dbBucket.updatedAt ?? undefined,
+            totalObjects: totalObjects,
+            totalSize: totalSize,
+            access: access,
           }
         }),
       )
 
-      return dataBucketsUpdated.filter((bucket: ExtendedBucket): boolean => bucket.name !== '')
-    } catch (error: any) {
-      logger.error(`getAllBuckets Error retrieving buckets: ${error.message}`)
+      return dataBucketsUpdated
+    } catch (error: unknown) {
+      const errorMessage: string = error instanceof Error ? error.message : 'Unknown error'
+      logger.error(`getAllBuckets Error retrieving buckets: ${errorMessage}`)
     }
   }
 
