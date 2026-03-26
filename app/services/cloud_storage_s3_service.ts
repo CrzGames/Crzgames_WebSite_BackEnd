@@ -51,12 +51,12 @@ const readFile: any = promisify(fs.readFile)
  */
 const s3Client: S3Client = new S3Client({
   credentials: {
-    accessKeyId: env.get('S3_KEY') as string,
-    secretAccessKey: env.get('S3_SECRET_KEY') as string,
+    accessKeyId: env.get('S3_BUCKET_ACCESS_KEY_ID'),
+    secretAccessKey: env.get('S3_BUCKET_SECRET_ACCESS_KEY'),
   },
-  region: env.get('S3_REGION') as string,
-  endpoint: env.get('S3_ENDPOINT') as string,
-  forcePathStyle: String(env.get('S3_FORCE_PATH_STYLE')).toLowerCase() === 'true',
+  region: env.get('S3_BUCKET_REGION'),
+  endpoint: env.get('S3_BUCKET_ENDPOINT'),
+  forcePathStyle: env.get('S3_BUCKET_FORCE_PATH_STYLE')
 })
 
 /**
