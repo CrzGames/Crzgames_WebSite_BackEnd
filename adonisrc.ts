@@ -109,10 +109,6 @@ export default defineConfig({
       pattern: 'resources/views/**/*.edge',
       reloadServer: false,
     },
-    {
-      pattern: 'resources/logo/app-icon.png',
-      reloadServer: false,
-    },
   ],
 
   hooks: {
