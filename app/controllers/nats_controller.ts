@@ -1,25 +1,34 @@
-import type { HttpContext } from '@adonisjs/core/http'
+﻿import type { HttpContext } from '@adonisjs/core/http'
 
+/**
+ *
+ */
 export default class NatsController {
-  public async publish({ response, request }: HttpContext): Promise<void> {
-    const data = request.only(['message', 'subject'])
+  /**
+   *
+   */
+  public publish({ response, request }: HttpContext): void {
+    request.only(['message', 'subject'])
 
     try {
-      //await NatsService.publish(data.subject, data.message)
-      response.send('Connexion drainée avec succès + Publish subject and message.')
+      // await NatsService.publish(_data.subject, _data.message)
+      response.send('Connexion drainee avec succes + Publish subject and message.')
     } catch (error) {
-      response.send('Erreur lors de la connexion à NATS: ' + error)
+      response.send(`Erreur lors de la connexion a NATS: ${error}`)
     }
   }
 
-  public async subscribe({ response, request }: HttpContext): Promise<void> {
-    const { subject } = request.only(['subject'])
+  /**
+   *
+   */
+  public subscribe({ response, request }: HttpContext): void {
+    request.only(['subject'])
 
     try {
-      // await NatsService.subscribe(subject)
-      response.send('Connexion drainée avec succès + Subscribe publication.')
+      // await NatsService.subscribe(_subject.subject)
+      response.send('Connexion drainee avec succes + Subscribe publication.')
     } catch (error) {
-      response.send('Erreur lors de la connexion à NATS: ' + error)
+      response.send(`Erreur lors de la connexion a NATS: ${error}`)
     }
   }
 }

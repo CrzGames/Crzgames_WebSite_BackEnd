@@ -7,6 +7,7 @@ import GamePlatform from '#models/game_platform'
 import File from '#models/file'
 import CloudStorageS3Service from '#services/cloud_storage_s3_service'
 import logger from '@adonisjs/core/services/logger'
+import env from '#start/env'
 
 export default class GameBinarySeeder extends BaseSeeder {
   public static environment: string[] = ['development', 'test']
@@ -51,7 +52,7 @@ export default class GameBinarySeeder extends BaseSeeder {
 
   private async processPlatform(game: Game, platformName: string, folderName: string): Promise<void> {
     const assetsBasePathGameBinary: string = path.resolve('database/seeders/assets-bucket-s3/GameBinarySeeder/')
-    const bucketNameBase: string = 'crzgames-public'
+    const bucketNameBase: string = env.get('S3_BUCKET_NAME')
 
     const platform: GamePlatform | null = await GamePlatform.findBy('name', platformName)
     if (!platform) {

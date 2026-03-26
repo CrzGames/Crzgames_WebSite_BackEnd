@@ -10,6 +10,6 @@ router
   .use(middleware.authRole([UserRoles.MODERATOR, UserRoles.STAFF, UserRoles.ADMIN]))
 router.get('/tickets/:userId', [controllers.Tickets, 'getAllTicketsByUserId']).use(middleware.auth())
 router.put('/tickets/:id', [controllers.Tickets, 'updateTicketByIdForStatus']).use(middleware.auth())
-router.get('/tickets-open-count/:userId', [controllers.Tickets, 'getTicketsCountByStatusOpenForUser']).use(
-  middleware.auth(),
-)
+router
+  .get('/tickets-open-count/:userId', [controllers.Tickets, 'getTicketsCountByStatusOpenForUser'])
+  .use(middleware.auth())

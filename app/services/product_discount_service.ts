@@ -79,6 +79,9 @@ export class ProductDiscountService {
   }
 
   // Get all product discounts for a specific product
+  /**
+   *
+   */
   public static async getAllProductDiscountsByProductId(productId: number): Promise<ProductDiscount[]> {
     try {
       return ProductDiscount.query().where('products_id', productId).preload('product')

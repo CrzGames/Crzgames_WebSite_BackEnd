@@ -53,12 +53,14 @@ export const updateGameValidator = vine.compile(
         }),
       )
       .optional(),
-    binaries: vine.array(
-      vine.object({
-        pathfilename: vine.string(),
-        platformId: vine.number(),
-        bucketName: vine.string(),
-      }),
-    ).optional(),
+    binaries: vine
+      .array(
+        vine.object({
+          pathfilename: vine.string(),
+          platformId: vine.number(),
+          bucketName: vine.string(),
+        }),
+      )
+      .optional(),
   }),
 )

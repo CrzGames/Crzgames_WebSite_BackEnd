@@ -26,3 +26,5 @@ database/schema_rules.ts
 database/schema.ts
 .adonisjs/**
 database/seeders/assets-bucket-s3/**
+
+k8s/**

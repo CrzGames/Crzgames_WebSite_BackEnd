@@ -1,19 +1,29 @@
-import type { HttpContext } from '@adonisjs/core/http'
+﻿import type { HttpContext } from '@adonisjs/core/http'
 import ProductGameServerService from '#services/product_game_server_service'
 import type ProductGameServer from '#models/product_game_server'
 
+/**
+ *
+ */
 export default class ProductGameServerController {
+  /**
+   *
+   */
   public async getAllProductGameServers({ response }: HttpContext): Promise<void> {
     const gameServers: ProductGameServer[] = await ProductGameServerService.getAllProductGameServers()
-    return response.status(200).json(gameServers)
+    response.status(200).json(gameServers)
   }
 
+  /**
+   *
+   */
   public async createProductGameServer({ request, response }: HttpContext): Promise<void> {
-    const { products_id, game_servers_id } = request.body()
+    const products_id: number = request.input('products_id')
+    const game_servers_id: number = request.input('game_servers_id')
     const gameServer: ProductGameServer = await ProductGameServerService.createProductGameServer(
       products_id,
       game_servers_id,
     )
-    return response.status(201).json(gameServer)
+    response.status(201).json(gameServer)
   }
 }

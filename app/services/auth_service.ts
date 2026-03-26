@@ -299,11 +299,6 @@ export default class AuthService {
         data.token,
       )
 
-      // Si le token n'a pas de date d'expiration, lancer une exception
-      if (!passwordResetToken.expiresAt) {
-        throw new BadRequestException('Token does not have an expiration date')
-      }
-
       // Checker si le token est expiré
       if (passwordResetToken.expiresAt < DateTime.now()) {
         throw new BadRequestException('Token expired')
@@ -404,11 +399,6 @@ export default class AuthService {
       const passwordResetToken: PasswordResetToken = await PasswordResetTokenService.getPasswordResetTokenByToken(
         data.token,
       )
-
-      // Checker si le token a une date d'expiration
-      if (!passwordResetToken.expiresAt) {
-        throw new BadRequestException('Token does not have an expiration date')
-      }
 
       // Checker si le token est expiré
       if (passwordResetToken.expiresAt < DateTime.now()) {

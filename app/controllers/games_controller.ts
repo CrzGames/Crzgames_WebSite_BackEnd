@@ -12,7 +12,13 @@ import { updateGameValidator } from '#validators/game/update_game_validator'
 import { createGameValidator } from '#validators/game/create_game_validator'
 import BadRequestException from '#exceptions/bad_request_exception'
 
+/**
+ *
+ */
 export default class GamesController {
+  /**
+   *
+   */
   public async createGames({ request, response }: HttpContext): Promise<void> {
     // Recuperation des donnees de la requete
     const payload: CreateGamePayload = await request.validateUsing(createGameValidator)
@@ -39,6 +45,9 @@ export default class GamesController {
     response.status(201)
   }
 
+  /**
+   *
+   */
   public async updateGames({ params, request, response }: HttpContext): Promise<void> {
     const gameId: number = Number(params.id)
     if (Number.isNaN(gameId)) {
@@ -82,6 +91,9 @@ export default class GamesController {
     response.status(204).noContent()
   }
 
+  /**
+   *
+   */
   public async deleteGames({ params, response }: HttpContext): Promise<void> {
     const gameId: number = Number(params.id)
     if (Number.isNaN(gameId)) {
@@ -92,6 +104,9 @@ export default class GamesController {
     response.status(204).noContent()
   }
 
+  /**
+   *
+   */
   public async getGamesById({ params, response }: HttpContext): Promise<void> {
     const gameId: number = Number(params.id)
     if (Number.isNaN(gameId)) {
@@ -102,18 +117,27 @@ export default class GamesController {
     response.status(200).json(game)
   }
 
+  /**
+   *
+   */
   public async getAllGamesByTitle({ params, response }: HttpContext): Promise<void> {
     const title: string = params.title
     const games: Game[] = await GamesService.getAllGamesByTitle(title)
     response.status(200).json(games)
   }
 
+  /**
+   *
+   */
   public async getGameByTitle({ request, response }: HttpContext): Promise<void> {
     const title: string = request.input('title')
     const game: Game = await GamesService.getGameByTitle(title)
     response.status(200).json(game)
   }
 
+  /**
+   *
+   */
   public async getAllGames({ response, request }: HttpContext): Promise<void> {
     const title: string | undefined = request.input('title')
     const page: number | undefined = request.input('page') ? Number(request.input('page')) : undefined

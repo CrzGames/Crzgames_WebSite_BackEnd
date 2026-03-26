@@ -151,7 +151,7 @@ export default class UserGameLibrariesService {
         const order: Order | null = await OrderService.getOrderById(orderProduct.ordersId)
 
         // Vérifiez si l'order est payé et appartient à l'utilisateur
-        if (order && order.statusOrder === 'Paid' && order.usersId === userId) {
+        if (order?.statusOrder === 'Paid' && order.usersId === userId) {
           userPaidValid = true
           break
         }

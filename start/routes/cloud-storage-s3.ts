@@ -27,6 +27,4 @@ router
 router
   .post('/cloud-storage-s3/file-or-folder/size', [controllers.CloudStorageS3, 'getTotalSizeFileOrFolderInBucket'])
   .use(middleware.auth())
-router
-  .post('/cloud-storage-s3/content', [controllers.CloudStorageS3, 'getFileContentInBucket'])
-  .use(middleware.auth())
+router.post('/cloud-storage-s3/content', [controllers.CloudStorageS3, 'getFileContentInBucket']).use(middleware.auth())

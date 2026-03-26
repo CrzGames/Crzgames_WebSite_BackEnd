@@ -1,4 +1,4 @@
-import Stripe from 'stripe'
+﻿import Stripe from 'stripe'
 import env from '#start/env'
 import User from '#models/user'
 import logger from '@adonisjs/core/services/logger'
@@ -16,11 +16,11 @@ import { errors as lucidErrors } from '@adonisjs/lucid'
 import InternalServerErrorException from '#exceptions/internal_server_error_exception'
 
 /**
- * Type pour les commandes de création de PaymentIntent.
+ * Type pour les commandes de crÃ©ation de PaymentIntent.
  * @typedef {object} PaymentIntentCommand
- * @property {number} products_id - L'ID du produit associé.
- * @property {number} quantity - La quantité de produit commandée.
- * @property {number | undefined | null} [game_servers_id] - L'ID du serveur de jeu associé (optionnel).
+ * @property {number} products_id - L'ID du produit associÃ©.
+ * @property {number} quantity - La quantitÃ© de produit commandÃ©e.
+ * @property {number | undefined | null} [game_servers_id] - L'ID du serveur de jeu associÃ© (optionnel).
  */
 export type PaymentIntentCommand = {
   products_id: number
@@ -29,40 +29,40 @@ export type PaymentIntentCommand = {
 }
 
 /**
- * Type pour les éléments de panier traités.
+ * Type pour les Ã©lÃ©ments de panier traitÃ©s.
  * @typedef {object} ProcessedCartItem
- * @property {number} products_id - L'ID du produit associé.
- * @property {number} quantity - La quantité de produit commandée.
- * @property {number | undefined | null} [game_servers_id] - L'ID du serveur de jeu associé (optionnel).
- * @property {number} price - Le prix du produit multiplié par la quantité.
+ * @property {number} products_id - L'ID du produit associÃ©.
+ * @property {number} quantity - La quantitÃ© de produit commandÃ©e.
+ * @property {number | undefined | null} [game_servers_id] - L'ID du serveur de jeu associÃ© (optionnel).
+ * @property {number} price - Le prix du produit multipliÃ© par la quantitÃ©.
  */
 export type ProcessedCartItem = {
   products_id: number
   quantity: number
   game_servers_id?: number | undefined | null
-  price: number // Le prix du produit x la quantité
+  price: number // Le prix du produit x la quantitÃ©
 }
 
 /**
- * Type pour les métadonnées de commande Stripe.
+ * Type pour les mÃ©tadonnÃ©es de commande Stripe.
  * @typedef {object} OrderMetadataStripe
- * @property {number} users_id - L'ID de l'utilisateur associé à la commande.
- * @property {string} processed_items - Les éléments traités du panier en format JSON.
+ * @property {number} users_id - L'ID de l'utilisateur associÃ© Ã  la commande.
+ * @property {string} processed_items - Les Ã©lÃ©ments traitÃ©s du panier en format JSON.
  */
 export const stripe: Stripe = new Stripe(env.get('STRIPE_SECRET_KEY'), {
-  apiVersion: env.get('STRIPE_API_VERSION'),
+  apiVersion: env.get('STRIPE_API_VERSION') as Stripe.LatestApiVersion,
   telemetry: false,
 })
 
 /**
- * Service pour gérer les interactions avec Stripe, notamment la création de PaymentIntent,
+ * Service pour gÃ©rer les interactions avec Stripe, notamment la crÃ©ation de PaymentIntent,
  * la gestion des clients Stripe et le traitement des paiements.
  * @class StripeService
  */
 export class StripeService {
   /**
-   * Crée un PaymentIntent pour traiter le paiement d'un panier d'achats.
-   * @param {PaymentIntentCommand[]} cartItems - Les articles du panier à payer.
+   * CrÃ©e un PaymentIntent pour traiter le paiement d'un panier d'achats.
+   * @param {PaymentIntentCommand[]} cartItems - Les articles du panier Ã  payer.
    * @param {number} userId - L'ID de l'utilisateur effectuant le paiement.
    * @returns {Promise<string | null>} - Le client_secret du PaymentIntent ou null en cas d'erreur.
    */
@@ -71,19 +71,19 @@ export class StripeService {
       let user: User = await User.findOrFail(userId)
 
       /**
-       *  Pour éviter que le même PaymentIntent ne soit créé accidentellement plusieurs fois
+       *  Pour Ã©viter que le mÃªme PaymentIntent ne soit crÃ©Ã© accidentellement plusieurs fois
        *  (par exemple, en cas de plusieurs clics sur le bouton de paiement par l'utilisateur),
-       *  vous pouvez utiliser une clé idempotente. Stripe permet de spécifier une clé idempotente
-       *  dans vos requêtes pour garantir que même si la même requête est envoyée plusieurs fois,
-       *  elle ne sera traitée qu'une seule fois.
+       *  vous pouvez utiliser une clÃ© idempotente. Stripe permet de spÃ©cifier une clÃ© idempotente
+       *  dans vos requÃªtes pour garantir que mÃªme si la mÃªme requÃªte est envoyÃ©e plusieurs fois,
+       *  elle ne sera traitÃ©e qu'une seule fois.
        */
       const idempotencyKey: string = uuidv4()
 
-      // Si c'est la première fois qu'il paye un produit, ajoutée un stripe customer id au compte user
+      // Si c'est la premiÃ¨re fois qu'il paye un produit, ajoutÃ©e un stripe customer id au compte user
       if (user.stripeCustomerId === null) {
         user = await this.createStripeCustomer(user.id)
 
-        // On vérifie si l'utilisateur a un stripe_customer_id a nouveau
+        // On vÃ©rifie si l'utilisateur a un stripe_customer_id a nouveau
         if (user.stripeCustomerId === null) {
           return null
         }
@@ -93,18 +93,18 @@ export class StripeService {
       const { totalAmount, orderMetadataStripeId } = await this.calculateTotalAmount(cartItems, user)
 
       /**
-       * Création d'un PaymentIntent. Cela représente une intention de paiement,
-       * et nous donne un moyen de suivre et de gérer le processus de paiement.
+       * CrÃ©ation d'un PaymentIntent. Cela reprÃ©sente une intention de paiement,
+       * et nous donne un moyen de suivre et de gÃ©rer le processus de paiement.
        */
       const paymentIntent: Stripe.Response<Stripe.PaymentIntent> = await stripe.paymentIntents.create(
         {
           /**
-           *  Les montants sont traités dans la plus petite unité monétaire pour chaque devise.
-           *  Pour l'euro (EUR), cela signifie que les montants sont exprimés en centimes.
-           *  C'est pourquoi lorsque vous spécifiez un montant de 50, cela représente en fait 50 centimes
+           *  Les montants sont traitÃ©s dans la plus petite unitÃ© monÃ©taire pour chaque devise.
+           *  Pour l'euro (EUR), cela signifie que les montants sont exprimÃ©s en centimes.
+           *  C'est pourquoi lorsque vous spÃ©cifiez un montant de 50, cela reprÃ©sente en fait 50 centimes
            */
-          amount: Math.round(totalAmount * 100), // Les montants sont exprimés en centimes
-          currency: 'eur', // Pour éviter des frais de conversion, on met la devise en euro
+          amount: Math.round(totalAmount * 100), // Les montants sont exprimÃ©s en centimes
+          currency: 'eur', // Pour Ã©viter des frais de conversion, on met la devise en euro
           use_stripe_sdk: true,
           customer: user.stripeCustomerId,
           automatic_payment_methods: {
@@ -112,7 +112,7 @@ export class StripeService {
           },
           setup_future_usage: 'off_session',
           metadata: {
-            // On peut ajouter des métadonnées personnalisées pour suivre les paiements lors des webhooks
+            // On peut ajouter des mÃ©tadonnÃ©es personnalisÃ©es pour suivre les paiements lors des webhooks
             user_id: user.id.toString(),
             order_metadata_stripe_id: orderMetadataStripeId.toString(),
           },
@@ -124,8 +124,8 @@ export class StripeService {
 
       /**
        * On retourne le client_secret du PaymentIntent.
-       * C'est une clé secrète qui permet à l'application cliente
-       * de confirmer le paiement intent auprès de Stripe.
+       * C'est une clÃ© secrÃ¨te qui permet Ã  l'application cliente
+       * de confirmer le paiement intent auprÃ¨s de Stripe.
        */
       return paymentIntent.client_secret
     } catch (error: any) {
@@ -140,17 +140,17 @@ export class StripeService {
   }
 
   /**
-   * Calcule le montant total du panier d'achats et crée les métadonnées de la commande Stripe.
-   * @param {PaymentIntentCommand[]} cartItems - Les articles du panier à payer.
+   * Calcule le montant total du panier d'achats et crÃ©e les mÃ©tadonnÃ©es de la commande Stripe.
+   * @param {PaymentIntentCommand[]} cartItems - Les articles du panier Ã  payer.
    * @param {User} user - L'utilisateur effectuant le paiement.
-   * @returns {Promise<{ totalAmount: number; orderMetadataStripeId: number }>} - Le montant total et l'ID des métadonnées de la commande Stripe.
+   * @returns {Promise<{ totalAmount: number; orderMetadataStripeId: number }>} - Le montant total et l'ID des mÃ©tadonnÃ©es de la commande Stripe.
    */
   private static async calculateTotalAmount(
     cartItems: PaymentIntentCommand[],
     user: User,
   ): Promise<{ totalAmount: number; orderMetadataStripeId: number }> {
     try {
-      // On initialise le montant total à 0 et un tableau pour les éléments traités
+      // On initialise le montant total Ã  0 et un tableau pour les Ã©lÃ©ments traitÃ©s
       let totalAmount: number = 0
       const processedItems: ProcessedCartItem[] = []
 
@@ -158,14 +158,14 @@ export class StripeService {
 
       for (const item of cartItemsArray) {
         const product: Product = await ProductService.getProductById(item.products_id)
-        let productPrice: number = product.price * item.quantity
+        let productPrice: number = Number(product.price) * item.quantity
 
         const discount: ProductDiscount | undefined = product.productDiscounts.find(
           (productDiscount: ProductDiscount): boolean =>
             productDiscount.currency.toLowerCase() === user.currencyCode?.toLowerCase(),
         )
         if (discount) {
-          productPrice *= 1 - discount.discountPercent / 100
+          productPrice *= 1 - Number(discount.discountPercent) / 100
         }
 
         totalAmount += productPrice
@@ -192,15 +192,15 @@ export class StripeService {
   }
 
   /**
-   * Crée un client Stripe pour l'utilisateur si celui-ci n'en a pas déjà un.
-   * @param {number} userId - L'ID de l'utilisateur pour lequel créer le client Stripe.
-   * @returns {Promise<User>} - L'utilisateur mis à jour avec le stripe_customer_id.
+   * CrÃ©e un client Stripe pour l'utilisateur si celui-ci n'en a pas dÃ©jÃ  un.
+   * @param {number} userId - L'ID de l'utilisateur pour lequel crÃ©er le client Stripe.
+   * @returns {Promise<User>} - L'utilisateur mis Ã  jour avec le stripe_customer_id.
    */
   private static async createStripeCustomer(userId: number): Promise<User> {
     try {
       const user: User = await User.findOrFail(userId)
 
-      // Paramètres pour créer un client chez Stripe
+      // ParamÃ¨tres pour crÃ©er un client chez Stripe
       const params: Stripe.CustomerCreateParams = {
         metadata: {
           user_id: user.id,
@@ -208,17 +208,17 @@ export class StripeService {
         },
       }
 
-      // Création d'un nouveau client chez Stripe. Cela nous permet d'enregistrer
-      // et de gérer des informations sur nos clients, comme leur adresse e-mail
-      // ou leurs méthodes de paiement enregistrées.
+      // CrÃ©ation d'un nouveau client chez Stripe. Cela nous permet d'enregistrer
+      // et de gÃ©rer des informations sur nos clients, comme leur adresse e-mail
+      // ou leurs mÃ©thodes de paiement enregistrÃ©es.
       const customer: Stripe.Response<Stripe.Customer> = await stripe.customers.create(params)
 
-      // On met à jour le stripe_customer_id de l'utilisateur dans la table 'users'
+      // On met Ã  jour le stripe_customer_id de l'utilisateur dans la table 'users'
       await user.merge({ stripeCustomerId: customer.id }).save()
 
       logger.info('CreateStripeCustomer Stripe customer created successfully')
 
-      return user // Retourne l'utilisateur mis à jour
+      return user // Retourne l'utilisateur mis Ã  jour
     } catch (error: any) {
       logger.error('CreateStripeCustomer An error occurred while trying to create a Stripe customer.')
 
@@ -231,12 +231,12 @@ export class StripeService {
   }
 
   /**
-   * Gère les actions à effectuer après la confirmation d'un PaymentIntent.
-   * Cela inclut la création d'une commande, l'ajout de produits à la bibliothèque de jeux de l'utilisateur,
-   * et l'ajout d'objets en jeu si nécessaire.
-   * @param {Stripe.PaymentIntent} paymentIntent - Le PaymentIntent confirmé.
+   * GÃ¨re les actions Ã  effectuer aprÃ¨s la confirmation d'un PaymentIntent.
+   * Cela inclut la crÃ©ation d'une commande, l'ajout de produits Ã  la bibliothÃ¨que de jeux de l'utilisateur,
+   * et l'ajout d'objets en jeu si nÃ©cessaire.
+   * @param {Stripe.PaymentIntent} paymentIntent - Le PaymentIntent confirmÃ©.
    * @param {'Paid' | 'Failed' | 'Canceled'} orderStatus - Le statut de la commande.
-   * @returns {Promise<void>} - Aucune valeur de retour, mais l'opération peut échouer avec une exception.
+   * @returns {Promise<void>} - Aucune valeur de retour, mais l'opÃ©ration peut Ã©chouer avec une exception.
    */
   public static async handleAfterPaymentIntent(
     paymentIntent: Stripe.PaymentIntent,
@@ -246,10 +246,10 @@ export class StripeService {
     const orderMetadataStripeId: number = parseInt(paymentIntent.metadata.order_metadata_stripe_id)
 
     const orderMetadataStripe: OrderMetadataStripe = await OrderMetadataStripe.findOrFail(orderMetadataStripeId)
-    const processedItems: ProcessedCartItem[] = JSON.parse(orderMetadataStripe.processedItems)
+    const processedItems: ProcessedCartItem[] = JSON.parse(orderMetadataStripe.processedItems || '[]')
 
     try {
-      // Vérifiez si une commande avec le même paymentIntent.id existe déjà
+      // VÃ©rifiez si une commande avec le mÃªme paymentIntent.id existe dÃ©jÃ
       /*const existingOrder: Order | null = await Order.query()
         .where('payment_intent_id', paymentIntent.id)
         .first()
@@ -259,23 +259,23 @@ export class StripeService {
         return
       }*/
 
-      // Créer la commande
+      // CrÃ©er la commande
       const order: Order = await Order.create({
         usersId: userId,
         currency: paymentIntent.currency,
-        totalPrice: paymentIntent.amount / 100, // convertir en unité monétaire
-        status_order: orderStatus,
-        payment_intent_id: paymentIntent.id,
+        totalPrice: String(paymentIntent.amount / 100), // convertir en unitÃ© monÃ©taire
+        statusOrder: orderStatus,
+        paymentIntentId: paymentIntent.id,
       })
 
       // Ajouter les produits de la commande
       for (const item of processedItems) {
         await OrderProduct.create({
-          orders_id: order.id,
-          products_id: item.products_id,
-          game_servers_id: item.game_servers_id,
+          ordersId: order.id,
+          productsId: item.products_id,
+          gameServersId: item.game_servers_id ?? null,
           quantity: item.quantity,
-          price: item.price,
+          price: String(item.price),
         })
       }
 
@@ -284,7 +284,7 @@ export class StripeService {
       }
 
       // Check par rapport au products_id si c'est un product_category = 'game'
-      // Ajouté a la table 'user_game_librairies' par rapport au game.id pour le users_id en question
+      // AjoutÃ© a la table 'user_game_librairies' par rapport au game.id pour le users_id en question
       for (const item of processedItems) {
         const product: Product = await ProductService.getProductById(item.products_id)
         if (product.productCategory.name === 'game') {
@@ -296,7 +296,7 @@ export class StripeService {
       }
 
       // Check par rapport au products_id si c'est un product_category = 'ingame'
-      // se connecté a la base de donnée du jeu et ajouté l'item au joueur en question
+      // se connectÃ© a la base de donnÃ©e du jeu et ajoutÃ© l'item au joueur en question
       for (const item of processedItems) {
         const product: Product = await ProductService.getProductById(item.products_id)
         if (product.productCategory.name === 'ingame') {
@@ -310,12 +310,12 @@ export class StripeService {
   }
 
   /**
-   * Ajoute un objet en jeu à l'utilisateur dans le jeu spécifié.
+   * Ajoute un objet en jeu Ã  l'utilisateur dans le jeu spÃ©cifiÃ©.
    * @param {number} userId - L'ID de l'utilisateur auquel ajouter l'objet en jeu.
    * @param {string} gameTitle - Le titre du jeu dans lequel ajouter l'objet.
-   * @param {string} productName - Le nom du produit à ajouter en jeu.
-   * @param {number} productQuantity - La quantité du produit à ajouter.
-   * @returns {Promise<void>} - Aucune valeur de retour, mais l'opération peut échouer avec une exception.
+   * @param {string} productName - Le nom du produit Ã  ajouter en jeu.
+   * @param {number} productQuantity - La quantitÃ© du produit Ã  ajouter.
+   * @returns {Promise<void>} - Aucune valeur de retour, mais l'opÃ©ration peut Ã©chouer avec une exception.
    */
   private static async addInGameItemToPlayer(
     userId: number,
@@ -323,7 +323,7 @@ export class StripeService {
     productName: string,
     productQuantity: number,
   ): Promise<void> {
-    // Faire une requette HTTP a l'API du jeu pour ajouté l'item au joueur en question
+    // Faire une requette HTTP a l'API du jeu pour ajoutÃ© l'item au joueur en question
     // World of Warcraft quand on'ai sur le server development
     if (gameTitle === 'SeaTyrants' || gameTitle === 'World of Warcraft') {
       let urlApi: string

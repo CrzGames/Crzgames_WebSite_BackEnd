@@ -8,7 +8,12 @@ export default class extends BaseSchema {
       table.increments('id').primary()
       table.integer('ticket_statuses_id').unsigned().references('id').inTable('ticket_statuses').onDelete('SET NULL')
       table.integer('users_id').unsigned().references('id').inTable('users').onDelete('SET NULL')
-      table.integer('ticket_categories_id').unsigned().references('id').inTable('ticket_categories').onDelete('SET NULL')
+      table
+        .integer('ticket_categories_id')
+        .unsigned()
+        .references('id')
+        .inTable('ticket_categories')
+        .onDelete('SET NULL')
       table.text('subject').notNullable()
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })

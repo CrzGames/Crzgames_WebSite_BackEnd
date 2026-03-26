@@ -42,7 +42,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import type { ObjectMetaData } from '@adonisjs/drive/types'
 import type { Readable } from 'stream'
 import { errors as lucidErrors } from '@adonisjs/lucid'
-import { RelationSubQueryBuilderContract } from '@adonisjs/lucid/types/relations'
+import type { RelationSubQueryBuilderContract } from '@adonisjs/lucid/types/relations'
 
 const readFile: any = promisify(fs.readFile)
 
@@ -56,7 +56,7 @@ const s3Client: S3Client = new S3Client({
   },
   region: env.get('S3_REGION') as string,
   endpoint: env.get('S3_ENDPOINT') as string,
-  forcePathStyle: env.get('S3_FORCE_PATH_STYLE'),
+  forcePathStyle: String(env.get('S3_FORCE_PATH_STYLE')).toLowerCase() === 'true',
 })
 
 /**
@@ -212,7 +212,7 @@ export default class CloudStorageS3Service {
       let fileContentBuffer: any = null
       if (bucketFile.localPath) {
         fileContentBuffer = await readFile(bucketFile.localPath)
-      } else if (bucketFile.file && bucketFile.file.state === 'consumed' && bucketFile.file.tmpPath) {
+      } else if (bucketFile.file?.state === 'consumed' && bucketFile.file.tmpPath) {
         fileContentBuffer = await readFile(bucketFile.file.tmpPath)
       }
       console.log('Uploading to path:', bucketFile.pathFilename)
@@ -367,7 +367,9 @@ export default class CloudStorageS3Service {
       const deleteParams: DeleteObjectsCommandInput = {
         Bucket: bucketName,
         Delete: {
-          Objects: listedObjects.Contents.map(({ Key }) => ({ Key })),
+          Objects: listedObjects.Contents.filter((item: _Object): item is _Object & { Key: string } =>
+            Boolean(item.Key),
+          ).map((item: _Object & { Key: string }): { Key: string } => ({ Key: item.Key })),
         },
       }
 
@@ -908,10 +910,8 @@ export default class CloudStorageS3Service {
       // Récupérez les données de visibilité pour chaque bucket
       const dataBucketsUpdated: ExtendedBucket[] = await Promise.all(
         data.Buckets.map(async (bucket: Bucket): Promise<ExtendedBucket> => {
-          let dbBucket: MyBucket | null = null
-
           if (bucket.Name !== undefined) {
-            dbBucket = await this.getBucketByName(bucket.Name)
+            const dbBucket: MyBucket = await this.getBucketByName(bucket.Name)
 
             // Fetch number of objects and total size
             let totalObjects: number = 0
@@ -926,7 +926,8 @@ export default class CloudStorageS3Service {
 
               const objectsData: ListObjectsV2CommandOutput = await s3Client.send(listObjectsCommand)
               totalObjects += objectsData.KeyCount || 0
-              totalSize += objectsData.Contents?.reduce((acc, obj) => acc + (obj.Size || 0), 0) || 0
+              totalSize +=
+                objectsData.Contents?.reduce((acc: number, obj: _Object): number => acc + (obj.Size || 0), 0) || 0
               continuationToken = objectsData.NextContinuationToken
             } while (continuationToken)
 
@@ -939,11 +940,11 @@ export default class CloudStorageS3Service {
 
             // Create the extended bucket data
             const extendedBucket: ExtendedBucket = {
-              id: dbBucket?.id,
+              id: dbBucket.id,
               name: bucket.Name,
-              visibility: dbBucket?.visibility,
-              createdAt: dbBucket?.createdAt ?? undefined,
-              updatedAt: dbBucket?.updatedAt ?? undefined,
+              visibility: dbBucket.visibility,
+              createdAt: dbBucket.createdAt ?? undefined,
+              updatedAt: dbBucket.updatedAt ?? undefined,
               totalObjects: totalObjects,
               totalSize: totalSize,
               access: access,
@@ -965,6 +966,9 @@ export default class CloudStorageS3Service {
     }
   }
 
+  /**
+   *
+   */
   public static getFileWithPathFileNameAndBucketName(fileCommand: {
     pathFilename: string
     bucketName: string
@@ -984,6 +988,9 @@ export default class CloudStorageS3Service {
     }
   }
 
+  /**
+   *
+   */
   public static async getTotalSizeFileOrFolderInBucket(bucketName: string, pathFilename: string): Promise<number> {
     // Fetch le bucket en question dans la db pour récupérer la visibility du bucket
     const bucket: MyBucket = await this.getBucketByName(bucketName)

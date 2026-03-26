@@ -5,6 +5,7 @@ import ProductDiscount from '#models/product_discount'
 import path from 'path'
 import CloudStorageS3Service from '#services/cloud_storage_s3_service'
 import File from '#models/file'
+import env from '#start/env'
 
 export default class extends BaseSeeder {
   public static environment: string[] = ['development', 'test']
@@ -12,7 +13,7 @@ export default class extends BaseSeeder {
   public async run(): Promise<void> {
     const assetsBasePath: string = path.resolve('database/seeders/assets-bucket-s3/ProductSeeder/')
     const assetsBasePath2: string = path.resolve('database/seeders/assets-bucket-s3/GameSeeder/')
-    const bucketNameBase: string = 'crzgames-public'
+    const bucketNameBase: string = env.get('S3_BUCKET_NAME')
 
     const gameServer1: GameServer = await GameServer.create({
       name: 'Europe Global 1',

@@ -1,4 +1,4 @@
-import ProxyCheck from 'proxycheck-ts'
+﻿import ProxyCheck from 'proxycheck-ts'
 import type { ProxyCheckResponse, IPAddressInfo } from 'proxycheck-ts'
 import env from '#start/env'
 
@@ -10,9 +10,9 @@ const proxyCheck: ProxyCheck = new ProxyCheck({ api_key: env.get('PROXY_CHECK_IO
  * @property {string} continentCode - Le code du continent de l'adresse IP.
  * @property {string} country - Le pays de l'adresse IP.
  * @property {string} isocode - Le code ISO du pays de l'adresse IP.
- * @property {string} region - La région de l'adresse IP.
+ * @property {string} region - La region de l'adresse IP.
  * @property {string} city - La ville de l'adresse IP.
- * @property {object} currency - Les informations sur la devise associée à l'adresse IP.
+ * @property {object} currency - Les informations sur la devise associee a l'adresse IP.
  * @property {string} currency.code - Le code de la devise.
  * @property {string} currency.name - Le nom de la devise.
  * @property {string} currency.symbol - Le symbole de la devise.
@@ -34,57 +34,38 @@ export type ResponseProxyCheckIO = {
 }
 
 /**
- * Service pour vérifier si une adresse IP est un proxy ou un VPN en utilisant ProxyCheck.io.
+ * Service pour verifier si une adresse IP est un proxy ou un VPN en utilisant ProxyCheck.io.
  * @class ProxyCheckIOService
  */
 export class ProxyCheckIOService {
   /**
-   * Vérifie si une adresse IP est un proxy ou un VPN.
-   * @param {string} ip - L'adresse IP à vérifier.
+   * Verifie si une adresse IP est un proxy ou un VPN.
+   * @param {string} ip - L'adresse IP a verifier.
    * @returns {Promise<ResponseProxyCheckIO>} - Les informations sur l'adresse IP, y compris si c'est un proxy ou un VPN.
-   * @throws {Error} Si la vérification échoue.
+   * @throws {Error} Si la verification echoue.
    */
   public static async checkProxyVPN(ip: string): Promise<ResponseProxyCheckIO> {
     try {
       const response: ProxyCheckResponse = await proxyCheck.checkIP(ip, {
-        asn: 1, // Returns ASN, IP info, etc.
-        vpn: 3, // Check for VPN & Proxy
+        asn: 1,
+        vpn: 3,
       })
 
-      // Extract IP check results
       const ipData: IPAddressInfo = response[ip]
-      if (ipData) {
-        // Create response object
-        return {
-          continent: ipData.continent,
-          continentCode: ipData.continentcode,
-          country: ipData.country,
-          isocode: ipData.isocode,
-          region: ipData.region,
-          city: ipData.city,
-          currency: {
-            code: ipData.currency.code,
-            name: ipData.currency.name,
-            symbol: ipData.currency.symbol,
-          },
-          isProxyOrVPN: ipData.proxy === 'yes' || ipData.vpn === 'yes',
-        } as ResponseProxyCheckIO
-      }
 
-      // Si l'IP n'est pas trouvé, on retourne un objet vide
       return {
-        continent: '',
-        continentCode: '',
-        country: '',
-        isocode: '',
-        region: '',
-        city: '',
+        continent: ipData.continent,
+        continentCode: ipData.continentcode,
+        country: ipData.country,
+        isocode: ipData.isocode,
+        region: ipData.region,
+        city: ipData.city,
         currency: {
-          code: '',
-          name: '',
-          symbol: '',
+          code: ipData.currency.code,
+          name: ipData.currency.name,
+          symbol: ipData.currency.symbol,
         },
-        isProxyOrVPN: env.get('NODE_ENV') !== 'development', // Default to true in production
+        isProxyOrVPN: ipData.proxy === 'yes' || ipData.vpn === 'yes',
       } as ResponseProxyCheckIO
     } catch (error) {
       console.error('Error checking IP:', error)

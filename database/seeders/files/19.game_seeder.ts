@@ -9,6 +9,7 @@ import path from 'path'
 import CloudStorageS3Service from '#services/cloud_storage_s3_service'
 import logger from '@adonisjs/core/services/logger'
 import { DateTime } from 'luxon'
+import env from '#start/env'
 
 /* TYPES */
 /**
@@ -78,7 +79,7 @@ export default class extends BaseSeeder {
 
   public async run(): Promise<void> {
     const assetsBasePath: string = path.resolve('database/seeders/assets-bucket-s3/GameSeeder/')
-    const bucketNameBase: string = 'crzgames-public'
+    const bucketNameBase: string = env.get('S3_BUCKET_NAME')
 
     logger.info('GameSeeder Start : ')
 

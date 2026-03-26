@@ -9,8 +9,14 @@ import { deleteGameChangeLogValidator } from '#validators/GameChangeLog/DeleteGa
 import { getGameChangeLogByIdValidator } from '#validators/GameChangeLog/GetGameChangeLogByIdValidator'
 import BadRequestException from '#exceptions/bad_request_exception'
 
+/**
+ *
+ */
 export default class GameChangeLogsController {
   //function to create a game change log
+  /**
+   *
+   */
   public async createGameChangeLog({ request, response }: HttpContext): Promise<void> {
     const payload: { games_id: number; version: string; content: string } =
       await request.validateUsing(createGameChangeLogValidator)
@@ -21,12 +27,18 @@ export default class GameChangeLogsController {
   }
 
   //function to get all game change logs
+  /**
+   *
+   */
   public async getAllGameChangeLogs({ response }: HttpContext): Promise<void> {
     const gameChangeLogs: GameChangeLog[] = await GameChangeLogService.getAllGameChangeLogs()
     response.status(200).json(gameChangeLogs)
   }
 
   //function to update a game change log
+  /**
+   *
+   */
   public async updateGameChangeLog({ request, params, response }: HttpContext): Promise<void> {
     const gameChangeLogId: number = Number(params.id)
     if (Number.isNaN(gameChangeLogId)) {
@@ -47,6 +59,9 @@ export default class GameChangeLogsController {
   }
 
   //function to delete a game change log
+  /**
+   *
+   */
   public async deleteGameChangeLog({ request, response }: HttpContext): Promise<void> {
     const payload: { params: { id: number } } = await request.validateUsing(deleteGameChangeLogValidator)
     await GameChangeLogService.deleteGameChangeLog(payload.params.id)
@@ -54,6 +69,9 @@ export default class GameChangeLogsController {
   }
 
   //function to get a game change log by id game
+  /**
+   *
+   */
   public async getAllGameChangeLogByGameId({ request, response }: HttpContext): Promise<void> {
     const payload: { params: { gameId: number } } = await request.validateUsing(getAllGameChangeLogByGameIdValidator)
     const gameChangeLogs: GameChangeLog[] = await GameChangeLogService.getAllGameChangeLogByGameId(
@@ -62,12 +80,18 @@ export default class GameChangeLogsController {
     response.status(200).json(gameChangeLogs)
   }
 
+  /**
+   *
+   */
   public async getGameChangeLogById({ request, response }: HttpContext): Promise<void> {
     const payload: { params: { id: number } } = await request.validateUsing(getGameChangeLogByIdValidator)
     const gameChangeLog: GameChangeLog = await GameChangeLogService.getGameChangeLogById(payload.params.id)
     response.status(200).json(gameChangeLog)
   }
 
+  /**
+   *
+   */
   public async getAllGameChangeLogByGameTitle({ request, response }: HttpContext): Promise<void> {
     const payload: { params: { title: string } } = await request.validateUsing(getAllGameChangeLogByTitleValidator)
     const decodedTitle: string = decodeURIComponent(payload.params.title).replace(/\+/g, ' ').trim()

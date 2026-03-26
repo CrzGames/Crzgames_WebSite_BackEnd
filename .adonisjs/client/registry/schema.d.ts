@@ -1115,10 +1115,10 @@ export interface Registry {
     methods: ["POST"]
     pattern: '/proxy-check-io'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/stripe/check_proxy_vpn_validator').checkProxyVpnValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#validators/Stripe/check_proxy_vpn_validator').checkProxyVpnValidator)>>
       paramsTuple: []
       params: {}
-      query: ExtractQuery<InferInput<(typeof import('#validators/stripe/check_proxy_vpn_validator').checkProxyVpnValidator)>>
+      query: ExtractQuery<InferInput<(typeof import('#validators/Stripe/check_proxy_vpn_validator').checkProxyVpnValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/stripe_controller').default['checkProxyVPN']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/stripe_controller').default['checkProxyVPN']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
@@ -1175,10 +1175,10 @@ export interface Registry {
     methods: ["POST"]
     pattern: '/ticket'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/ticket/CreateTicketsValidator').createTicketsValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#validators/Ticket/CreateTicketsValidator').createTicketsValidator)>>
       paramsTuple: []
       params: {}
-      query: ExtractQuery<InferInput<(typeof import('#validators/ticket/CreateTicketsValidator').createTicketsValidator)>>
+      query: ExtractQuery<InferInput<(typeof import('#validators/Ticket/CreateTicketsValidator').createTicketsValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/tickets_controller').default['createTickets']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/tickets_controller').default['createTickets']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
@@ -1223,10 +1223,10 @@ export interface Registry {
     methods: ["PUT"]
     pattern: '/tickets/:id'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/ticket/update_ticket_by_id_for_status_validator').updateTicketByIdForStatusValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#validators/Ticket/update_ticket_by_id_for_status_validator').updateTicketByIdForStatusValidator)>>
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
-      query: ExtractQuery<InferInput<(typeof import('#validators/ticket/update_ticket_by_id_for_status_validator').updateTicketByIdForStatusValidator)>>
+      query: ExtractQuery<InferInput<(typeof import('#validators/Ticket/update_ticket_by_id_for_status_validator').updateTicketByIdForStatusValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/tickets_controller').default['updateTicketByIdForStatus']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/tickets_controller').default['updateTicketByIdForStatus']>>> | { status: 422; response: { errors: SimpleError[] } }
     }

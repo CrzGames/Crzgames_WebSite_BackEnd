@@ -6,9 +6,15 @@ import type { ResponseProxyCheckIO } from '#services/proxy_check_io_service'
 import type Stripe from 'stripe'
 import env from '#start/env'
 import logger from '@adonisjs/core/services/logger'
-import { checkProxyVpnValidator } from '#validators/stripe/check_proxy_vpn_validator'
+import { checkProxyVpnValidator } from '#validators/Stripe/check_proxy_vpn_validator'
 
+/**
+ *
+ */
 export default class StripeController {
+  /**
+   *
+   */
   public async createPaymentIntentStripe({ request, response, auth }: HttpContext): Promise<void> {
     // @ts-ignore
     const payload: PaymentIntentCommand[] = request.all()
@@ -17,12 +23,18 @@ export default class StripeController {
     response.status(201).json({ clientSecret })
   }
 
+  /**
+   *
+   */
   public async checkProxyVPN({ response, request }: HttpContext): Promise<void> {
     const payload: { ip: string } = await request.validateUsing(checkProxyVpnValidator)
     const responseProxyCheckIO: ResponseProxyCheckIO = await ProxyCheckIOService.checkProxyVPN(payload.ip)
     response.status(200).json(responseProxyCheckIO)
   }
 
+  /**
+   *
+   */
   public async handleWebhookStripe({ request, response }: HttpContext): Promise<void> {
     const stripeSignature: string | string[] | undefined = request.headers()['stripe-signature']
     const rawBody: string | null = request.raw()

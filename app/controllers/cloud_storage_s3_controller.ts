@@ -1,9 +1,15 @@
-import type { HttpContext } from '@adonisjs/core/http'
+﻿import type { HttpContext } from '@adonisjs/core/http'
 import CloudStorageS3Service from '#services/cloud_storage_s3_service'
 import type { ExtendedBucket, ExtendedFile, BucketFileCommand } from '#services/cloud_storage_s3_service'
 import type { MultipartFile } from '@adonisjs/core/bodyparser'
 
+/**
+ *
+ */
 export default class CloudStorageS3Controller {
+  /**
+   *
+   */
   public async getAllBuckets({ response }: HttpContext): Promise<void> {
     const buckets: ExtendedBucket[] | undefined = await CloudStorageS3Service.getAllBuckets()
 
@@ -14,8 +20,11 @@ export default class CloudStorageS3Controller {
     }
   }
 
+  /**
+   *
+   */
   public async getListFilesObjectInBucket({ request, response }: HttpContext): Promise<void> {
-    const payload: Record<string, any> = request.all()
+    const payload: Record<string, string> = request.all()
     const listObjectsS3: ExtendedFile[] | undefined = await CloudStorageS3Service.getListFilesObjectInBucket(
       payload.bucketName,
       payload.path,
@@ -28,14 +37,20 @@ export default class CloudStorageS3Controller {
     }
   }
 
+  /**
+   *
+   */
   public async deleteInBucketAndDB({ request, response }: HttpContext): Promise<void> {
-    const payload: Record<string, any> = request.all()
+    const payload: Record<string, string> = request.all()
     await CloudStorageS3Service.deleteInBucketAndDB(payload.pathFilename, payload.bucketName)
     response.status(204).ok('deleteFileInBucketAndDB success')
   }
 
+  /**
+   *
+   */
   public async streamDownloadFileInBucketForLauncher(ctx: HttpContext): Promise<void> {
-    const payload: Record<string, any> = ctx.request.all()
+    const payload: Record<string, string> = ctx.request.all()
     await CloudStorageS3Service.streamDownloadFileOrFolderInBucketForLauncher(
       ctx,
       payload.pathFilename,
@@ -44,12 +59,12 @@ export default class CloudStorageS3Controller {
   }
 
   /**
-   * Retourne une URL pré-signée de téléchargement S3 pour le launcher
+   * Retourne une URL pre-signee de telechargement S3 pour le launcher
    * @param {HttpContext} ctx
    * @returns {Promise<void>}
    */
   public async getPresignedDownloadUrlForLauncher({ request, response }: HttpContext): Promise<void> {
-    const payload: Record<string, any> = request.all()
+    const payload: Record<string, string> = request.all()
     const expiresIn: number = Number(payload.expiresIn) || 900
     const presignedUrl: string = await CloudStorageS3Service.getPresignedDownloadUrlForLauncher(
       payload.bucketName,
@@ -67,22 +82,22 @@ export default class CloudStorageS3Controller {
 
   /**
    * Download file or folder in bucket
-   * Via le site crzgames et le launcher deux choses bien diffèrent
+   * Via le site crzgames et le launcher deux choses bien different
    * @param ctx
    * @private
    */
   public async downloadFileOrFolderInBucket(ctx: HttpContext): Promise<void> {
-    const payload: Record<string, any> = ctx.request.all()
+    const payload: Record<string, string> = ctx.request.all()
     await CloudStorageS3Service.streamDownloadFileOrFolderInBucket(ctx, payload.pathFilename, payload.bucketName)
   }
 
+  /**
+   *
+   */
   public async uploadFileOrFolderInBucket({ request, response }: HttpContext): Promise<void> {
-    const payloadFiles = request.allFiles()
+    const payloadFiles: Record<string, MultipartFile | MultipartFile[]> = request.allFiles()
     const payloadBucketName: string = request.input('bucketName')
-    let payloadPathFilename: string = request.input('pathFilename')
-
-    // Si jamais le path est à la racine du bucket ça sera == null, donc mettre : ''
-    payloadPathFilename = payloadPathFilename === null || payloadPathFilename === undefined ? '' : payloadPathFilename
+    const payloadPathFilename: string = request.input('pathFilename', '')
 
     const bucketFileCommand: BucketFileCommand = {
       pathFilename: payloadPathFilename,
@@ -95,8 +110,11 @@ export default class CloudStorageS3Controller {
     response.status(201).ok('uploadFileOrFolderInBucket success')
   }
 
+  /**
+   *
+   */
   public async getTotalSizeFileOrFolderInBucket({ request, response }: HttpContext): Promise<void> {
-    const payload: Record<string, any> = request.all()
+    const payload: Record<string, string> = request.all()
 
     try {
       const totalSize: number = await CloudStorageS3Service.getTotalSizeFileOrFolderInBucket(
@@ -104,16 +122,19 @@ export default class CloudStorageS3Controller {
         payload.pathFilename,
       )
       response.status(200).json({ totalSize })
-    } catch (error) {
+    } catch (error: any) {
       response.status(500).json({ error: error.message })
     }
   }
 
+  /**
+   *
+   */
   public async getFileContentInBucket({ response, request }: HttpContext): Promise<void> {
-    const payload: Record<string, any> = request.all()
+    const payload: Record<string, string> = request.all()
 
     const contentString: string = await CloudStorageS3Service.getFileContent(payload.bucketName, payload.pathFilename)
-    const contentJSON = JSON.parse(contentString)
+    const contentJSON: unknown = JSON.parse(contentString)
     response.json(contentJSON)
   }
 }

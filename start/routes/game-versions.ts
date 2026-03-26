@@ -19,6 +19,6 @@ router
 router
   .delete('/games/:gameId/versions/:gameVersionId', [controllers.GameVersions, 'deleteGameVersion'])
   .use(middleware.authRole([UserRoles.STAFF, UserRoles.ADMIN]))
-router.get('/games/:gameId/version-latest', [controllers.GameVersions, 'getLatestAvailableVersion']).use(
-  middleware.auth(),
-)
+router
+  .get('/games/:gameId/version-latest', [controllers.GameVersions, 'getLatestAvailableVersion'])
+  .use(middleware.auth())

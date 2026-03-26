@@ -1,11 +1,17 @@
 import TicketsService from '#services/tickets_service'
 import type { HttpContext } from '@adonisjs/core/http'
 import type Ticket from '#models/ticket'
-import { updateTicketByIdForStatusValidator } from '#validators/ticket/update_ticket_by_id_for_status_validator'
-import { createTicketsValidator } from '#validators/ticket/CreateTicketsValidator'
+import { updateTicketByIdForStatusValidator } from '#validators/Ticket/update_ticket_by_id_for_status_validator'
+import { createTicketsValidator } from '#validators/Ticket/CreateTicketsValidator'
 import BadRequestException from '#exceptions/bad_request_exception'
 
+/**
+ *
+ */
 export default class TicketsController {
+  /**
+   *
+   */
   public async createTickets({ request, response }: HttpContext): Promise<void> {
     // Récupération des données de la requête
     const payload: {
@@ -29,6 +35,9 @@ export default class TicketsController {
     response.status(201).json(ticket)
   }
 
+  /**
+   *
+   */
   public async getTicketsById({ params, response }: HttpContext): Promise<void> {
     const id: number = Number(params.id)
     if (Number.isNaN(id)) {
@@ -39,6 +48,9 @@ export default class TicketsController {
     response.status(200).json(ticket)
   }
 
+  /**
+   *
+   */
   public async getAllTicketsByUserId({ request, response, params }: HttpContext): Promise<void> {
     const start: number = request.input('start')
     const end: number = request.input('end')
@@ -51,6 +63,9 @@ export default class TicketsController {
     response.status(200).json(tickets)
   }
 
+  /**
+   *
+   */
   public async getAllTickets({ response, request }: HttpContext): Promise<void> {
     const start: number = request.input('start')
     const end: number = request.input('end')
@@ -58,6 +73,9 @@ export default class TicketsController {
     response.status(200).json(tickets)
   }
 
+  /**
+   *
+   */
   public async updateTicketByIdForStatus({ request, response, params }: HttpContext): Promise<void> {
     const payload: {
       name: string
@@ -66,6 +84,9 @@ export default class TicketsController {
     response.status(200).json(ticket)
   }
 
+  /**
+   *
+   */
   public async getTicketsCountByStatusOpenForUser({ params, response }: HttpContext): Promise<void> {
     const countTicketsOpen: number = await TicketsService.getTicketsCountByStatusOpenForUser(params.userId)
     response.status(200).json(countTicketsOpen)

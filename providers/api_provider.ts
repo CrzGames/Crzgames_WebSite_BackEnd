@@ -1,4 +1,4 @@
-import { HttpContext } from '@adonisjs/core/http'
+﻿import { HttpContext } from '@adonisjs/core/http'
 import { BaseSerializer } from '@adonisjs/core/transformers'
 import { type SimplePaginatorMetaKeys } from '@adonisjs/lucid/types/querybuilder'
 
@@ -15,7 +15,7 @@ class ApiSerializer extends BaseSerializer<{
    * Wraps all serialized data under this key in the response object.
    * Example: { data: [...] } instead of returning raw arrays/objects
    */
-  wrap: 'data' = 'data'
+  public wrap: 'data' = 'data'
 
   /**
    * Validates and defines pagination metadata structure for paginated responses.
@@ -23,7 +23,7 @@ class ApiSerializer extends BaseSerializer<{
    *
    * @throws Error if metadata doesn't match Lucid's pagination structure
    */
-  definePaginationMetaData(metaData: unknown): SimplePaginatorMetaKeys {
+  public definePaginationMetaData(metaData: unknown): SimplePaginatorMetaKeys {
     if (!this.isLucidPaginatorMetaData(metaData)) {
       throw new Error('Invalid pagination metadata. Expected metadata to contain Lucid pagination keys')
     }
@@ -34,8 +34,10 @@ class ApiSerializer extends BaseSerializer<{
 /**
  * Single instance of ApiSerializer used across the application
  */
-const serializer = new ApiSerializer()
-const serialize = serializer.serialize.bind(serializer) as ApiSerializer['serialize'] & {
+const serializer: ApiSerializer = new ApiSerializer()
+const serialize: ApiSerializer['serialize'] & {
+  withoutWrapping: ApiSerializer['serializeWithoutWrapping']
+} = serializer.serialize.bind(serializer) as ApiSerializer['serialize'] & {
   withoutWrapping: ApiSerializer['serializeWithoutWrapping']
 }
 serialize.withoutWrapping = serializer.serializeWithoutWrapping.bind(serializer)
@@ -52,6 +54,9 @@ HttpContext.instanceProperty('serialize', serialize)
  * This allows controllers to use ctx.serialize() for consistent API responses.
  */
 declare module '@adonisjs/core/http' {
+  /**
+   *
+   */
   export interface HttpContext {
     serialize: typeof serialize
   }

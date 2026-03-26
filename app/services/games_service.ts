@@ -37,10 +37,22 @@ export type GamesResponse =
   | Game[] // Si pas de pagination
   | { data: Game[]; meta: PaginationMeta } // Si pagination active
 
+/**
+ *
+ */
 export type GameMode = 'solo' | 'multiplayer' | 'both'
+/**
+ *
+ */
 export type PegiRating = 'PEGI 3' | 'PEGI 7' | 'PEGI 12' | 'PEGI 16' | 'PEGI 18'
+/**
+ *
+ */
 export type GameMediaType = 'screenshot' | 'trailer' | 'gameplay'
 
+/**
+ *
+ */
 export type GameConfigurationPayload = {
   cpuIntel: string
   cpuAmd: string
@@ -53,18 +65,27 @@ export type GameConfigurationPayload = {
   additionalNotes?: string | null
 }
 
+/**
+ *
+ */
 export type GameMediaPayload = {
   pathFilename: string
   bucketName: string
   type: GameMediaType
 }
 
+/**
+ *
+ */
 type GameBinaryPayload = {
   pathfilename: string
   platformId: number
   bucketName: string
 }
 
+/**
+ *
+ */
 export type CreateGamePayload = {
   title: string
   gameMode: GameMode
@@ -90,6 +111,9 @@ export type CreateGamePayload = {
   binaries?: GameBinaryPayload[]
 }
 
+/**
+ *
+ */
 export type UpdateGamePayload = CreateGamePayload & {
   trailerFilesId: number
   logoFilesId: number
@@ -103,6 +127,9 @@ export type UpdateGamePayload = CreateGamePayload & {
  * @class GamesService
  */
 export default class GamesService {
+  /**
+   *
+   */
   private static parseReleaseDate(releaseDate?: string | null): DateTime | null {
     if (!releaseDate) {
       return null
@@ -116,6 +143,9 @@ export default class GamesService {
     return parsedDate
   }
 
+  /**
+   *
+   */
   private static async upsertGameConfiguration(
     configuration: GameConfigurationPayload,
     type: 'minimal' | 'recommended',
@@ -159,6 +189,9 @@ export default class GamesService {
     return createdConfiguration.id
   }
 
+  /**
+   *
+   */
   private static async syncGameMedias(gameId: number, medias?: GameMediaPayload[]): Promise<void> {
     if (!medias) {
       return
@@ -181,6 +214,9 @@ export default class GamesService {
   }
 
   // Fonction pour créer un nouveau game
+  /**
+   *
+   */
   public static async createGames(payload: CreateGamePayload): Promise<Game> {
     try {
       const bucketFileTrailerCommand: BucketFileCommand = {
@@ -235,6 +271,9 @@ export default class GamesService {
   }
 
   // Fonction pour mettre à jour un game
+  /**
+   *
+   */
   public static async updateGames(id: number, payload: UpdateGamePayload): Promise<Game> {
     try {
       const bucketFileTrailerCommand: BucketFileCommand = {
@@ -292,6 +331,9 @@ export default class GamesService {
   }
 
   // Fonction pour supprimer un game
+  /**
+   *
+   */
   public static async deleteGames(id: number): Promise<void> {
     const game: Game = await Game.findOrFail(id)
 
@@ -303,22 +345,25 @@ export default class GamesService {
   }
 
   // Fonction pour récupérer un game par son id
+  /**
+   *
+   */
   public static async getGamesById(id: number): Promise<Game> {
     try {
       return await Game.query()
-        .preload('pictureFile', (pictureFileQuery): void => {
+        .preload('pictureFile', (pictureFileQuery: ModelQueryBuilderContract<any, any>): void => {
           pictureFileQuery.preload('bucket')
         })
-        .preload('logoFile', (logoFileQuery): void => {
+        .preload('logoFile', (logoFileQuery: ModelQueryBuilderContract<any, any>): void => {
           logoFileQuery.preload('bucket')
         })
-        .preload('trailerFile', (trailerFile): void => {
+        .preload('trailerFile', (trailerFile: ModelQueryBuilderContract<any, any>): void => {
           trailerFile.preload('bucket')
         })
         .preload('gamePlatform')
-        .preload('gameBinary', (gameBinaryQuery): void => {
+        .preload('gameBinary', (gameBinaryQuery: ModelQueryBuilderContract<any, any>): void => {
           gameBinaryQuery.preload('gamePlatform')
-          gameBinaryQuery.preload('file', (fileQuery): void => {
+          gameBinaryQuery.preload('file', (fileQuery: ModelQueryBuilderContract<any, any>): void => {
             fileQuery.preload('bucket')
           })
         })
@@ -327,8 +372,8 @@ export default class GamesService {
         .preload('gameConfigurationRecommended')
         .preload('languages')
         .preload('gameVersions')
-        .preload('gameMedias', (gameMediasQuery): void => {
-          gameMediasQuery.preload('file', (fileQuery): void => {
+        .preload('gameMedias', (gameMediasQuery: ModelQueryBuilderContract<any, any>): void => {
+          gameMediasQuery.preload('file', (fileQuery: ModelQueryBuilderContract<any, any>): void => {
             fileQuery.preload('bucket')
           })
         })
@@ -362,23 +407,28 @@ export default class GamesService {
     sortBy: string = 'releaseDate',
   ): Promise<GamesResponse> {
     try {
-      const applyGamePreloads = (
+      /**
+       *
+       */
+      const applyGamePreloads: (
+        queryBuilder: ModelQueryBuilderContract<typeof Game, Game>,
+      ) => ModelQueryBuilderContract<typeof Game, Game> = (
         queryBuilder: ModelQueryBuilderContract<typeof Game, Game>,
       ): ModelQueryBuilderContract<typeof Game, Game> =>
         queryBuilder
-          .preload('pictureFile', (pictureFileQuery): void => {
+          .preload('pictureFile', (pictureFileQuery: ModelQueryBuilderContract<any, any>): void => {
             pictureFileQuery.preload('bucket')
           })
-          .preload('logoFile', (logoFileQuery): void => {
+          .preload('logoFile', (logoFileQuery: ModelQueryBuilderContract<any, any>): void => {
             logoFileQuery.preload('bucket')
           })
-          .preload('trailerFile', (trailerFile): void => {
+          .preload('trailerFile', (trailerFile: ModelQueryBuilderContract<any, any>): void => {
             trailerFile.preload('bucket')
           })
           .preload('gamePlatform')
-          .preload('gameBinary', (gameBinaryQuery): void => {
+          .preload('gameBinary', (gameBinaryQuery: ModelQueryBuilderContract<any, any>): void => {
             gameBinaryQuery.preload('gamePlatform')
-            gameBinaryQuery.preload('file', (fileQuery): void => {
+            gameBinaryQuery.preload('file', (fileQuery: ModelQueryBuilderContract<any, any>): void => {
               fileQuery.preload('bucket')
             })
           })
@@ -387,8 +437,8 @@ export default class GamesService {
           .preload('gameConfigurationRecommended')
           .preload('languages')
           .preload('gameVersions')
-          .preload('gameMedias', (gameMediasQuery): void => {
-            gameMediasQuery.preload('file', (fileQuery): void => {
+          .preload('gameMedias', (gameMediasQuery: ModelQueryBuilderContract<any, any>): void => {
+            gameMediasQuery.preload('file', (fileQuery: ModelQueryBuilderContract<any, any>): void => {
               fileQuery.preload('bucket')
             })
           })
@@ -407,21 +457,21 @@ export default class GamesService {
 
       // Filtre par genres
       if (genres && genres.length > 0) {
-        query.whereHas('gameCategory', (categoryQuery) => {
+        query.whereHas('gameCategory', (categoryQuery: ModelQueryBuilderContract<any, any>) => {
           categoryQuery.whereIn('name', genres)
         })
       }
 
       // Filtre par langues
       if (languages && languages.length > 0) {
-        query.whereHas('languages', (languageQuery) => {
+        query.whereHas('languages', (languageQuery: ModelQueryBuilderContract<any, any>) => {
           languageQuery.whereIn('name', languages)
         })
       }
 
       // Filtre par modes de jeu
       if (gameModes && gameModes.length > 0) {
-        let allowedModes = [...gameModes]
+        let allowedModes: string[] = [...gameModes]
         if (gameModes.includes('solo') || gameModes.includes('multiplayer')) {
           allowedModes.push('both')
         }
@@ -490,11 +540,14 @@ export default class GamesService {
   }
 
   //fonction filtre games par title sans sensitive case
+  /**
+   *
+   */
   public static async getAllGamesByTitle(title: string): Promise<Game[]> {
     try {
       const games: Game[] = await Game.query().whereRaw('LOWER(title) LIKE ?', [`%${title.toLowerCase()}%`])
 
-      if (!games || games.length === 0) {
+      if (games.length === 0) {
         throw new NotFoundException('No games found')
       }
 
@@ -508,23 +561,26 @@ export default class GamesService {
     }
   }
 
+  /**
+   *
+   */
   public static async getGameByTitle(title: string): Promise<Game> {
     try {
       return await Game.query()
         .where('title', title)
-        .preload('pictureFile', (pictureFileQuery): void => {
+        .preload('pictureFile', (pictureFileQuery: ModelQueryBuilderContract<any, any>): void => {
           pictureFileQuery.preload('bucket')
         })
-        .preload('logoFile', (logoFileQuery): void => {
+        .preload('logoFile', (logoFileQuery: ModelQueryBuilderContract<any, any>): void => {
           logoFileQuery.preload('bucket')
         })
-        .preload('trailerFile', (trailerFile): void => {
+        .preload('trailerFile', (trailerFile: ModelQueryBuilderContract<any, any>): void => {
           trailerFile.preload('bucket')
         })
         .preload('gamePlatform')
-        .preload('gameBinary', (gameBinaryQuery): void => {
+        .preload('gameBinary', (gameBinaryQuery: ModelQueryBuilderContract<any, any>): void => {
           gameBinaryQuery.preload('gamePlatform')
-          gameBinaryQuery.preload('file', (fileQuery): void => {
+          gameBinaryQuery.preload('file', (fileQuery: ModelQueryBuilderContract<any, any>): void => {
             fileQuery.preload('bucket')
           })
         })
@@ -533,8 +589,8 @@ export default class GamesService {
         .preload('gameConfigurationRecommended')
         .preload('languages')
         .preload('gameVersions')
-        .preload('gameMedias', (gameMediasQuery): void => {
-          gameMediasQuery.preload('file', (fileQuery): void => {
+        .preload('gameMedias', (gameMediasQuery: ModelQueryBuilderContract<any, any>): void => {
+          gameMediasQuery.preload('file', (fileQuery: ModelQueryBuilderContract<any, any>): void => {
             fileQuery.preload('bucket')
           })
         })

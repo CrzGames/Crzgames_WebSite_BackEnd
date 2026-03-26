@@ -3,13 +3,14 @@ import path from 'path'
 import fs from 'fs/promises'
 import CloudStorageS3Service from '#services/cloud_storage_s3_service'
 import logger from '@adonisjs/core/services/logger'
+import env from '#start/env'
 
 export default class extends BaseSeeder {
   public static environment: string[] = ['development', 'test']
 
   public async run(): Promise<void> {
     const assetsBasePath: string = path.resolve('database/seeders/assets-bucket-s3/LauncherSeeder/')
-    const bucketNameBase: string = 'crzgames-public'
+    const bucketNameBase: string = env.get('S3_BUCKET_NAME')
 
     logger.info('Starting LauncherSeeder')
 

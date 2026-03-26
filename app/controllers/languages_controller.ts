@@ -2,6 +2,9 @@ import type { HttpContext } from '@adonisjs/core/http'
 import LanguagesService from '#services/languages_service'
 import type Language from '#models/language'
 
+/**
+ *
+ */
 export default class LanguagesController {
   /**
    * Récupère tous les langages
