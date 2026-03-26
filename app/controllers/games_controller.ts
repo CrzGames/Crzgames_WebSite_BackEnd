@@ -1,59 +1,39 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import GamesService from '#services/games_service'
-import type { GamesResponse } from '#services/games_service'
+import type { CreateGamePayload, GamesResponse, UpdateGamePayload } from '#services/games_service'
 import GameCategoryAssignmentsService from '#services/game_category_assignments_service'
 import GamePlatformAssignmentsService from '#services/game_platform_assignments_service'
+import GameBinariesService from '#services/game_binaries_service'
+import GameBinaryAssignmentsService from '#services/game_binary_assignments_service'
 import type Game from '#models/game'
-import type { GameBinaryCommand } from '#services/game_binaries_service'
+import GameBinaryAssignment from '#models/game_binary_assignment'
+import type GameBinary from '#models/game_binary'
 import { updateGameValidator } from '#validators/game/update_game_validator'
 import { createGameValidator } from '#validators/game/create_game_validator'
 import BadRequestException from '#exceptions/bad_request_exception'
 
 export default class GamesController {
   public async createGames({ request, response }: HttpContext): Promise<void> {
-    // Récupération des données de la requête
-    const payload: {
-      title: string
-      upcomingGame: boolean
-      newGame: boolean
-      trailerPathFilename: string
-      trailerBucketName: string
-      picturePathFilename: string
-      pictureBucketName: string
-      logoPathFilename: string
-      logoBucketName: string
-      categoryIds: number[]
-      platformIds: number[]
-      // binaries: GameBinaryCommand[]
-      description: string
-    } = await request.validateUsing(createGameValidator)
+    // Recuperation des donnees de la requete
+    const payload: CreateGamePayload = await request.validateUsing(createGameValidator)
 
-    // Création du game en utilisant le service GamesService
-    const newGame: Game = await GamesService.createGames(
-      payload.title,
-      payload.upcomingGame,
-      payload.newGame,
-      payload.trailerPathFilename,
-      payload.trailerBucketName,
-      payload.picturePathFilename,
-      payload.pictureBucketName,
-      payload.logoPathFilename,
-      payload.logoBucketName,
-      payload.description,
-    )
+    // Creation du game en utilisant le service GamesService
+    const newGame: Game = await GamesService.createGames(payload)
 
-    /* A REFAIRE COTE FRONT END pour que cela marche
-    // Création des binaries en utilisant le service GameBinariesService
-    const gameBinariesId: number[] = await GameBinariesService.createGameBinaries(payload.binaries)
-    // Ajout des binaries au game en utilisant le service GameBinaryAssignmentsService
-    await GameBinaryAssignmentsService.createGameBinaryAssignments(newGame.id, gameBinariesId)
-    */
-
-    // Ajout des catégories au game en utilisant le service GameCategoryAssignmentsService
+    // Ajout des categories au game
     await GameCategoryAssignmentsService.createGameCategoryAssignment(newGame.id, payload.categoryIds)
 
-    // Ajout des plateformes au game en utilisant le service GamePlatformAssignmentsService
+    // Ajout des plateformes au game
     await GamePlatformAssignmentsService.createGamePlatformAssignment(newGame.id, payload.platformIds)
+
+    // Ajout des langues au game
+    await newGame.related('languages').sync(payload.languageIds)
+
+    // Creation + assignation des binaries fournis au create
+    if (payload.binaries && payload.binaries.length > 0) {
+      const gameBinariesId: number[] = await GameBinariesService.createGameBinaries(payload.binaries)
+      await GameBinaryAssignmentsService.createGameBinaryAssignments(newGame.id, gameBinariesId)
+    }
 
     // Response 201 Document created
     response.status(201)
@@ -65,64 +45,40 @@ export default class GamesController {
       throw new BadRequestException('Invalid game id')
     }
 
-    // Récupération des données de la requête
-    const payload: {
-      title: string
-      upcomingGame: boolean
-      newGame: boolean
-      trailerFilesId: number
-      logoFilesId: number
-      pictureFileId: number
-      trailerPathFilename: string
-      trailerBucketName: string
-      picturePathFilename: string
-      pictureBucketName: string
-      logoPathFilename: string
-      logoBucketName: string
-      categoryIds: number[]
-      platformIds: number[]
-      binaries: GameBinaryCommand[]
-      description: string
-    } = await request.validateUsing(updateGameValidator)
+    // Recuperation des donnees de la requete
+    const payload: UpdateGamePayload = await request.validateUsing(updateGameValidator)
 
     // Update du game en utilisant le service GamesService
-    const updatedGame: Game = await GamesService.updateGames(
-      gameId,
-      payload.title,
-      payload.upcomingGame,
-      payload.newGame,
-      payload.trailerPathFilename,
-      payload.trailerBucketName,
-      payload.picturePathFilename,
-      payload.pictureBucketName,
-      payload.logoPathFilename,
-      payload.logoBucketName,
-      payload.trailerFilesId,
-      payload.logoFilesId,
-      payload.pictureFileId,
-      payload.description,
-    )
+    const updatedGame: Game = await GamesService.updateGames(gameId, payload)
 
-    // Suppression des catégories du game pour ne pas les avoir en double
+    // Suppression des categories du game pour ne pas les avoir en double
     await GameCategoryAssignmentsService.deleteAllGameCategoryAssignmentByGameId(updatedGame.id)
-    // Update des catégories au game pour les re-set en utilisant le service GameCategoryAssignmentsService
+    // Update des categories au game pour les re-set
     await GameCategoryAssignmentsService.createGameCategoryAssignment(updatedGame.id, payload.categoryIds)
 
     // Suppression des plateformes du game pour ne pas les avoir en double
     await GamePlatformAssignmentsService.deleteAllGamePlatformAssignmentByGameId(updatedGame.id)
-    // Update des plateformes au game pour les re-set en utilisant le service GamePlatformAssignmentsService
+    // Update des plateformes au game pour les re-set
     await GamePlatformAssignmentsService.createGamePlatformAssignment(updatedGame.id, payload.platformIds)
 
-    /* A REFAIRE COTE FRONT END pour que cela marche
-    // Suppression des game_binaries_assignments du game (qui vas delete en cascade pour les game_binaries) pour ne pas les avoir en double
-    await GameBinaryAssignmentsService.deleteAllGameBinaryAssignmentsByGameId(updatedGame.id)
-    // Création des binaries en utilisant le service GameBinariesService
-    const gameBinariesId: number[] = await GameBinariesService.createGameBinaries(payload.binaries)
-    // Ajout des binaries au game en utilisant le service GameBinaryAssignmentsService
-    await GameBinaryAssignmentsService.createGameBinaryAssignments (updatedGame.id, gameBinariesId)
-    */
+    // Update des langues au game
+    await updatedGame.related('languages').sync(payload.languageIds)
 
-    // Réponse 204 (No Content) si tout s'est bien passé
+    // Update des binaries au game
+    const existingGameBinaries: GameBinary[] = await updatedGame.related('gameBinary').query()
+    await GameBinaryAssignment.query().where('games_id', updatedGame.id).delete()
+    await Promise.all(
+      existingGameBinaries.map(async (gameBinary: GameBinary): Promise<void> => {
+        await GameBinariesService.deleteGameBinary(gameBinary.id)
+      }),
+    )
+
+    if (payload.binaries && payload.binaries.length > 0) {
+      const gameBinariesId: number[] = await GameBinariesService.createGameBinaries(payload.binaries)
+      await GameBinaryAssignmentsService.createGameBinaryAssignments(updatedGame.id, gameBinariesId)
+    }
+
+    // Reponse 204 (No Content) si tout s'est bien passe
     response.status(204).noContent()
   }
 
@@ -143,7 +99,7 @@ export default class GamesController {
     }
 
     const game: Game = await GamesService.getGamesById(gameId)
-    return response.status(200).json(game)
+    response.status(200).json(game)
   }
 
   public async getAllGamesByTitle({ params, response }: HttpContext): Promise<void> {

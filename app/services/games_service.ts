@@ -5,7 +5,10 @@ import BadRequestException from '#exceptions/bad_request_exception'
 import type { BucketFileCommand } from '#services/cloud_storage_s3_service'
 import CloudStorageS3Service from '#services/cloud_storage_s3_service'
 import type File from '#models/file'
+import GameConfiguration from '#models/game_configuration'
+import GameMedia from '#models/game_media'
 import type { ModelQueryBuilderContract } from '@adonisjs/lucid/types/model'
+import { DateTime } from 'luxon'
 
 /**
  * Type pour la méta-donnée de pagination
@@ -34,6 +37,65 @@ export type GamesResponse =
   | Game[] // Si pas de pagination
   | { data: Game[]; meta: PaginationMeta } // Si pagination active
 
+export type GameMode = 'solo' | 'multiplayer' | 'both'
+export type PegiRating = 'PEGI 3' | 'PEGI 7' | 'PEGI 12' | 'PEGI 16' | 'PEGI 18'
+export type GameMediaType = 'screenshot' | 'trailer' | 'gameplay'
+
+export type GameConfigurationPayload = {
+  cpuIntel: string
+  cpuAmd: string
+  gpuNvidia: string
+  gpuAmd: string
+  ram: string
+  storage: string
+  os: string
+  internet?: boolean | null
+  additionalNotes?: string | null
+}
+
+export type GameMediaPayload = {
+  pathFilename: string
+  bucketName: string
+  type: GameMediaType
+}
+
+type GameBinaryPayload = {
+  pathfilename: string
+  platformId: number
+  bucketName: string
+}
+
+export type CreateGamePayload = {
+  title: string
+  gameMode: GameMode
+  publisher: string
+  developer: string
+  pegiRating: PegiRating
+  releaseDate?: string | null
+  upcomingGame: boolean
+  newGame: boolean
+  trailerPathFilename: string
+  trailerBucketName: string
+  picturePathFilename: string
+  pictureBucketName: string
+  logoPathFilename: string
+  logoBucketName: string
+  categoryIds: number[]
+  platformIds: number[]
+  languageIds: number[]
+  description: string
+  gameConfigurationsMinimal: GameConfigurationPayload
+  gameConfigurationsRecommended: GameConfigurationPayload
+  gameMedias?: GameMediaPayload[]
+  binaries?: GameBinaryPayload[]
+}
+
+export type UpdateGamePayload = CreateGamePayload & {
+  trailerFilesId: number
+  logoFilesId: number
+  pictureFileId: number
+}
+
 /**
  * Un service pour gérer les jeux.
  * Ce service fournit des méthodes pour créer, mettre à jour, supprimer et récupérer des jeux,
@@ -41,96 +103,189 @@ export type GamesResponse =
  * @class GamesService
  */
 export default class GamesService {
+  private static parseReleaseDate(releaseDate?: string | null): DateTime | null {
+    if (!releaseDate) {
+      return null
+    }
+
+    const parsedDate: DateTime = DateTime.fromISO(releaseDate)
+    if (!parsedDate.isValid) {
+      throw new BadRequestException('Invalid releaseDate. Expected ISO date format (YYYY-MM-DD)')
+    }
+
+    return parsedDate
+  }
+
+  private static async upsertGameConfiguration(
+    configuration: GameConfigurationPayload,
+    type: 'minimal' | 'recommended',
+    configurationId?: number | null,
+  ): Promise<number> {
+    if (configurationId) {
+      const existingConfiguration: GameConfiguration | null = await GameConfiguration.find(configurationId)
+      if (existingConfiguration) {
+        await existingConfiguration
+          .merge({
+            type,
+            cpuIntel: configuration.cpuIntel,
+            cpuAmd: configuration.cpuAmd,
+            gpuNvidia: configuration.gpuNvidia,
+            gpuAmd: configuration.gpuAmd,
+            ram: configuration.ram,
+            storage: configuration.storage,
+            os: configuration.os,
+            internet: configuration.internet ?? null,
+            additionalNotes: configuration.additionalNotes ?? null,
+          })
+          .save()
+
+        return existingConfiguration.id
+      }
+    }
+
+    const createdConfiguration: GameConfiguration = await GameConfiguration.create({
+      type,
+      cpuIntel: configuration.cpuIntel,
+      cpuAmd: configuration.cpuAmd,
+      gpuNvidia: configuration.gpuNvidia,
+      gpuAmd: configuration.gpuAmd,
+      ram: configuration.ram,
+      storage: configuration.storage,
+      os: configuration.os,
+      internet: configuration.internet ?? null,
+      additionalNotes: configuration.additionalNotes ?? null,
+    })
+
+    return createdConfiguration.id
+  }
+
+  private static async syncGameMedias(gameId: number, medias?: GameMediaPayload[]): Promise<void> {
+    if (!medias) {
+      return
+    }
+
+    await GameMedia.query().where('gamesId', gameId).delete()
+
+    for (const media of medias) {
+      const mediaFile: File = await CloudStorageS3Service.createFileInDB({
+        pathFilename: media.pathFilename,
+        bucketName: media.bucketName,
+      })
+
+      await GameMedia.create({
+        gamesId: gameId,
+        filesId: mediaFile.id,
+        type: media.type,
+      })
+    }
+  }
+
   // Fonction pour créer un nouveau game
-  public static async createGames(
-    title: string,
-    upcomingGame: boolean,
-    newGame: boolean,
-    trailerPathFilename: string,
-    trailerBucketName: string,
-    picturePathFilename: string,
-    pictureBucketName: string,
-    logoPathFilename: string,
-    logoBucketName: string,
-    description: string,
-  ): Promise<Game> {
+  public static async createGames(payload: CreateGamePayload): Promise<Game> {
     try {
       const bucketFileTrailerCommand: BucketFileCommand = {
-        pathFilename: trailerPathFilename,
-        bucketName: trailerBucketName,
+        pathFilename: payload.trailerPathFilename,
+        bucketName: payload.trailerBucketName,
       }
       const bucketFilePictureCommand: BucketFileCommand = {
-        pathFilename: picturePathFilename,
-        bucketName: pictureBucketName,
+        pathFilename: payload.picturePathFilename,
+        bucketName: payload.pictureBucketName,
       }
       const bucketFileLogoCommand: BucketFileCommand = {
-        pathFilename: logoPathFilename,
-        bucketName: logoBucketName,
+        pathFilename: payload.logoPathFilename,
+        bucketName: payload.logoBucketName,
       }
 
       const trailerFileInstance: File = await CloudStorageS3Service.createFileInDB(bucketFileTrailerCommand)
       const pictureFileInstance: File = await CloudStorageS3Service.createFileInDB(bucketFilePictureCommand)
       const logoFileInstance: File = await CloudStorageS3Service.createFileInDB(bucketFileLogoCommand)
 
-      return await Game.create({
-        title,
-        description,
-        upcomingGame: upcomingGame,
-        newGame: newGame,
+      const gameConfigurationsMinimalId: number = await this.upsertGameConfiguration(
+        payload.gameConfigurationsMinimal,
+        'minimal',
+      )
+      const gameConfigurationsRecommendedId: number = await this.upsertGameConfiguration(
+        payload.gameConfigurationsRecommended,
+        'recommended',
+      )
+
+      const game: Game = await Game.create({
+        title: payload.title,
+        description: payload.description,
+        gameMode: payload.gameMode,
+        publisher: payload.publisher,
+        developer: payload.developer,
+        pegiRating: payload.pegiRating,
+        releaseDate: this.parseReleaseDate(payload.releaseDate),
+        upcomingGame: payload.upcomingGame,
+        newGame: payload.newGame,
+        gameConfigurationsMinimalId,
+        gameConfigurationsRecommendedId,
         trailerFilesId: trailerFileInstance.id,
         pictureFilesId: pictureFileInstance.id,
         logoFilesId: logoFileInstance.id,
       })
+
+      await this.syncGameMedias(game.id, payload.gameMedias)
+
+      return game
     } catch (error) {
       throw new BadRequestException(error.message)
     }
   }
 
   // Fonction pour mettre à jour un game
-  public static async updateGames(
-    id: number,
-    title: string,
-    upcomingGame: boolean,
-    newGame: boolean,
-    trailerPathFilename: string,
-    trailerBucketName: string,
-    picturePathFilename: string,
-    pictureBucketName: string,
-    logoPathFilename: string,
-    logoBucketName: string,
-    trailer_files_id: number,
-    logo_files_id: number,
-    picture_files_id: number,
-    description: string,
-  ): Promise<Game> {
+  public static async updateGames(id: number, payload: UpdateGamePayload): Promise<Game> {
     try {
       const bucketFileTrailerCommand: BucketFileCommand = {
-        pathFilename: trailerPathFilename,
-        bucketName: trailerBucketName,
+        pathFilename: payload.trailerPathFilename,
+        bucketName: payload.trailerBucketName,
       }
       const bucketFilePictureCommand: BucketFileCommand = {
-        pathFilename: picturePathFilename,
-        bucketName: pictureBucketName,
+        pathFilename: payload.picturePathFilename,
+        bucketName: payload.pictureBucketName,
       }
       const bucketFileLogoCommand: BucketFileCommand = {
-        pathFilename: logoPathFilename,
-        bucketName: logoBucketName,
+        pathFilename: payload.logoPathFilename,
+        bucketName: payload.logoBucketName,
       }
 
-      await CloudStorageS3Service.updateFileInDB(bucketFileTrailerCommand, trailer_files_id)
-      await CloudStorageS3Service.updateFileInDB(bucketFilePictureCommand, picture_files_id)
-      await CloudStorageS3Service.updateFileInDB(bucketFileLogoCommand, logo_files_id)
+      await CloudStorageS3Service.updateFileInDB(bucketFileTrailerCommand, payload.trailerFilesId)
+      await CloudStorageS3Service.updateFileInDB(bucketFilePictureCommand, payload.pictureFileId)
+      await CloudStorageS3Service.updateFileInDB(bucketFileLogoCommand, payload.logoFilesId)
 
       // Updating in database
       const game: Game = await Game.findOrFail(id)
-      return await game
+      const gameConfigurationsMinimalId: number = await this.upsertGameConfiguration(
+        payload.gameConfigurationsMinimal,
+        'minimal',
+        game.gameConfigurationsMinimalId,
+      )
+      const gameConfigurationsRecommendedId: number = await this.upsertGameConfiguration(
+        payload.gameConfigurationsRecommended,
+        'recommended',
+        game.gameConfigurationsRecommendedId,
+      )
+
+      const updatedGame: Game = await game
         .merge({
-          title,
-          description,
-          upcomingGame: upcomingGame,
-          newGame: newGame,
+          title: payload.title,
+          description: payload.description,
+          gameMode: payload.gameMode,
+          publisher: payload.publisher,
+          developer: payload.developer,
+          pegiRating: payload.pegiRating,
+          releaseDate: this.parseReleaseDate(payload.releaseDate),
+          upcomingGame: payload.upcomingGame,
+          newGame: payload.newGame,
+          gameConfigurationsMinimalId,
+          gameConfigurationsRecommendedId,
         })
         .save()
+
+      await this.syncGameMedias(updatedGame.id, payload.gameMedias)
+
+      return updatedGame
     } catch (error) {
       throw new BadRequestException(error.message)
     }
@@ -172,7 +327,11 @@ export default class GamesService {
         .preload('gameConfigurationRecommended')
         .preload('languages')
         .preload('gameVersions')
-        .preload('gameMedias')
+        .preload('gameMedias', (gameMediasQuery): void => {
+          gameMediasQuery.preload('file', (fileQuery): void => {
+            fileQuery.preload('bucket')
+          })
+        })
         .where('id', id)
         .firstOrFail()
     } catch (error) {
@@ -228,7 +387,11 @@ export default class GamesService {
           .preload('gameConfigurationRecommended')
           .preload('languages')
           .preload('gameVersions')
-          .preload('gameMedias')
+          .preload('gameMedias', (gameMediasQuery): void => {
+            gameMediasQuery.preload('file', (fileQuery): void => {
+              fileQuery.preload('bucket')
+            })
+          })
 
       const query: ModelQueryBuilderContract<typeof Game, Game> = Game.query()
 
@@ -370,7 +533,11 @@ export default class GamesService {
         .preload('gameConfigurationRecommended')
         .preload('languages')
         .preload('gameVersions')
-        .preload('gameMedias')
+        .preload('gameMedias', (gameMediasQuery): void => {
+          gameMediasQuery.preload('file', (fileQuery): void => {
+            fileQuery.preload('bucket')
+          })
+        })
         .firstOrFail()
     } catch (error) {
       if (error instanceof NotFoundException) {
