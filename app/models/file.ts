@@ -27,10 +27,7 @@ const s3ClientForFileModel: S3Client = new S3Client({
 
 export default class File extends FileSchema {
   private static normalizePrivateUrlExpiration(expiresIn: number): number {
-    return Math.max(
-      PRIVATE_URL_MIN_EXPIRATION_SECONDS,
-      Math.min(expiresIn, PRIVATE_URL_MAX_EXPIRATION_SECONDS),
-    )
+    return Math.max(PRIVATE_URL_MIN_EXPIRATION_SECONDS, Math.min(expiresIn, PRIVATE_URL_MAX_EXPIRATION_SECONDS))
   }
 
   private static replaceHostInUrl(url: string): string {

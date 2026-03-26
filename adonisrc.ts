@@ -115,8 +115,6 @@ export default defineConfig({
   | the production build.
   |
   */
-  metaFiles: [],
-
   hooks: {
     init: [
       indexEntities({
