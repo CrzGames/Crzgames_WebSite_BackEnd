@@ -6,7 +6,7 @@ export default class extends BaseSchema {
   public async up(): Promise<void> {
     this.schema.createTable(this.tableName, (table): void => {
       table.increments('id').primary()
-      table.integer('games_id').unsigned().references('id').inTable('games')
+      table.integer('games_id').unsigned().references('id').inTable('games').onDelete('CASCADE')
       table.string('version').notNullable()
       table.unique(['games_id', 'version'])
       table.text('content', 'longtext').notNullable()

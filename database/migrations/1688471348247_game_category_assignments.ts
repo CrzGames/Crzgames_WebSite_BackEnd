@@ -7,7 +7,7 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table): void => {
       table.increments('id').primary()
       table.integer('games_id').unsigned().references('id').inTable('games').onDelete('CASCADE')
-      table.integer('game_categories_id').unsigned().references('id').inTable('game_categories')
+      table.integer('game_categories_id').unsigned().references('id').inTable('game_categories').onDelete('CASCADE')
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

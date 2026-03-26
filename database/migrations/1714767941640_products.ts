@@ -8,8 +8,8 @@ export default class extends BaseSchema {
       table.increments('id').primary()
       table.string('name').notNullable()
       table.text('description').notNullable()
-      table.integer('image_files_id').unsigned().references('id').inTable('files')
-      table.integer('games_id').unsigned().nullable().references('id').inTable('games')
+      table.integer('image_files_id').unsigned().references('id').inTable('files').onDelete('SET NULL')
+      table.integer('games_id').unsigned().nullable().references('id').inTable('games').onDelete('SET NULL')
       table
         .integer('product_categories_id')
         .unsigned()

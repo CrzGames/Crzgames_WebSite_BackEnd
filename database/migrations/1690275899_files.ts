@@ -8,7 +8,7 @@ export default class extends BaseSchema {
   public async up(): Promise<void> {
     this.schema.createTable(this.tableName, (table: CreateTableBuilder): void => {
       table.increments('id').primary()
-      table.integer('buckets_id').unsigned().references('id').inTable('buckets')
+      table.integer('buckets_id').unsigned().references('id').inTable('buckets').onDelete('SET NULL')
       table.string('pathfilename').notNullable()
       table.string('url').notNullable()
       table.integer('size').notNullable() // in bytes
