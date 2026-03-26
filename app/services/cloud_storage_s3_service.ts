@@ -56,7 +56,7 @@ const s3Client: S3Client = new S3Client({
   },
   region: env.get('S3_BUCKET_REGION'),
   endpoint: env.get('S3_BUCKET_ENDPOINT'),
-  forcePathStyle: env.get('S3_BUCKET_FORCE_PATH_STYLE')
+  forcePathStyle: env.get('S3_BUCKET_FORCE_PATH_STYLE'),
 })
 
 /**
