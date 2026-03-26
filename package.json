@@ -43,7 +43,6 @@
     "lint:ts": "tsc --noEmit",
     "lint:eslint": "eslint .",
     "lint:fix": "prettier --write . && eslint . --fix",
-    "postbuild": "npm run generate:swagger && cp -a swagger.yml build/",
     "prepare": "husky"
   },
   "dependencies": {
