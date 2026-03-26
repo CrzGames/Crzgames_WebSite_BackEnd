@@ -1,12 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prod-customerName-projectName-backend-deployment
-  namespace: prod-customerName-projectName-backend
+  name: prod-crzgames-website-backend-deployment
+  namespace: prod-crzgames-website-backend
   labels:
-    app: prod-customerName-projectName-backend
+    app: prod-crzgames-website-backend
 spec:
-  replicas: 3
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -14,15 +13,15 @@ spec:
       maxSurge: 1
   selector:
     matchLabels:
-      app: prod-customerName-projectName-backend
+      app: prod-crzgames-website-backend
   template:
     metadata:
       labels:
-        app: prod-customerName-projectName-backend
+        app: prod-crzgames-website-backend
     spec:
       containers:
-        - name: prod-customerName-projectName-backend
-          image: corentin35/customerName-projectName-backend:${TAG_VERSION}
+        - name: prod-crzgames-website-backend
+          image: corentin35/crzgames-website-backend:${TAG_VERSION}
           imagePullPolicy: Always
           ports:
             - containerPort: 3333
@@ -31,10 +30,10 @@ spec:
               value: '3333'
           resources:
             requests:
-              cpu: '300m'
-              memory: '400Mi'
+              cpu: '20m'
+              memory: '160Mi'
             limits:
-              cpu: '600m'
-              memory: '800Mi'
+              cpu: '100m'
+              memory: '320Mi'
       imagePullSecrets:
         - name: regcred

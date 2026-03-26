@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: dev-customerName-projectName-backend-service
-  namespace: dev-customerName-projectName-backend
+  name: dev-crzgames-website-backend-service
+  namespace: dev-crzgames-website-backend
 spec:
   ports:
     - port: 3333
       targetPort: 3333
   selector:
-    app: dev-customerName-projectName-backend
+    app: dev-crzgames-website-backend

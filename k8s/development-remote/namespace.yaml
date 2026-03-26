@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: dev-customerName-projectName-backend
+  name: dev-crzgames-website-backend

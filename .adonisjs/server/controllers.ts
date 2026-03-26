@@ -16,6 +16,7 @@ export const controllers = {
   GamePlatforms: () => import('#controllers/game_platforms_controller'),
   GameServer: () => import('#controllers/game_server_controller'),
   GameVersions: () => import('#controllers/game_versions_controller'),
+  Games: () => import('#controllers/games_controller'),
   Health: () => import('#controllers/health_controller'),
   Languages: () => import('#controllers/languages_controller'),
   LauncherCrz: () => import('#controllers/launcher_crz_controller'),
@@ -36,5 +37,4 @@ export const controllers = {
   UserGameLibraries: () => import('#controllers/user_game_libraries_controller'),
   UserRoles: () => import('#controllers/user_roles_controller'),
   Users: () => import('#controllers/users_controller'),
-  Games: () => import('#controllers/games_controller'),
 }

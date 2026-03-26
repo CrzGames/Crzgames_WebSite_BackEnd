@@ -1,22 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dev-customerName-projectName-backend-deployment
-  namespace: dev-customerName-projectName-backend
+  name: dev-crzgames-website-backend-deployment
+  namespace: dev-crzgames-website-backend
   labels:
-    app: dev-customerName-projectName-backend
+    app: dev-crzgames-website-backend
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: dev-customerName-projectName-backend
+      app: dev-crzgames-website-backend
   template:
     metadata:
       labels:
-        app: dev-customerName-projectName-backend
+        app: dev-crzgames-website-backend
     spec:
       containers:
-        - name: dev-customerName-projectName-backend
-          image: corentin35/customerName-projectName-backend:develop-${TAG_VERSION}
+        - name: dev-crzgames-website-backend
+          image: corentin35/crzgames-website-backend:develop-${TAG_VERSION}
           imagePullPolicy: Always
           ports:
             - containerPort: 3333
@@ -25,10 +26,10 @@ spec:
               value: '3333'
           resources:
             requests:
-              cpu: '300m'
-              memory: '400Mi'
+              cpu: '20m'
+              memory: '160Mi'
             limits:
-              cpu: '600m'
-              memory: '800Mi'
+              cpu: '100m'
+              memory: '320Mi'
       imagePullSecrets:
         - name: regcred

@@ -1,22 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: staging-customerName-projectName-backend-deployment
-  namespace: staging-customerName-projectName-backend
+  name: staging-crzgames-website-backend-deployment
+  namespace: staging-crzgames-website-backend
   labels:
-    app: staging-customerName-projectName-backend
+    app: staging-crzgames-website-backend
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: staging-customerName-projectName-backend
+      app: staging-crzgames-website-backend
   template:
     metadata:
       labels:
-        app: staging-customerName-projectName-backend
+        app: staging-crzgames-website-backend
     spec:
       containers:
-        - name: staging-customerName-projectName-backend
-          image: corentin35/customerName-projectName-backend:staging-${TAG_VERSION}
+        - name: staging-crzgames-website-backend
+          image: corentin35/crzgames-website-backend:staging-${TAG_VERSION}
           imagePullPolicy: Always
           ports:
             - containerPort: 3333
@@ -25,10 +26,10 @@ spec:
               value: '3333'
           resources:
             requests:
-              cpu: '300m'
-              memory: '400Mi'
+              cpu: '20m'
+              memory: '160Mi'
             limits:
-              cpu: '600m'
-              memory: '800Mi'
+              cpu: '100m'
+              memory: '320Mi'
       imagePullSecrets:
         - name: regcred
