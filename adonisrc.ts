@@ -3,6 +3,17 @@ import { defineConfig } from '@adonisjs/core/app'
 import { generateRegistry } from '@tuyau/core/hooks'
 
 export default defineConfig({
+  metaFiles: [
+    {
+      pattern: 'resources/views/**/*.edge',
+      reloadServer: false,
+    },
+    {
+      pattern: 'resources/logo/app-icon.png',
+      reloadServer: false,
+    },
+  ],
+
   /*
   |--------------------------------------------------------------------------
   | Experimental flags
