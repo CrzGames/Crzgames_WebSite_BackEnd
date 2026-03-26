@@ -822,7 +822,7 @@ export default class CloudStorageS3Service {
   public static setVisibilityBucketCurrent(visibility: string): void {
     if (visibility === 'public' || visibility === 'private') {
       logger.info('setVisibilityBucketCurrent new value : ' + visibility)
-      env.set('S3_VISIBILITY', visibility)
+      env.set('S3_BUCKET_VISIBILITY', visibility)
     } else {
       logger.warn('setVisibilityBucketCurrent no value autorized just public or private value is ok')
     }
@@ -835,7 +835,7 @@ export default class CloudStorageS3Service {
    */
   public static setBucketCurrent(newBucketCurrent: string): void {
     logger.info('setBucketCurrent : ' + newBucketCurrent)
-    env.set('S3_BUCKET', newBucketCurrent)
+    env.set('S3_BUCKET_NAME', newBucketCurrent)
   }
 
   /**

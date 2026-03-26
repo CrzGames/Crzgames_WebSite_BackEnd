@@ -9,79 +9,32 @@
 - Kubernetes (Development-Remote, Staging and Production)
 - Unit / Functional Tests (Japa)
 - MariaDB (Database)
-- MailHog (Development-Local) and Mailjet (Development-Remote, Staging and Production)
+- Mailer MailHog (Development-Local) and Mailer ReSend (Development-Remote, Staging and Production)
 
-<br /><br /><br /><br />
+<br /><br />
 
-## 📦 Versionning
+---
 
-On utilise la convention SemVer : https://semver.org/lang/fr/ <br /><br />
-Pour une Release classique : MAJOR.MINOR.PATCH <br />
-Pour une Pre-Release, exemples : MAJOR.MINOR.PATCH-rc.0 OR MAJOR.MINOR.PATCH-beta.3 <br /><br />
-
-Nous utilison release-please de Google pour versionner, via Github Actions. <br />
-Pour que cela sois pris en compte il faut utiliser les conventionnal commits : https://www.conventionalcommits.org/en/v1.0.0/ <br />
-Release Please crée une demande d'extraction de version après avoir remarqué que la branche par défaut contient des « unités publiables » depuis la dernière version. Une unité publiable est un commit sur la branche avec l'un des préfixes suivants : `feat` / `feat!` et `fix` / `fix!`. <br /><br />
-
-La première Release que créer release-please automatiquement est la version : 1.0.0 <br />
-Pour créer une Pre-Release faire un commit vide, par exemple si on'ai à la version 1.0.0, on peut faire :
-
-```bash
-git commit --allow-empty -m "chore: release 1.1.0-rc.0" -m "Release-As: 1.1.0-rc.0"
-```
-
-<br /><br /><br /><br />
-
-## 🚀 Conventions de Commit
-
-Nous utilisons les conventions de commit pour maintenir une cohérence dans l'historique du code et faciliter le versionnement automatique avec release-please. Voici les types de commits que nous utilisons, ainsi que leur impact sur le versionnage :
-
-- feat : Introduction d'une nouvelle fonctionnalité pour l'utilisateur. Entraîne une augmentation de la version mineure (par exemple, de 1.0.0 à 1.1.0).
-
-- feat! : Introduction d'une nouvelle fonctionnalité avec des modifications incompatibles avec les versions antérieures (breaking changes). Entraîne une augmentation de la version majeure (par exemple, de 1.0.0 à 2.0.0).
-
-- fix : Correction d'un bug pour l'utilisateur. Entraîne une augmentation de la version patch (par exemple, de 1.0.0 à 1.0.1).
-
-- fix! : Correction d'un bug avec des modifications incompatibles avec les versions antérieures (breaking changes). Entraîne une augmentation de la version majeure.
-
-- docs : Changements concernant uniquement la documentation. N'affecte pas la version.
-
-- style : Changements qui n'affectent pas le sens du code (espaces blancs, mise en forme, etc.). N'affecte pas la version.
-
-- refactor : Modifications du code qui n'apportent ni nouvelle fonctionnalité ni correction de bug. N'affecte pas la version.
-
-- perf : Changements de code qui améliorent les performances. Peut entraîner une augmentation de la version mineure.
-
-- test : Ajout ou correction de tests. N'affecte pas la version.
-
-- chore : Changements qui ne modifient ni les fichiers source ni les tests (par exemple, mise à jour des dépendances). N'affecte pas la version.
-
-- ci : Changements dans les fichiers de configuration et les scripts d'intégration continue (par exemple, GitHub Actions). N'affecte pas la version.
-
-- build : Changements qui affectent le système de build ou les dépendances externes (par exemple, npm, Docker). N'affecte pas la version.
-
-- revert : Annulation d'un commit précédent. N'affecte pas la version.
-
-Pour indiquer qu'un commit introduit des modifications incompatibles avec les versions antérieures (breaking changes), ajoutez un ! après le type de commit, par exemple feat! ou fix!.
-
-Pour plus de détails sur les conventions de commit, consultez : [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
-
-<br /><br /><br /><br />
+<br /><br />
 
 ## 📚 Domains of different environments
 
-- Development-Remote : https://dev.example.api.flapi.org
-- Staging : https://staging.example.api.flapi.org
-- Production : https://example.api.flapi.org
+- Development-Remote : https://dev.api.crzgames.com
+- Staging : https://staging.api.crzgames.com
+- Production : https://api.crzgames.com
 
-<br /><br /><br /><br />
+<br /><br />
+
+---
+
+<br /><br />
 
 ## ⚙️ Setup Environment Development
 
 1. Clone the project repository using the following commands :
 
 ```bash
-git clone git@github.com:FlapiBusiness/flapi-customerName-projectName-backend.git
+git clone git@github.com:CrzGames/Crzgames_WebSite_BackEnd.git
 ```
 
 2. Steps by Platform :
@@ -103,7 +56,11 @@ git clone git@github.com:FlapiBusiness/flapi-customerName-projectName-backend.gi
 3. Download and Install Docker (Debian) : https://docs.docker.com/engine/install/debian/
 ```
 
-<br /><br /><br /><br />
+<br /><br />
+
+---
+
+<br /><br />
 
 ## 🔄 Cycle Development
 
@@ -114,12 +71,18 @@ git clone git@github.com:FlapiBusiness/flapi-customerName-projectName-backend.gi
    # Start the development server on http://localhost:3555 (AdonisJS)
    # Start the development server on http://localhost:7450 (PhpMyAdmin)
    # Start the development server on http://localhost:8025 (Mailhog)
+   # Start the development server on http://localhost:9001 (Minio S3 - UI)
+   # Start the development server on http://localhost:900 (Minio S3 - API Endpoint)
    # Start MariaDB port is : 3310
    npm install # just for the idea
    npm run dev:docker
 ```
 
-<br /><br /><br /><br />
+<br /><br />
+
+---
+
+<br /><br />
 
 ## 🔄 Unit / Functional Tests
 
@@ -136,7 +99,7 @@ git clone git@github.com:FlapiBusiness/flapi-customerName-projectName-backend.gi
    npm run test:all:watch
    ```
 
----
+<br />
 
 ### **Unit Tests:**
 
@@ -151,7 +114,7 @@ git clone git@github.com:FlapiBusiness/flapi-customerName-projectName-backend.gi
    npm run test:unit:watch
    ```
 
----
+<br />
 
 ### **Functional Tests:**
 
@@ -166,7 +129,11 @@ git clone git@github.com:FlapiBusiness/flapi-customerName-projectName-backend.gi
    npm run test:functional:watch
    ```
 
-<br /><br /><br /><br />
+<br /><br />
+
+---
+
+<br /><br />
 
 ## 🔑 **Gestion des Secrets d'Environnement**
 
@@ -240,7 +207,11 @@ Ce projet utilise le package `@foadonis/crypt` pour stocker et gérer de manièr
 
 Les clés privées réelles sont stockées de manière sécurisée dans **1Password**, dans le coffre nommé **`.env.keys (Flapi - AdonisJS)`**.
 
-<br /><br /><br /><br />
+<br /><br />
+
+---
+
+<br /><br />
 
 ## 🚀 Production
 
