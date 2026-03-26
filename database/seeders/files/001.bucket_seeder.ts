@@ -3,7 +3,7 @@ import Bucket from '#models/bucket'
 import env from '#start/env'
 
 export default class BucketSeeder extends BaseSeeder {
-  public static environment: string[] = ['development', 'test', 'staging', 'production']
+  public static environment: string[] = ['development', 'development-remote', 'test', 'staging', 'production']
 
   public async run(): Promise<void> {
     const bucketsData: { name: string; visibility: string }[] = [
