@@ -2,7 +2,7 @@ import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import ProductCategory from '#models/product_category'
 
 export default class extends BaseSeeder {
-  public static environment: string[] = ['development', 'test', 'staging', 'production']
+  public static environment: string[] = ['development', 'development-remote', 'test', 'staging', 'production']
 
   public async run(): Promise<void> {
     const productCategories = [
