@@ -1,43 +1,88 @@
-@mjml()
+@mjml({
+  keepComments: false,
+  fonts: {
+    Inter: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+  },
+})
   <mjml>
-    <mj-body background-color="#111827">
-      <mj-section background-color="#1F2937" padding-bottom="20px">
+    <mj-head>
+      <mj-attributes>
+        <mj-all font-family="Inter, Arial, sans-serif" />
+        <mj-text font-size="15px" line-height="1.65" color="#1f2937" />
+        <mj-button
+          background-color="#f4b400"
+          color="#111827"
+          border-radius="10px"
+          font-size="15px"
+          font-weight="700"
+          inner-padding="14px 22px"
+        />
+      </mj-attributes>
+    </mj-head>
+    <mj-body background-color="#0f172a" width="640px">
+      <mj-section background-color="#1d2a45" padding="26px 24px 18px 24px" border-radius="14px 14px 0 0">
         <mj-column>
-          <mj-image width="120px;" src="https://crzgames.com/images/logo_fond_transparent_whitout_text.png" align="center" padding="10px 0">
-          </mj-image>
-          <mj-text align="center" color="#ffffff" font-size="26px" font-weight="bold" padding="20px">
-            Welcome to Crz Games, {{ username }}!
+          <mj-image
+            src="{{ embedImage(app.makePath('resources/logo/app-icon.png')) }}"
+            width="58px"
+            align="center"
+            padding="0 0 10px 0"
+          />
+          <mj-text align="center" color="#ffffff" font-size="24px" font-weight="700" padding="0 0 4px 0">
+            CrzGames
+          </mj-text>
+          <mj-text align="center" color="#aebbd4" font-size="13px" padding="0">
+            Account & Security Notification
           </mj-text>
         </mj-column>
       </mj-section>
-      <mj-section background-color="#ffffff" padding="15px">
-        <mj-column width="400px">
-          <mj-text font-size="20px" color="#1F2937" font-weight="bold">
-            Activate Your Account
+
+      <mj-section background-color="#f8fafc" padding="28px 26px 20px 26px">
+        <mj-column>
+          <mj-text color="#0f172a" font-size="27px" font-weight="700" padding="0 0 6px 0">
+            Welcome, {{ username }}!
           </mj-text>
-          <mj-divider border-width="1px" border-style="dashed" border-color="lightgrey"></mj-divider>
-          <mj-text font-size="15px" color="#000000">
-            We are thrilled to welcome you to Crz Games! To complete the activation of your account, please enter the verification code below:
+          <mj-text color="#334155" padding="0 0 14px 0">
+            Thank you for joining CrzGames. Use the verification code below to activate your account.
           </mj-text>
-          <mj-text font-size="24px" color="#1F2937" font-weight="bold">
+          <mj-text
+            align="center"
+            color="#0f172a"
+            font-size="34px"
+            font-weight="700"
+            letter-spacing="6px"
+            background-color="#e8edf7"
+            border-radius="10px"
+            padding="16px 10px"
+          >
             {{ code }}
           </mj-text>
-          <mj-text font-size="15px" color="#000000">
-            If you have lost the link to the activation page, you can click on the following link to access your account verification directly:
-          </mj-text>
-          <mj-text font-size="15px" color="#1F2937">
-            <a href="{{ redirect_uri }}">{{ redirect_uri }}</a>
+          <mj-text color="#475569" font-size="13px" padding="14px 0 0 0">
+            This code is sensitive. Do not share it with anyone.
           </mj-text>
         </mj-column>
       </mj-section>
-      <mj-section background-color="#1F2937" padding-top="20px">
+
+      <mj-section background-color="#f8fafc" padding="0 26px 24px 26px">
         <mj-column>
-          <mj-text align="center" color="#ffffff" font-size="12px">
-            We look forward to seeing you in our games!
+          <mj-button href="{{ redirect_uri }}" padding="0 0 14px 0">
+            Verify My Account
+          </mj-button>
+          <mj-text color="#64748b" font-size="12px" padding="0">
+            If the button does not work, copy and paste this URL:
             <br />
-            Thank you for your trust,
-            <br />
-            The Crz Games Support Team
+            <a style="color:#1d4ed8;word-break:break-all;" href="{{ redirect_uri }}">{{ redirect_uri }}</a>
+          </mj-text>
+        </mj-column>
+      </mj-section>
+
+      <mj-section background-color="#1d2a45" padding="18px 24px 24px 24px" border-radius="0 0 14px 14px">
+        <mj-column>
+          <mj-text align="center" color="#b7c3da" font-size="12px" padding="0">
+            Need help? Contact us at support@crzgames.com
+          </mj-text>
+          <mj-text align="center" color="#7f8da7" font-size="11px" padding="6px 0 0 0">
+            (c) CrzGames. All rights reserved.
           </mj-text>
         </mj-column>
       </mj-section>

@@ -1,45 +1,81 @@
-@mjml()
+@mjml({
+  keepComments: false,
+  fonts: {
+    Inter: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+  },
+})
   <mjml>
-    <mj-body background-color="#111827">
-      <mj-section background-color="#1F2937" padding-bottom="20px">
+    <mj-head>
+      <mj-attributes>
+        <mj-all font-family="Inter, Arial, sans-serif" />
+        <mj-text font-size="15px" line-height="1.65" color="#1f2937" />
+        <mj-button
+          background-color="#f4b400"
+          color="#111827"
+          border-radius="10px"
+          font-size="15px"
+          font-weight="700"
+          inner-padding="14px 22px"
+        />
+      </mj-attributes>
+    </mj-head>
+    <mj-body background-color="#0f172a" width="640px">
+      <mj-section background-color="#1d2a45" padding="26px 24px 18px 24px" border-radius="14px 14px 0 0">
         <mj-column>
-          <mj-image width="120px;" src="https://crzgames.com/images/logo_fond_transparent_whitout_text.png" align="center" padding="10px 0">
-          </mj-image>
-          <mj-text align="center" color="#ffffff" font-size="28px" font-weight="bold" padding="20px">
-            Crz Games
+          <mj-image
+            src="{{ embedImage(app.makePath('resources/logo/app-icon.png')) }}"
+            width="58px"
+            align="center"
+            padding="0 0 10px 0"
+          />
+          <mj-text align="center" color="#ffffff" font-size="24px" font-weight="700" padding="0 0 4px 0">
+            CrzGames
+          </mj-text>
+          <mj-text align="center" color="#aebbd4" font-size="13px" padding="0">
+            Support Notification
           </mj-text>
         </mj-column>
       </mj-section>
-      <mj-section background-color="#ffffff" padding="15px">
-        <mj-column width="400px">
-          <mj-text font-size="20px" color="#1F2937" font-weight="bold">
-            Support Ticket Update
+
+      <mj-section background-color="#f8fafc" padding="28px 26px 20px 26px">
+        <mj-column>
+          <mj-text color="#0f172a" font-size="27px" font-weight="700" padding="0 0 6px 0">
+            Ticket #{{ ticketNumber }} Updated
           </mj-text>
-          <mj-divider border-width="1px" border-style="dashed" border-color="lightgrey"></mj-divider>
-          <mj-text font-size="15px" color="#000000">
-            Hello {{ username }},
-            <br /><br />
-            We have updated Ticket #{{ ticketNumber }} following your request. Here is a summary of our response:
+          <mj-text color="#334155" padding="0 0 14px 0">
+            Hello {{ username }}, our support team has replied to your ticket.
           </mj-text>
-          <mj-text font-size="15px" color="#000000" padding-left="25px">
-            <i>"{{ contentResponseSupport }}"</i>
+          <mj-text
+            color="#334155"
+            background-color="#e8edf7"
+            border-left="4px solid #f4b400"
+            border-radius="8px"
+            padding="14px 14px"
+            font-size="14px"
+          >
+            "{{ contentResponseSupport }}"
           </mj-text>
-          <mj-text padding-top="20px" color="#000000">
-            To view the complete response and continue the conversation, please log in to your account on our website.
-          </mj-text>
-          <mj-button background-color="#1F2937" color="white" href="{{ ticketURL }}">
+        </mj-column>
+      </mj-section>
+
+      <mj-section background-color="#f8fafc" padding="0 26px 24px 26px">
+        <mj-column>
+          <mj-button href="{{ ticketURL }}" padding="0 0 14px 0">
             View Ticket
           </mj-button>
+          <mj-text color="#64748b" font-size="12px" padding="0">
+            You can continue the conversation directly from your support dashboard.
+          </mj-text>
         </mj-column>
       </mj-section>
-      <mj-section background-color="#1F2937" padding-top="20px">
+
+      <mj-section background-color="#1d2a45" padding="18px 24px 24px 24px" border-radius="0 0 14px 14px">
         <mj-column>
-          <mj-text align="center" color="#ffffff" font-size="12px">
-            We are here for any further assistance you may need.
-            <br />
-            Thank you for trusting Crz Games,
-            <br />
-            The Crz Games Support Team
+          <mj-text align="center" color="#b7c3da" font-size="12px" padding="0">
+            Need help? Contact us at support@crzgames.com
+          </mj-text>
+          <mj-text align="center" color="#7f8da7" font-size="11px" padding="6px 0 0 0">
+            (c) CrzGames. All rights reserved.
           </mj-text>
         </mj-column>
       </mj-section>
