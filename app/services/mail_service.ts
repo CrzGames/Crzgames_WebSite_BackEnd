@@ -21,20 +21,17 @@ export default class MailService {
     try {
       const recipients: string[] = Array.isArray(emailUsers) ? emailUsers : [emailUsers]
 
-      await Promise.all(
-        recipients.map((emailUser: string): Promise<void> => {
-          return mail.sendLater((message: Message): void => {
-            message.to(emailUser).subject(emailSubject).htmlView(`emails/${viewEmail}`, data)
-          })
-        }),
-      )
+      for (const emailUser of recipients) {
+        await mail.send((message: Message): void => {
+          message.to(emailUser).subject(emailSubject).htmlView(`emails/${viewEmail}`, data)
+        })
+      }
 
-      logger.info(`[MailService] Email queued for ${recipients.length} recipient(s).`)
+      logger.info(`[MailService] Email sent to ${recipients.length} recipient(s).`)
     } catch (error: unknown) {
       const errorMessage: string = error instanceof Error ? error.message : String(error)
       logger.error(`Send mail error: ${errorMessage}`)
 
-      // Erreur lors de l'envoi de l'e-mail
       throw new InternalServerErrorException('Failed to send email')
     }
   }
