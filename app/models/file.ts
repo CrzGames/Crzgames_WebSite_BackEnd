@@ -10,7 +10,7 @@ import { FileSchema } from '#database/schema'
 
 export default class File extends FileSchema {
   public getUrl(url: string): string {
-    let endpoint: string = env.get('S3_ENDPOINT') as string
+    let endpoint: string = env.get('S3_BUCKET_ENDPOINT')
 
     // Si 'host.docker.internal' est dans l'endpoint, remplacez-le par 'localhost'
 
