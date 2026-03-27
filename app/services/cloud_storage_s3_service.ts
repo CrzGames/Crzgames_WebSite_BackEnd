@@ -143,9 +143,6 @@ export default class CloudStorageS3Service {
    */
   public static async getFileContent(bucketName: string, pathFilename: string): Promise<string> {
     try {
-      // Fetch le bucket en question dans la db pour récupérer la visibility du bucket
-      const bucket: MyBucket = await this.getBucketByName(bucketName)
-
       // Vérifier si le fichier existe dans le bucket
       const command: GetObjectCommand = new GetObjectCommand({
         Bucket: bucketName,
@@ -185,9 +182,6 @@ export default class CloudStorageS3Service {
    * @returns {Promise<void>}
    */
   public static async uploadFileOrFolderInBucket(bucketFile: BucketFileCommand): Promise<void> {
-    // Récupérer le bucket par son nom
-    const bucket: MyBucket = await this.getBucketByName(bucketFile.bucketName)
-
     if (bucketFile.files) {
       // Pour plusieurs fichiers, que pour les assets réel en production
       for (const file of bucketFile.files) {
@@ -409,9 +403,6 @@ export default class CloudStorageS3Service {
    */
   public static async deleteInBucketAndDB(pathFilename: string, bucketName: string): Promise<void> {
     try {
-      // Choisi le bucket
-      const bucket: MyBucket = await this.getBucketByName(bucketName)
-
       // Si c'est une demande de suppression d'un dossier
       if (pathFilename.endsWith('/')) {
         await this.deleteFolderInBucketAndDB(bucketName, pathFilename)
@@ -530,8 +521,6 @@ export default class CloudStorageS3Service {
   ): Promise<void> {
     logger.info(`Début du téléchargement pour le chemin : ${pathFilename} dans le bucket : ${bucketName}`)
 
-    const bucket: MyBucket = await this.getBucketByName(bucketName)
-
     try {
       // Vérifier si le chemin est une application macOS (.app)
       if (pathFilename.endsWith('.app')) {
@@ -613,8 +602,6 @@ export default class CloudStorageS3Service {
     pathFilename: string,
     expiresIn: number = PRESIGNED_URL_DEFAULT_EXPIRATION_SECONDS,
   ): Promise<string> {
-    const bucket: MyBucket = await this.getBucketByName(bucketName)
-
     const normalizedExpiresIn: number = Math.max(
       PRESIGNED_URL_MIN_EXPIRATION_SECONDS,
       Math.min(expiresIn, PRESIGNED_URL_MAX_EXPIRATION_SECONDS),
@@ -661,8 +648,6 @@ export default class CloudStorageS3Service {
     bucketName: string,
   ): Promise<void> {
     logger.info(`Début du téléchargement pour le chemin : ${pathFilename} dans le bucket : ${bucketName}`)
-
-    const bucket: MyBucket = await this.getBucketByName(bucketName)
 
     // Vérifier si le chemin se termine par '.zip' (donc pas besoin d'archiver)
     if (pathFilename.endsWith('.zip')) {
