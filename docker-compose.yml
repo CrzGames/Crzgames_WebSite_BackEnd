@@ -120,6 +120,32 @@ services:
     networks:
       - app-network
 
+  redis:
+    container_name: redis
+    image: redis:8.6
+    restart: always
+    ports:
+      - '6400:6379'
+    # Sans password (dev local)
+    command: ['redis-server', '--appendonly', 'yes']
+    volumes:
+      - redis_data:/data
+    networks:
+      - app-network
+
+  redisinsight:
+    container_name: redisinsight
+    image: redis/redisinsight:latest
+    restart: always
+    ports:
+      - '5600:5540'
+    depends_on:
+      - redis
+    volumes:
+      - redisinsight_data:/data
+    networks:
+      - app-network
+
 networks:
   app-network:
 
@@ -128,3 +154,5 @@ volumes:
   app:
   node_modules:
   bucket_s3:
+  redis_data:
+  redisinsight_data:
