@@ -5,6 +5,7 @@ metadata:
   namespace: dev-crzgames-website-backend
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-production
+    nginx.ingress.kubernetes.io/proxy-body-size: "0" # ou "0" pour illimité
 spec:
   ingressClassName: nginx
   tls:
