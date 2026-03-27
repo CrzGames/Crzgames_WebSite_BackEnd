@@ -146,10 +146,6 @@ export default class CloudStorageS3Service {
       // Fetch le bucket en question dans la db pour récupérer la visibility du bucket
       const bucket: MyBucket = await this.getBucketByName(bucketName)
 
-      // Avant de sauvegarder le fichier dans le bucket on set le bucket courant et la visibilité courante
-      await this.setBucketCurrent(bucket.name)
-      await this.setVisibilityBucketCurrent(bucket.visibility)
-
       // Vérifier si le fichier existe dans le bucket
       const command: GetObjectCommand = new GetObjectCommand({
         Bucket: bucketName,
@@ -191,10 +187,6 @@ export default class CloudStorageS3Service {
   public static async uploadFileOrFolderInBucket(bucketFile: BucketFileCommand): Promise<void> {
     // Récupérer le bucket par son nom
     const bucket: MyBucket = await this.getBucketByName(bucketFile.bucketName)
-
-    // Avant de sauvegarder le fichier dans le bucket ont set le bucket courant et la visibilité courante
-    await this.setBucketCurrent(bucket.name)
-    await this.setVisibilityBucketCurrent(bucket.visibility)
 
     if (bucketFile.files) {
       // Pour plusieurs fichiers, que pour les assets réel en production
@@ -419,8 +411,6 @@ export default class CloudStorageS3Service {
     try {
       // Choisi le bucket
       const bucket: MyBucket = await this.getBucketByName(bucketName)
-      await this.setBucketCurrent(bucket.name)
-      await this.setVisibilityBucketCurrent(bucket.visibility)
 
       // Si c'est une demande de suppression d'un dossier
       if (pathFilename.endsWith('/')) {
@@ -467,9 +457,6 @@ export default class CloudStorageS3Service {
 
         return signedUrl
       }
-
-      await this.setBucketCurrent(file.bucket.name)
-      await this.setVisibilityBucketCurrent(file.bucket.visibility)
 
       if (await drive.use().exists(pathFilename)) {
         logger.info('getFileInBucket success pathfilename for file')
@@ -544,8 +531,6 @@ export default class CloudStorageS3Service {
     logger.info(`Début du téléchargement pour le chemin : ${pathFilename} dans le bucket : ${bucketName}`)
 
     const bucket: MyBucket = await this.getBucketByName(bucketName)
-    await this.setBucketCurrent(bucket.name)
-    await this.setVisibilityBucketCurrent(bucket.visibility)
 
     try {
       // Vérifier si le chemin est une application macOS (.app)
@@ -629,8 +614,6 @@ export default class CloudStorageS3Service {
     expiresIn: number = PRESIGNED_URL_DEFAULT_EXPIRATION_SECONDS,
   ): Promise<string> {
     const bucket: MyBucket = await this.getBucketByName(bucketName)
-    await this.setBucketCurrent(bucket.name)
-    await this.setVisibilityBucketCurrent(bucket.visibility)
 
     const normalizedExpiresIn: number = Math.max(
       PRESIGNED_URL_MIN_EXPIRATION_SECONDS,
@@ -680,8 +663,6 @@ export default class CloudStorageS3Service {
     logger.info(`Début du téléchargement pour le chemin : ${pathFilename} dans le bucket : ${bucketName}`)
 
     const bucket: MyBucket = await this.getBucketByName(bucketName)
-    await this.setBucketCurrent(bucket.name)
-    await this.setVisibilityBucketCurrent(bucket.visibility)
 
     // Vérifier si le chemin se termine par '.zip' (donc pas besoin d'archiver)
     if (pathFilename.endsWith('.zip')) {
@@ -849,30 +830,6 @@ export default class CloudStorageS3Service {
   }
 
   /**
-   * Définit la visibilité actuelle du bucket
-   * @param {string} visibility - La visibilité du bucket ('public' ou 'private')
-   * @returns {void}
-   */
-  public static setVisibilityBucketCurrent(visibility: string): void {
-    if (visibility === 'public' || visibility === 'private') {
-      logger.info('setVisibilityBucketCurrent new value : ' + visibility)
-      env.set('S3_BUCKET_VISIBILITY', visibility)
-    } else {
-      logger.warn('setVisibilityBucketCurrent no value autorized just public or private value is ok')
-    }
-  }
-
-  /**
-   * Définit le bucket actuel
-   * @param {string} newBucketCurrent - Le nom du nouveau bucket courant
-   * @returns {void}
-   */
-  public static setBucketCurrent(newBucketCurrent: string): void {
-    logger.info('setBucketCurrent : ' + newBucketCurrent)
-    env.set('S3_BUCKET_NAME', newBucketCurrent)
-  }
-
-  /**
    * Récupère la liste des fichiers dans un bucket S3 avec un préfixe donné
    * @param {string} bucketName - Le nom du bucket S3
    * @param {string} pathFilename - Le préfixe des fichiers à lister
@@ -1022,13 +979,6 @@ export default class CloudStorageS3Service {
    *
    */
   public static async getTotalSizeFileOrFolderInBucket(bucketName: string, pathFilename: string): Promise<number> {
-    // Fetch le bucket en question dans la db pour récupérer la visibility du bucket
-    const bucket: MyBucket = await this.getBucketByName(bucketName)
-
-    // Avant de sauvegarder le fichier dans le bucket ont set le bucket courant et la visibilité courante
-    await this.setBucketCurrent(bucket.name)
-    await this.setVisibilityBucketCurrent(bucket.visibility)
-
     const params: ListObjectsV2CommandInput = {
       Bucket: bucketName,
       Prefix: pathFilename,
