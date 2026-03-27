@@ -289,9 +289,26 @@ export default class GamesService {
         bucketName: payload.logoBucketName,
       }
 
-      await CloudStorageS3Service.updateFileInDB(bucketFileTrailerCommand, payload.trailerFilesId)
-      await CloudStorageS3Service.updateFileInDB(bucketFilePictureCommand, payload.pictureFileId)
-      await CloudStorageS3Service.updateFileInDB(bucketFileLogoCommand, payload.logoFilesId)
+      let trailerFilesId: number = payload.trailerFilesId
+      const pictureFilesId: number = payload.pictureFileId
+      const logoFilesId: number = payload.logoFilesId
+
+      // Lorsque trailer et picture partagent la meme entree file (meme id),
+      // une mise a jour independante peut s'ecraser. On dedouble le trailer
+      // uniquement si les cibles divergent.
+      const trailerAndPictureShareSameFileId: boolean = trailerFilesId === pictureFilesId
+      const trailerAndPictureHaveDifferentTargets: boolean =
+        payload.trailerPathFilename !== payload.picturePathFilename ||
+        payload.trailerBucketName !== payload.pictureBucketName
+
+      if (trailerAndPictureShareSameFileId && trailerAndPictureHaveDifferentTargets) {
+        const trailerFileInstance: File = await CloudStorageS3Service.createFileInDB(bucketFileTrailerCommand)
+        trailerFilesId = trailerFileInstance.id
+      }
+
+      await CloudStorageS3Service.updateFileInDB(bucketFileTrailerCommand, trailerFilesId)
+      await CloudStorageS3Service.updateFileInDB(bucketFilePictureCommand, pictureFilesId)
+      await CloudStorageS3Service.updateFileInDB(bucketFileLogoCommand, logoFilesId)
 
       // Updating in database
       const game: Game = await Game.findOrFail(id)
@@ -317,6 +334,9 @@ export default class GamesService {
           releaseDate: this.parseReleaseDate(payload.releaseDate),
           upcomingGame: payload.upcomingGame,
           newGame: payload.newGame,
+          trailerFilesId,
+          pictureFilesId,
+          logoFilesId,
           gameConfigurationsMinimalId,
           gameConfigurationsRecommendedId,
         })
