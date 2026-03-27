@@ -28,6 +28,7 @@ export interface ApiDefinition {
     downloadFileOrFolderInBucket: typeof routes['cloud_storage_s_3.download_file_or_folder_in_bucket']
     streamDownloadFileInBucketForLauncher: typeof routes['cloud_storage_s_3.stream_download_file_in_bucket_for_launcher']
     getPresignedDownloadUrlForLauncher: typeof routes['cloud_storage_s_3.get_presigned_download_url_for_launcher']
+    getPresignedDownloadUrlsForLauncher: typeof routes['cloud_storage_s_3.get_presigned_download_urls_for_launcher']
     deleteInBucketAndDb: typeof routes['cloud_storage_s_3.delete_in_bucket_and_db']
     getTotalSizeFileOrFolderInBucket: typeof routes['cloud_storage_s_3.get_total_size_file_or_folder_in_bucket']
     getFileContentInBucket: typeof routes['cloud_storage_s_3.get_file_content_in_bucket']

@@ -1,6 +1,11 @@
 ﻿import type { HttpContext } from '@adonisjs/core/http'
 import CloudStorageS3Service from '#services/cloud_storage_s3_service'
-import type { ExtendedBucket, ExtendedFile, BucketFileCommand } from '#services/cloud_storage_s3_service'
+import type {
+  ExtendedBucket,
+  ExtendedFile,
+  BucketFileCommand,
+  LauncherPresignedUrlEntry,
+} from '#services/cloud_storage_s3_service'
 import type { MultipartFile } from '@adonisjs/core/bodyparser'
 
 /**
@@ -77,6 +82,40 @@ export default class CloudStorageS3Controller {
       expiresIn: Math.max(60, Math.min(expiresIn, 3600)),
       bucketName: payload.bucketName,
       pathFilename: payload.pathFilename,
+    })
+  }
+
+  /**
+   * Retourne des URLs pre-signees de telechargement S3 pour le launcher en lot.
+   * @param {HttpContext} ctx
+   * @returns {Promise<void>}
+   */
+  public async getPresignedDownloadUrlsForLauncher({ request, response }: HttpContext): Promise<void> {
+    const payloadBucketName: string = request.input('bucketName')
+    const payloadPathFilenames: unknown = request.input('pathFilenames', [])
+    const expiresIn: number = Number(request.input('expiresIn')) || 900
+    const maxBatchSize: number = 500
+
+    if (!payloadBucketName || !Array.isArray(payloadPathFilenames) || payloadPathFilenames.length === 0) {
+      response.status(400).json({ error: 'bucketName and non-empty pathFilenames[] are required' })
+      return
+    }
+
+    if (payloadPathFilenames.length > maxBatchSize) {
+      response.status(400).json({ error: `pathFilenames supports up to ${maxBatchSize} entries per request` })
+      return
+    }
+
+    const presignedUrls: LauncherPresignedUrlEntry[] = await CloudStorageS3Service.getPresignedDownloadUrlsForLauncher(
+      payloadBucketName,
+      payloadPathFilenames as string[],
+      expiresIn,
+    )
+
+    response.status(200).json({
+      bucketName: payloadBucketName,
+      expiresIn: Math.max(60, Math.min(expiresIn, 3600)),
+      urls: presignedUrls,
     })
   }
 

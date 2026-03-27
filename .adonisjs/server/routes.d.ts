@@ -25,6 +25,7 @@ export type ScannedRoutes = {
     'cloud_storage_s_3.download_file_or_folder_in_bucket': { paramsTuple?: []; params?: {} }
     'cloud_storage_s_3.stream_download_file_in_bucket_for_launcher': { paramsTuple?: []; params?: {} }
     'cloud_storage_s_3.get_presigned_download_url_for_launcher': { paramsTuple?: []; params?: {} }
+    'cloud_storage_s_3.get_presigned_download_urls_for_launcher': { paramsTuple?: []; params?: {} }
     'cloud_storage_s_3.delete_in_bucket_and_db': { paramsTuple?: []; params?: {} }
     'cloud_storage_s_3.get_total_size_file_or_folder_in_bucket': { paramsTuple?: []; params?: {} }
     'cloud_storage_s_3.get_file_content_in_bucket': { paramsTuple?: []; params?: {} }
@@ -255,6 +256,7 @@ export type ScannedRoutes = {
     'carousel.create_carousel': { paramsTuple?: []; params?: {} }
     'cloud_storage_s_3.get_list_files_object_in_bucket': { paramsTuple?: []; params?: {} }
     'cloud_storage_s_3.upload_file_or_folder_in_bucket': { paramsTuple?: []; params?: {} }
+    'cloud_storage_s_3.get_presigned_download_urls_for_launcher': { paramsTuple?: []; params?: {} }
     'cloud_storage_s_3.delete_in_bucket_and_db': { paramsTuple?: []; params?: {} }
     'cloud_storage_s_3.get_total_size_file_or_folder_in_bucket': { paramsTuple?: []; params?: {} }
     'cloud_storage_s_3.get_file_content_in_bucket': { paramsTuple?: []; params?: {} }

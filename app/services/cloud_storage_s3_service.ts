@@ -113,6 +113,17 @@ export type ExtendedFile = {
 }
 
 /**
+ * ReprÃ©sente une URL pre-signee associee a un chemin de fichier
+ * @typedef {object} LauncherPresignedUrlEntry
+ * @property {string} pathFilename - Le chemin complet du fichier dans le bucket
+ * @property {string} url - L'URL pre-signee
+ */
+export type LauncherPresignedUrlEntry = {
+  pathFilename: string
+  url: string
+}
+
+/**
  * Service pour gérer les opérations de stockage dans un bucket S3
  */
 export default class CloudStorageS3Service {
@@ -617,6 +628,53 @@ export default class CloudStorageS3Service {
     })
 
     return await getSignedUrl(s3Client, command, { expiresIn: normalizedExpiresIn })
+  }
+
+  /**
+   * GÃ©nÃ¨re des URLs prÃ©-signÃ©es de tÃ©lÃ©chargement pour le launcher en lot.
+   * Cette mÃ©thode rÃ©duit le nombre d'aller-retours HTTP entre launcher et backend.
+   * @param {string} bucketName - Nom du bucket S3
+   * @param {string[]} pathFilenames - Liste des chemins complets des objets dans S3
+   * @param {number} [expiresIn=900] - DurÃ©e de validitÃ© des URLs en secondes
+   * @returns {Promise<LauncherPresignedUrlEntry[]>} - Liste des URLs prÃ©-signÃ©es par fichier
+   */
+  public static async getPresignedDownloadUrlsForLauncher(
+    bucketName: string,
+    pathFilenames: string[],
+    expiresIn: number = PRESIGNED_URL_DEFAULT_EXPIRATION_SECONDS,
+  ): Promise<LauncherPresignedUrlEntry[]> {
+    const normalizedExpiresIn: number = Math.max(
+      PRESIGNED_URL_MIN_EXPIRATION_SECONDS,
+      Math.min(expiresIn, PRESIGNED_URL_MAX_EXPIRATION_SECONDS),
+    )
+
+    const sanitizedPathFilenames: string[] = [
+      ...new Set(
+        pathFilenames
+          .map((pathFilename: string): string => pathFilename.trim())
+          .filter((pathFilename: string): boolean => pathFilename.length > 0),
+      ),
+    ]
+
+    if (sanitizedPathFilenames.length === 0) {
+      return []
+    }
+
+    return await Promise.all(
+      sanitizedPathFilenames.map(async (pathFilename: string): Promise<LauncherPresignedUrlEntry> => {
+        const command: GetObjectCommand = new GetObjectCommand({
+          Bucket: bucketName,
+          Key: pathFilename,
+        })
+
+        const signedUrl: string = await getSignedUrl(s3Client, command, { expiresIn: normalizedExpiresIn })
+
+        return {
+          pathFilename: pathFilename,
+          url: signedUrl,
+        }
+      }),
+    )
   }
 
   /**

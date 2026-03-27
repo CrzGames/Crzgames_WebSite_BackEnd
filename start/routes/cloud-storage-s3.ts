@@ -22,6 +22,9 @@ router
   .get('/cloud-storage-s3/launcher/presign', [controllers.CloudStorageS3, 'getPresignedDownloadUrlForLauncher'])
   .use(middleware.auth())
 router
+  .post('/cloud-storage-s3/launcher/presign/batch', [controllers.CloudStorageS3, 'getPresignedDownloadUrlsForLauncher'])
+  .use(middleware.auth())
+router
   .post('/cloud-storage-s3/delete', [controllers.CloudStorageS3, 'deleteInBucketAndDB'])
   .use(middleware.authRole([UserRoles.STAFF, UserRoles.ADMIN]))
 router
