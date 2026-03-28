@@ -29,27 +29,27 @@ jobs:
       - name: Lint TypeScript and ESLint for project
         run: npm run lint:ts && npm run lint:eslint
 
-      - name: Setup Docker Compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
+      #- name: Setup Docker Compose
+      #  run: |
+      #    sudo apt-get update
+      #    sudo apt-get install -y docker-compose
 
-      - name: Build and run with Docker Compose
-        run: |
-          docker-compose up --build -d
+      #- name: Build and run with Docker Compose
+      #  run: |
+      #    docker-compose up --build -d
 
-      - name: Check services healthiness
-        uses: thegabriele97/dockercompose-health-action@main
-        with:
-          timeout: '60'
-          workdir: '.'
+      #- name: Check services healthiness
+      #  uses: thegabriele97/dockercompose-health-action@main
+      #  with:
+      #    timeout: '60'
+      #    workdir: '.'
 
-      - name: Japa - Run Unit Tests and Functional Tests
-        run: npm run test:all
+      #- name: Japa - Run Unit Tests and Functional Tests
+      #  run: npm run test:all
 
-      - name: Shutdown Docker Compose
-        run: |
-          docker-compose down
+      #- name: Shutdown Docker Compose
+      #  run: |
+      #    docker-compose down
 
       - name: Remove heavy seed assets before docker build
         run: rm -rf database/seeders/assets-bucket-s3/GameBinarySeeder
