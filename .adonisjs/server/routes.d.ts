@@ -120,6 +120,9 @@ export type ScannedRoutes = {
     'users.update_users': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.delete_users': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.update_users_role': { paramsTuple: [ParamValue,ParamValue]; params: {'userId': ParamValue,'roleId': ParamValue} }
+    'event_stream': { paramsTuple?: []; params?: {} }
+    'subscribe': { paramsTuple?: []; params?: {} }
+    'unsubscribe': { paramsTuple?: []; params?: {} }
   }
   GET: {
     'health': { paramsTuple?: []; params?: {} }
@@ -181,6 +184,7 @@ export type ScannedRoutes = {
     'users.get_users_by_id': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.get_all_users': { paramsTuple?: []; params?: {} }
     'users.get_all_users_by_username_or_email': { paramsTuple: [ParamValue]; params: {'usernameOrEmail': ParamValue} }
+    'event_stream': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
     'health': { paramsTuple?: []; params?: {} }
@@ -242,6 +246,7 @@ export type ScannedRoutes = {
     'users.get_users_by_id': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.get_all_users': { paramsTuple?: []; params?: {} }
     'users.get_all_users_by_username_or_email': { paramsTuple: [ParamValue]; params: {'usernameOrEmail': ParamValue} }
+    'event_stream': { paramsTuple?: []; params?: {} }
   }
   POST: {
     'auth.sign_up': { paramsTuple?: []; params?: {} }
@@ -278,6 +283,8 @@ export type ScannedRoutes = {
     'ticket_responses.create_ticket_responses': { paramsTuple?: []; params?: {} }
     'tickets.create_tickets': { paramsTuple?: []; params?: {} }
     'user_game_libraries.add_game_to_user_game_libraries': { paramsTuple?: []; params?: {} }
+    'subscribe': { paramsTuple?: []; params?: {} }
+    'unsubscribe': { paramsTuple?: []; params?: {} }
   }
   PUT: {
     'carousel.update_carousel': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }

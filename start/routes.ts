@@ -1,4 +1,7 @@
 import router from '@adonisjs/core/services/router'
+import transmit from '@adonisjs/transmit/services/main'
+import { middleware } from '#start/kernel'
+import type { Route } from '@adonisjs/core/http'
 
 /**
  * Routes système
@@ -41,6 +44,17 @@ import './routes/ticket-statuses.js'
 import './routes/user-game-libraries.js'
 import './routes/user-roles.js'
 import './routes/users.js'
+
+/**
+ * Routes Transmit (SSE)
+ */
+transmit.registerRoutes((route: Route<any>): void => {
+  // EventSource (GET /__transmit/events) ne peut pas envoyer le header Authorization.
+  // On protege uniquement subscribe/unsubscribe qui passent via fetch avec header Bearer.
+  if (route.getPattern() !== '__transmit/events') {
+    route.middleware(middleware.auth())
+  }
+})
 
 /**
  * Cette route est utilisée pour tester le fonctionnement de base de l'application.

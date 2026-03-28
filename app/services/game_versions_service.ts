@@ -5,6 +5,7 @@ import NotFoundException from '#exceptions/not_found_exception'
 import logger from '@adonisjs/core/services/logger'
 import InternalServerErrorException from '#exceptions/internal_server_error_exception'
 import { errors as lucidErrors } from '@adonisjs/lucid'
+import GameVersionsRealtimeService from '#services/game_versions_realtime_service'
 
 /**
  * Un service pour gérer les versions de jeux.
@@ -97,7 +98,9 @@ export default class GameVersionsService {
   ): Promise<GameVersion> {
     try {
       const game: Game = await Game.findOrFail(gameId)
-      return await game.related('gameVersions').create(gameVersionData)
+      const createdGameVersion: GameVersion = await game.related('gameVersions').create(gameVersionData)
+      await GameVersionsRealtimeService.broadcastLatestAvailableForGame(gameId)
+      return createdGameVersion
     } catch (error: any) {
       logger.error('createGameVersion error: ' + error.message)
 
@@ -197,11 +200,13 @@ export default class GameVersionsService {
   ): Promise<GameVersion> {
     try {
       const gameVersion: GameVersion = await this.getGameVersion(gameId, gameVersionId)
-      return gameVersion
+      const updatedGameVersion: GameVersion = await gameVersion
         .merge({
           isAvailable: updateDataForIsAvailable,
         })
         .save()
+      await GameVersionsRealtimeService.broadcastLatestAvailableForGame(gameId)
+      return updatedGameVersion
     } catch (error: any) {
       logger.error('updateGameVersion error: ' + error.message)
 
