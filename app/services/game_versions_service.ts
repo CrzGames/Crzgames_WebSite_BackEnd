@@ -99,7 +99,7 @@ export default class GameVersionsService {
     try {
       const game: Game = await Game.findOrFail(gameId)
       const createdGameVersion: GameVersion = await game.related('gameVersions').create(gameVersionData)
-      await GameVersionsRealtimeService.broadcastLatestAvailableForGame(gameId)
+      await GameVersionsRealtimeService.broadcastIfAvailable(createdGameVersion)
       return createdGameVersion
     } catch (error: any) {
       logger.error('createGameVersion error: ' + error.message)
@@ -205,7 +205,24 @@ export default class GameVersionsService {
           isAvailable: updateDataForIsAvailable,
         })
         .save()
-      await GameVersionsRealtimeService.broadcastLatestAvailableForGame(gameId)
+
+      if (updateDataForIsAvailable) {
+        await GameVersionsRealtimeService.broadcastIfAvailable(updatedGameVersion)
+      } else {
+        try {
+          const latestAvailableVersion: GameVersion = await this.getLatestAvailableVersion(gameId)
+          await GameVersionsRealtimeService.broadcastIfAvailable(latestAvailableVersion)
+        } catch (error: unknown) {
+          if (error instanceof NotFoundException) {
+            logger.info(`[SSE] No available version remains for gameId=${gameId}, nothing to broadcast`)
+          } else {
+            logger.warn(
+              `[SSE] Failed fallback broadcast for gameId=${gameId}: ${error instanceof Error ? error.message : String(error)}`,
+            )
+          }
+        }
+      }
+
       return updatedGameVersion
     } catch (error: any) {
       logger.error('updateGameVersion error: ' + error.message)
