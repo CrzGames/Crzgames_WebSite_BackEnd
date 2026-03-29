@@ -3,18 +3,13 @@
   "files": [
     {
       "name": ".DS_Store",
-      "hash": "3f4e7c953d6f4bb5aeb63854095e3902ef9b9ebc354ecda557456520a51e0561",
+      "hash": "e9c1d7322093034f2ddbc6bfe226084779b130c70b359d59adcf02e10fe0a776",
       "size": 6148
     },
     {
-      "name": "rc2d-game-template.app/Contents/CodeResources",
-      "hash": "c79492bf5ce0ad24c07b929ffb2ef235d93a05bae96364006e50139600b244ef",
-      "size": 1905
-    },
-    {
       "name": "rc2d-game-template.app/Contents/Info.plist",
-      "hash": "deaed7133d74f44386c5d53fd11a23b4e10d2738a800471023a8332a0d83d743",
-      "size": 2158
+      "hash": "89d49d981b93b0e2beb6c9d2cd809803e62dbb9b4601adc099139912b4d1558e",
+      "size": 2152
     },
     {
       "name": "rc2d-game-template.app/Contents/PkgInfo",
@@ -23,163 +18,203 @@
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libSDL3.0.dylib",
-      "hash": "7c7739405ad5a1c1ad93c0b06afcb1e0aeb5d495d1e761c7bff7afb9b28f7774",
-      "size": 2913632
+      "hash": "e4348b89b7fb295f04b4b54e4c274421ec4a0cc79ef631375dec2bddc9fb5dc4",
+      "size": 2878208
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libSDL3.dylib",
-      "hash": "7c7739405ad5a1c1ad93c0b06afcb1e0aeb5d495d1e761c7bff7afb9b28f7774",
-      "size": 2913632
+      "hash": "1a71cfc7237d11c9438a85e4ac563a3e54a63fee0a378530659fc49793bcd7fa",
+      "size": 2878208
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libSDL3_image.0.5.0.dylib",
-      "hash": "7e50eab4c4b71c0042bd4cc6eabb37cdb34f8739aa5c97b576a6211556215633",
-      "size": 219312
+      "hash": "b61817a19d55855faa02cc1bbbc29fcf361a3bf74e94b373dedd03293ac07979",
+      "size": 219328
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libSDL3_image.0.dylib",
-      "hash": "7e50eab4c4b71c0042bd4cc6eabb37cdb34f8739aa5c97b576a6211556215633",
-      "size": 219312
+      "hash": "8f37aed32540dc9694487651b88a3ba381c9db48461041cbe8adc9d43a53fb76",
+      "size": 219328
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libSDL3_image.dylib",
-      "hash": "7e50eab4c4b71c0042bd4cc6eabb37cdb34f8739aa5c97b576a6211556215633",
-      "size": 219312
+      "hash": "7b319422fb1f3de666dad78ad088e8af3e91529dc7185eec494c75992d006bf2",
+      "size": 219328
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libSDL3_mixer.0.3.0.dylib",
-      "hash": "bc04d8c449199fb18f6306c4393b5b9d50ef1567fd0fdb94378c76e0661a2a3f",
+      "hash": "50771b98c0068c76645145d9f6786aa705e080afc43d8ae4a9b03af74d9c3297",
       "size": 134560
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libSDL3_mixer.0.dylib",
-      "hash": "bc04d8c449199fb18f6306c4393b5b9d50ef1567fd0fdb94378c76e0661a2a3f",
+      "hash": "691edf5993221f6d22e80f97779431501f6846d3f2281e2cd4137b9af4eda764",
       "size": 134560
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libSDL3_mixer.dylib",
-      "hash": "bc04d8c449199fb18f6306c4393b5b9d50ef1567fd0fdb94378c76e0661a2a3f",
+      "hash": "3cb956b64649e90f245c6e9f53ced4037924583974de12d39107471d1e930116",
       "size": 134560
     },
     {
+      "name": "rc2d-game-template.app/Contents/Frameworks/libSDL3_shadercross.0.0.0.dylib",
+      "hash": "5aedbe34d7bc88df131f11a4c319e44569f85a15007a6b0576f18c2d3bd993b8",
+      "size": 89792
+    },
+    {
+      "name": "rc2d-game-template.app/Contents/Frameworks/libSDL3_shadercross.0.dylib",
+      "hash": "886a944457357800e486acdbb63ace3f1dd00ff9d435b29a660f58a014f82bd4",
+      "size": 89792
+    },
+    {
+      "name": "rc2d-game-template.app/Contents/Frameworks/libSDL3_shadercross.dylib",
+      "hash": "2137a0811ea300c6ec3dbb20be39ab06d527a0af843e98b3fb55ef89f52dd3d4",
+      "size": 89792
+    },
+    {
       "name": "rc2d-game-template.app/Contents/Frameworks/libSDL3_ttf.0.3.0.dylib",
-      "hash": "0a792642613f515f231d78d90f94c9ff8751355b4d1199ba56749619feab92f5",
-      "size": 2342336
+      "hash": "8e372cf93921c62b133ba1239f8c6d0e48b24ac998b7ab1efc88f20a95e87caa",
+      "size": 2364272
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libSDL3_ttf.0.dylib",
-      "hash": "0a792642613f515f231d78d90f94c9ff8751355b4d1199ba56749619feab92f5",
-      "size": 2342336
+      "hash": "c3e066240f9efc6453d63259b860df2e822e34e9d30ec725926ff3348b5b40c2",
+      "size": 2364272
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libSDL3_ttf.dylib",
-      "hash": "0a792642613f515f231d78d90f94c9ff8751355b4d1199ba56749619feab92f5",
-      "size": 2342336
+      "hash": "1077ae305d21d2951abee3a66a96cfb56c6e625bb8464419dea47ec2450bfa35",
+      "size": 2364272
+    },
+    {
+      "name": "rc2d-game-template.app/Contents/Frameworks/libdxcompiler.dylib",
+      "hash": "48af90302645baa4c3359f800e9a5dfa06739a52c90fa3e70a40d5cd4ff79408",
+      "size": 27158192
+    },
+    {
+      "name": "rc2d-game-template.app/Contents/Frameworks/libdxil.dylib",
+      "hash": "b2dbcfa5f16736feb270f9d1de46521f5183c2bc20b429a299efdedd93889726",
+      "size": 2014816
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libogg.0.8.5.dylib",
-      "hash": "bf31bdcedc89b883d6bf4cc21d2600e88e50adcfd7c9928144ea6089e7f6d681",
+      "hash": "e979536b7e8e4048eb4fa851378ace0e0f6faf705c4e72061fc79ad7b5005e1c",
       "size": 71840
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libogg.0.dylib",
-      "hash": "bf31bdcedc89b883d6bf4cc21d2600e88e50adcfd7c9928144ea6089e7f6d681",
+      "hash": "e82c1376128c075010cc73f69846a391a78e53e8fbf615cfec19eebaed41b26d",
       "size": 71840
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libogg.dylib",
-      "hash": "bf31bdcedc89b883d6bf4cc21d2600e88e50adcfd7c9928144ea6089e7f6d681",
+      "hash": "abef17df22b57f8600ac4a2671e47784d2ba110703090964a0136ebd7a92c691",
       "size": 71840
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libonnxruntime.1.24.1.dylib",
-      "hash": "fbcf525657c120290eea47aed19f1946c4aa6f01884bf2cfb166dc8b21990bae",
+      "hash": "02478587b19504e58ca34787e994d4c2dbb55726c6d873c4cb9b478d2bc8b005",
       "size": 26391280
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libonnxruntime.dylib",
-      "hash": "b291d4ea6568f00d15d07fd2ee672302e57e0206b4dfde74298d16500ddf8163",
+      "hash": "d9baf438659af7d561cb14d991986ee7d3211402cca6399ae38e2f779620f294",
       "size": 26391280
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libopus.0.9.0.dylib",
-      "hash": "f27f559239169708b3b153244b433630ac471c4fe87574c53e8c5fbced2083c7",
-      "size": 484544
+      "hash": "caf50afc02683d4616ec2eee2c23a6b812cba6bcee31108af242e1302b556e48",
+      "size": 484592
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libopus.0.dylib",
-      "hash": "f27f559239169708b3b153244b433630ac471c4fe87574c53e8c5fbced2083c7",
-      "size": 484544
+      "hash": "a87d7950ee8d102bbc16dd806c912363d0138423898d3c24dd60f81de828b158",
+      "size": 484592
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libopus.dylib",
-      "hash": "f27f559239169708b3b153244b433630ac471c4fe87574c53e8c5fbced2083c7",
-      "size": 484544
+      "hash": "6b266145cfa9881fbf2f3c33febde838555ec0d171384bfd07ac6e2e366adea7",
+      "size": 484576
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libopusfile.0.12.dylib",
-      "hash": "7f2a6702a0d7c60160978ff1bd1a7762689e9302ccd572e203b0de8c7435f14b",
-      "size": 92208
+      "hash": "5adffe2bd19f22ab1a1336eea9fec857a1cf10de5676b4821071d6d8057a6df1",
+      "size": 92256
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libopusfile.0.dylib",
-      "hash": "7f2a6702a0d7c60160978ff1bd1a7762689e9302ccd572e203b0de8c7435f14b",
-      "size": 92208
+      "hash": "bc423059e8d7ca6ab03cee32768ee1d46a08a783b22935bd81ead917b5d2ffb4",
+      "size": 92256
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libopusfile.dylib",
-      "hash": "7f2a6702a0d7c60160978ff1bd1a7762689e9302ccd572e203b0de8c7435f14b",
-      "size": 92208
+      "hash": "54244d497fecf45f08f88f3a4c4815f307fca81ebcea77141c0fda5515b8c9ab",
+      "size": 92256
     },
     {
-      "name": "rc2d-game-template.app/Contents/Frameworks/libpng16.16.55.0.dylib",
-      "hash": "75245b4ee9f1ad224f9e26410610010bdb77f4c464b297941d6f9372272e6709",
+      "name": "rc2d-game-template.app/Contents/Frameworks/libpng16.16.56.0.dylib",
+      "hash": "161818b030def04a9ed7b9d2fb804e8acc80efc135618017640aca36afb57c66",
       "size": 312784
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libpng16.16.dylib",
-      "hash": "75245b4ee9f1ad224f9e26410610010bdb77f4c464b297941d6f9372272e6709",
+      "hash": "cf0b3d03d19e5112c674395153210d1be486a1801f8b8dd94b971bbc5e0ed65e",
       "size": 312784
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libpng16.dylib",
-      "hash": "75245b4ee9f1ad224f9e26410610010bdb77f4c464b297941d6f9372272e6709",
+      "hash": "b42863f6368b1843a981f6d8bb6b1e7a4a759c0830a8d26ac4380b1e572a05cd",
       "size": 312784
     },
     {
+      "name": "rc2d-game-template.app/Contents/Frameworks/libspirv-cross-c-shared.0.64.0.dylib",
+      "hash": "1769d1679bfed5ed9d5f7d0b733ed98ba120079bb271b7e61bdbb77f59933cc1",
+      "size": 3276560
+    },
+    {
+      "name": "rc2d-game-template.app/Contents/Frameworks/libspirv-cross-c-shared.0.dylib",
+      "hash": "9285017a86dd11c5153bf77ae65503ef00f78ce3d2bc8ab1d0a720e0be52250c",
+      "size": 3276560
+    },
+    {
+      "name": "rc2d-game-template.app/Contents/Frameworks/libspirv-cross-c-shared.dylib",
+      "hash": "53baefba10490a63ea56b243529495cbe939c2b1b0d604b9d09bbe788a41b42c",
+      "size": 3276544
+    },
+    {
       "name": "rc2d-game-template.app/Contents/Frameworks/libvorbis.0.4.9.dylib",
-      "hash": "e23ab765beb0c0fac2ac0254cfd362186563bed43b3284544078970aefe05b20",
-      "size": 258896
+      "hash": "0114cb9e37b653ce3d0bbb3ef2c41dc9e9e7afcde2884b360f7e02ff8929c485",
+      "size": 258944
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libvorbis.0.dylib",
-      "hash": "e23ab765beb0c0fac2ac0254cfd362186563bed43b3284544078970aefe05b20",
-      "size": 258896
+      "hash": "b71ed224f9bf897fa5c3833a88552fa714cbf3389be7edbed33ceaf79a92228a",
+      "size": 258944
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libvorbis.dylib",
-      "hash": "e23ab765beb0c0fac2ac0254cfd362186563bed43b3284544078970aefe05b20",
-      "size": 258896
+      "hash": "a4ac6290ff1ab5dad01c0686fbf8d951af5c181a7f94fb8a2f160b3b957b2e25",
+      "size": 258944
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libvorbisfile.3.3.8.dylib",
-      "hash": "96240d537e5e2164bd19b0bcb574b470a43a5a25dfcb6d5b29b13da8abf5d112",
+      "hash": "32dfca837d19f51d192f6747607ab94213a661d9a99ba2f622d855564630b957",
       "size": 73440
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libvorbisfile.3.dylib",
-      "hash": "96240d537e5e2164bd19b0bcb574b470a43a5a25dfcb6d5b29b13da8abf5d112",
+      "hash": "c72f05825f962235ae3ddd7b04418ecfd9188b1b74def11bf35e350b19a9f373",
       "size": 73440
     },
     {
       "name": "rc2d-game-template.app/Contents/Frameworks/libvorbisfile.dylib",
-      "hash": "96240d537e5e2164bd19b0bcb574b470a43a5a25dfcb6d5b29b13da8abf5d112",
+      "hash": "47f840a3a8ae8951ad10ee4dc5d69dff7700b6ab4978846f9329d142626ed16e",
       "size": 73440
     },
     {
       "name": "rc2d-game-template.app/Contents/MacOS/rc2d-game-template",
-      "hash": "647c0c838895a18960d3f5f68adf483b21990e6ac9959b7d29e383eb7acdde12",
-      "size": 6015664
+      "hash": "612315d9c819701d3c7c675c8dad2ab95b65ab1e948ce92d6d100728291bcf64",
+      "size": 6016944
     },
     {
       "name": "rc2d-game-template.app/Contents/Resources/app-icon.icns",
@@ -188,8 +223,8 @@
     },
     {
       "name": "rc2d-game-template.app/Contents/Resources/version.txt",
-      "hash": "2b935f2c5f327e3634e40d939d234cc5d550d0838a0d18aa6579b5f326816c62",
-      "size": 22
+      "hash": "e9c0e3e1cd77d76f7a9a79a0250def33f571fab005ce13f32e676408be125256",
+      "size": 29
     },
     {
       "name": "rc2d-game-template.app/Contents/Resources/assets/atlas/elite24/elite24.json",
@@ -292,6 +327,26 @@
       "size": 17274
     },
     {
+      "name": "rc2d-game-template.app/Contents/Resources/assets/images/seatyrants_logo1.png",
+      "hash": "2cefad4621e21919f6f35c72b3a79c10870a546782c6d879963ef82f633e16b1",
+      "size": 405131
+    },
+    {
+      "name": "rc2d-game-template.app/Contents/Resources/assets/images/seatyrants_logo2.png",
+      "hash": "11fb66f57d35d2637a43a5c6b3c7514922ec634036ad6885231bbabbe5c4af21",
+      "size": 328662
+    },
+    {
+      "name": "rc2d-game-template.app/Contents/Resources/assets/images/seatyrants_logo3.png",
+      "hash": "12719008df06316856f4f00c430a5e7eaba52771f3aaec7d56060e861f64d0ac",
+      "size": 582825
+    },
+    {
+      "name": "rc2d-game-template.app/Contents/Resources/assets/images/seatyrants_logo4.png",
+      "hash": "680bc564294f79e06526ed3c5bd911caf0431c36317e0e27e5163cc4ac16c838",
+      "size": 571274
+    },
+    {
       "name": "rc2d-game-template.app/Contents/Resources/assets/images/tile-caustic.png",
       "hash": "9312ac534ccfe661f052e751693da00ff33fe477ffa1db6595d370e7ccdc1342",
       "size": 23073
@@ -327,6 +382,11 @@
       "size": 2402566
     },
     {
+      "name": "rc2d-game-template.app/Contents/Resources/assets/videos/SplashScreen_SeaTyrants.mp4",
+      "hash": "c1374fdf66ccfcf1d6bd5ae8463bf1a509a3749c4b6f0b3ea936ec65fcabd809",
+      "size": 10214069
+    },
+    {
       "name": "rc2d-game-template.app/Contents/Resources/assets/videos/SplashScreen_Studio_1080p.mp4",
       "hash": "0563fd3d09d3c36874514b2a4bcb20bdf50b132cbc95a328865c09e32f23bc3e",
       "size": 3172259
@@ -343,22 +403,22 @@
     },
     {
       "name": "rc2d-game-template.app/Contents/Resources/shaders/compiled/metallib/ios/fogofwar.fragment.metallib",
-      "hash": "0aed201cf570315ee6190698e5df772369e40702a235b3ff26a4b745425bde32",
+      "hash": "9ad5cd959554f587c7fd279aa7ff74936ddca1e495a2592306e5a816cd1eb9ab",
       "size": 4347
     },
     {
       "name": "rc2d-game-template.app/Contents/Resources/shaders/compiled/metallib/ios/water.fragment.metallib",
-      "hash": "66bae4a174826e440bbf09fd38afbd5802a6ed8cf70dfa4a52ff3aebff2418cf",
+      "hash": "ad5ddf51c374f614d436a62b9d98e1e2d8715cf7a84a8ef239cc82b94ca4827b",
       "size": 5035
     },
     {
       "name": "rc2d-game-template.app/Contents/Resources/shaders/compiled/metallib/macos/fogofwar.fragment.metallib",
-      "hash": "c061bbd04f82a0dcab131cde76f03c01e0029926dbe0477bbfba6e71fb0e263e",
+      "hash": "134aff35841091c6b66cfbd6edfa0cc7e9411390a86d1fd5a30c485c9dee8d4d",
       "size": 4363
     },
     {
       "name": "rc2d-game-template.app/Contents/Resources/shaders/compiled/metallib/macos/water.fragment.metallib",
-      "hash": "da7cb0a823565e6499f5b0c79cf34c6f2289ef69a66782d4720c89486729c0a0",
+      "hash": "396429d17ada1eb1750406df354b46305f8eee53c35bbdc1ae55d0d2653daf4d",
       "size": 5035
     },
     {
@@ -403,8 +463,8 @@
     },
     {
       "name": "rc2d-game-template.app/Contents/_CodeSignature/CodeResources",
-      "hash": "1cc4618efc3698522ae3935ad3adef59f4db847b7730d4ddb0d67543537dcad5",
-      "size": 22548
+      "hash": "9201da00862a5036b447411e0ac3dda308b330913ced54b0dc9d5fc1befc5d77",
+      "size": 34492
     }
   ]
 }
