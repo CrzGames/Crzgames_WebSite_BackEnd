@@ -58,6 +58,22 @@ const s3Client: S3Client = new S3Client({
   forcePathStyle: env.get('S3_BUCKET_FORCE_PATH_STYLE'),
 })
 
+const launcherPresignEndpoint: string =
+  (env.get('NODE_ENV') === 'development' || env.get('NODE_ENV') === 'test') &&
+  env.get('S3_BUCKET_ENDPOINT').includes('host.docker.internal')
+    ? env.get('S3_BUCKET_ENDPOINT').replace('host.docker.internal', 'localhost')
+    : env.get('S3_BUCKET_ENDPOINT')
+
+const s3LauncherPresignClient: S3Client = new S3Client({
+  credentials: {
+    accessKeyId: env.get('S3_BUCKET_ACCESS_KEY_ID'),
+    secretAccessKey: env.get('S3_BUCKET_SECRET_ACCESS_KEY'),
+  },
+  region: env.get('S3_BUCKET_REGION'),
+  endpoint: launcherPresignEndpoint,
+  forcePathStyle: env.get('S3_BUCKET_FORCE_PATH_STYLE'),
+})
+
 /**
  * Commande pour les opérations sur les fichiers dans le bucket
  * @typedef {object} BucketFileCommand
@@ -627,7 +643,7 @@ export default class CloudStorageS3Service {
       Key: pathFilename,
     })
 
-    return await getSignedUrl(s3Client, command, { expiresIn: normalizedExpiresIn })
+    return await getSignedUrl(s3LauncherPresignClient, command, { expiresIn: normalizedExpiresIn })
   }
 
   /**
@@ -667,7 +683,9 @@ export default class CloudStorageS3Service {
           Key: pathFilename,
         })
 
-        const signedUrl: string = await getSignedUrl(s3Client, command, { expiresIn: normalizedExpiresIn })
+        const signedUrl: string = await getSignedUrl(s3LauncherPresignClient, command, {
+          expiresIn: normalizedExpiresIn,
+        })
 
         return {
           pathFilename: pathFilename,
