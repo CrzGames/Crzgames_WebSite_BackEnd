@@ -130,19 +130,19 @@
 		</data>
 		<key>Resources/shaders/compiled/metallib/ios/fogofwar.fragment.metallib</key>
 		<data>
-		TX7mQlmjQqS5GAOrpKm8RaSiX8A=
+		4Jrin0lXjTFKU1zbmU8j3hyql3U=
 		</data>
 		<key>Resources/shaders/compiled/metallib/ios/water.fragment.metallib</key>
 		<data>
-		/CvqimfEzjKX1klJI6q2o+IV/JI=
+		98wDQAhersSmQJgg56yGjx5gFDs=
 		</data>
 		<key>Resources/shaders/compiled/metallib/macos/fogofwar.fragment.metallib</key>
 		<data>
-		y0dytcVXKVpcwRq2KMhVVag7RXc=
+		fcuug99T7OteUOLGiX0LZlUfLf0=
 		</data>
 		<key>Resources/shaders/compiled/metallib/macos/water.fragment.metallib</key>
 		<data>
-		EFuiT/X7UnXlc7XCmMWDiPVxvm8=
+		I09s5XJvTpwtuCOKA4yGG4vjFHE=
 		</data>
 		<key>Resources/shaders/compiled/msl/fogofwar.fragment.msl</key>
 		<data>
@@ -178,7 +178,7 @@
 		</data>
 		<key>Resources/version.txt</key>
 		<data>
-		GDzHJ8KgLicixfHyso4fcZFj8KY=
+		0J/fRMKJD22o2zSMxUD+5+bUl1M=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -187,91 +187,172 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			tuCTVL72215PT5Ti4KsUVk47oqw=
+			85MZwHgj/kkiLUqL/k/bccc3vt8=
 			</data>
 			<key>requirement</key>
 			<string>anchor apple generic and identifier libSDL3 and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libSDL3.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libSDL3.0.dylib</string>
+			<key>cdhash</key>
+			<data>
+			85MZwHgj/kkiLUqL/k/bccc3vt8=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier libSDL3 and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libSDL3_image.0.5.0.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			XjxREgqICXuj/6g0WgiDxcgx788=
+			ZCv6YSLZ00maMhIHu6dJMItjTKI=
 			</data>
 			<key>requirement</key>
 			<string>anchor apple generic and identifier "libSDL3_image.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libSDL3_image.0.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libSDL3_image.0.5.0.dylib</string>
+			<key>cdhash</key>
+			<data>
+			ZCv6YSLZ00maMhIHu6dJMItjTKI=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libSDL3_image.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libSDL3_image.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libSDL3_image.0.dylib</string>
+			<key>cdhash</key>
+			<data>
+			SQENbupYm+pAbS2lZDCLRo/WzEM=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libSDL3_image" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libSDL3_mixer.0.3.0.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			Mx3QZCru4OjKxrJdtpiZGBP8OIA=
+			EdoHdwdrOdTAoCkfktY9YyqYg14=
 			</data>
 			<key>requirement</key>
 			<string>anchor apple generic and identifier "libSDL3_mixer.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libSDL3_mixer.0.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libSDL3_mixer.0.3.0.dylib</string>
+			<key>cdhash</key>
+			<data>
+			EdoHdwdrOdTAoCkfktY9YyqYg14=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libSDL3_mixer.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libSDL3_mixer.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libSDL3_mixer.0.dylib</string>
+			<key>cdhash</key>
+			<data>
+			rcnUnlwuPa6yLcBKf0luePjKZq0=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libSDL3_mixer" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
+		</dict>
+		<key>Frameworks/libSDL3_shadercross.0.0.0.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			AoH1GoOBfW/1NozJQfXeZ7BiYsg=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libSDL3_shadercross.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
+		</dict>
+		<key>Frameworks/libSDL3_shadercross.0.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			AoH1GoOBfW/1NozJQfXeZ7BiYsg=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libSDL3_shadercross.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
+		</dict>
+		<key>Frameworks/libSDL3_shadercross.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			O8q0qHSCe1vIOBOkYHsPoQmPgX8=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libSDL3_shadercross" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libSDL3_ttf.0.3.0.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			eUc6rJdhX1T2GqcUx2w95rbsgnU=
+			kAlbgU5L7vVfCGuxtaRSTpJ3VBE=
 			</data>
 			<key>requirement</key>
 			<string>anchor apple generic and identifier "libSDL3_ttf.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libSDL3_ttf.0.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libSDL3_ttf.0.3.0.dylib</string>
+			<key>cdhash</key>
+			<data>
+			kAlbgU5L7vVfCGuxtaRSTpJ3VBE=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libSDL3_ttf.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libSDL3_ttf.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libSDL3_ttf.0.dylib</string>
+			<key>cdhash</key>
+			<data>
+			G+09cBSpm9qPRS1vIarNTIJ/IA0=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libSDL3_ttf" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
+		</dict>
+		<key>Frameworks/libdxcompiler.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			rXKfam0QlbjIJD7Rj4190xV6eyo=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier libdxcompiler and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
+		</dict>
+		<key>Frameworks/libdxil.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			uekvS6vU1AgeM2NQOSsPgPs0UWw=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier libdxil and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libogg.0.8.5.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			gUozEc7umDEzF0H9iHdw59IbTWs=
+			d98+x9//JH5oazmwSYYiucBYJN8=
 			</data>
 			<key>requirement</key>
 			<string>anchor apple generic and identifier "libogg.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libogg.0.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libogg.0.8.5.dylib</string>
+			<key>cdhash</key>
+			<data>
+			d98+x9//JH5oazmwSYYiucBYJN8=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libogg.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libogg.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libogg.0.dylib</string>
+			<key>cdhash</key>
+			<data>
+			sWXBwwLTe50DmKhX28g0ndel5K0=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier libogg and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libonnxruntime.1.24.1.dylib</key>
 		<dict>
@@ -295,96 +376,163 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			JwmzOMdJwWYABB2mHVgk55dgPYs=
+			zZAkI/y+kmcP5Tg+9VoL0GwHrm0=
 			</data>
 			<key>requirement</key>
 			<string>anchor apple generic and identifier "libopus.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libopus.0.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libopus.0.9.0.dylib</string>
+			<key>cdhash</key>
+			<data>
+			zZAkI/y+kmcP5Tg+9VoL0GwHrm0=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libopus.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libopus.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libopus.0.dylib</string>
+			<key>cdhash</key>
+			<data>
+			c6mJXj8pL5Y4ATEw3bvgSgNZ9Aw=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier libopus and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libopusfile.0.12.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			6ZKO9vVFzpQSQ5pqKcOY4g7QRt8=
+			Rpi9dYKB5aUJdr/mp8Cvgl1D5J8=
 			</data>
 			<key>requirement</key>
 			<string>anchor apple generic and identifier "libopusfile.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libopusfile.0.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libopusfile.0.12.dylib</string>
+			<key>cdhash</key>
+			<data>
+			Rpi9dYKB5aUJdr/mp8Cvgl1D5J8=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libopusfile.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libopusfile.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libopusfile.0.dylib</string>
+			<key>cdhash</key>
+			<data>
+			I3aF+siATBozAJrRMvAeh80UOhs=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier libopusfile and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
-		<key>Frameworks/libpng16.16.55.0.dylib</key>
+		<key>Frameworks/libpng16.16.56.0.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			eJOL9OsLVQl9TYlpDwm9UD5SCVU=
+			u2m72yQM4T8iVaIbGeC1xtN9734=
 			</data>
 			<key>requirement</key>
 			<string>anchor apple generic and identifier libpng16 and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libpng16.16.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libpng16.16.55.0.dylib</string>
+			<key>cdhash</key>
+			<data>
+			u2m72yQM4T8iVaIbGeC1xtN9734=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier libpng16 and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libpng16.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libpng16.16.dylib</string>
+			<key>cdhash</key>
+			<data>
+			u2m72yQM4T8iVaIbGeC1xtN9734=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier libpng16 and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
+		</dict>
+		<key>Frameworks/libspirv-cross-c-shared.0.64.0.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			VSRQVRuFHC1u97A5S/DZGb7GpPM=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libspirv-cross-c-shared.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
+		</dict>
+		<key>Frameworks/libspirv-cross-c-shared.0.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			VSRQVRuFHC1u97A5S/DZGb7GpPM=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libspirv-cross-c-shared.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
+		</dict>
+		<key>Frameworks/libspirv-cross-c-shared.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			pDqjb0komuMc1Eiw2xJ8XfrBYMo=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libspirv-cross-c-shared" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libvorbis.0.4.9.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			rY+Vuxu+HoWE6Mwbxs/58naJTvc=
+			fTq3oDSZuDFzUPl3PA9gRSkLRzA=
 			</data>
 			<key>requirement</key>
 			<string>anchor apple generic and identifier "libvorbis.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libvorbis.0.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libvorbis.0.4.9.dylib</string>
+			<key>cdhash</key>
+			<data>
+			fTq3oDSZuDFzUPl3PA9gRSkLRzA=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libvorbis.0" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libvorbis.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libvorbis.0.dylib</string>
+			<key>cdhash</key>
+			<data>
+			Kyp6rIzo7x84L8WPhJ1LR539c9Y=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier libvorbis and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libvorbisfile.3.3.8.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			68Cz0kdITMg+ZDwHV/7q8vJ3Uro=
+			viu/lIqB5GXlEORZXe3C9rIPnMA=
 			</data>
 			<key>requirement</key>
 			<string>anchor apple generic and identifier "libvorbisfile.3" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libvorbisfile.3.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libvorbisfile.3.3.8.dylib</string>
+			<key>cdhash</key>
+			<data>
+			viu/lIqB5GXlEORZXe3C9rIPnMA=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "libvorbisfile.3" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Frameworks/libvorbisfile.dylib</key>
 		<dict>
-			<key>symlink</key>
-			<string>libvorbisfile.3.dylib</string>
+			<key>cdhash</key>
+			<data>
+			bAhelKRH2eU4o794uXhbL18y/aI=
+			</data>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier libvorbisfile and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U3D28WJ8DV)</string>
 		</dict>
 		<key>Resources/app-icon.icns</key>
 		<dict>
@@ -607,28 +755,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Cu0gHPVwMV7mGQaY5d93I2nkBwKiNbP/JqS3RUJb3jI=
+			mtXNlZVU9YfH/Seap/90k23coeSVolkjBuWoFs0euas=
 			</data>
 		</dict>
 		<key>Resources/shaders/compiled/metallib/ios/water.fragment.metallib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZrrkoXSCbkQLvwn9OK+9WAKm7Yz3DfpKUv866/8kGM8=
+			rV3fUcN09hTUNqYrnZjh4thxXPeoSo7yOcyCuUykgns=
 			</data>
 		</dict>
 		<key>Resources/shaders/compiled/metallib/macos/fogofwar.fragment.metallib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wGG70E+CoNyrExzedvA8AeACmSbb4Ed7v7pucfsOJj4=
+			E0r/NYQQkca2bPvW7foMx+lBE5CobR/VowxIXJ3ujU0=
 			</data>
 		</dict>
 		<key>Resources/shaders/compiled/metallib/macos/water.fragment.metallib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2nywqCNWXmSZ9bDHnPNMbyKJ72mmZ4LUcgyJSGcpwKA=
+			OWQp0XraHrF1BAbfNUtGMF+O7lPDW73BrlXQ0mU9r00=
 			</data>
 		</dict>
 		<key>Resources/shaders/compiled/msl/fogofwar.fragment.msl</key>
@@ -691,7 +839,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			K5NfLF8yfjY05A2TnSNMxdVQ0IOKDRiqZXm18yaBbGI=
+			6cDj4c131296mnmgJQ3vM/Vx+rAFzhPzLmdkCL4SUlY=
 			</data>
 		</dict>
 	</dict>
