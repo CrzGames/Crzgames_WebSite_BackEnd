@@ -36,11 +36,6 @@ const mailConfig = defineConfig({
       host: env.get('SMTP_HOST'),
       port: env.get('SMTP_PORT'),
       secure: false,
-      auth: {
-        type: 'login',
-        user: env.get('SMTP_USERNAME'),
-        pass: env.get('SMTP_PASSWORD'),
-      },
     }),
 
     resend: transports.resend({

@@ -54,8 +54,6 @@ export default await Env.create(new URL('../', import.meta.url), {
   SEATYRANTSxCRZGAMES_API_KEY_SECRET: Env.schema.string(),
   SMTP_HOST: Env.schema.string({ format: 'host' }),
   SMTP_PORT: Env.schema.number(),
-  SMTP_USERNAME: Env.schema.string(),
-  SMTP_PASSWORD: Env.schema.string(),
   MAIL_MAILER: Env.schema.enum(['smtp', 'resend'] as const),
   MAIL_FROM_NAME: Env.schema.string(),
   MAIL_FROM_ADDRESS: Env.schema.string(),

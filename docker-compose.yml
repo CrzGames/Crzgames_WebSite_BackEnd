@@ -110,15 +110,11 @@ services:
 
   mailhog:
     container_name: mailhog
-    image: mailhog/mailhog
-    logging:
-      driver: 'none' # disable saving logs
-    environment:
-      - MH_USERNAME=fakeusername
-      - MH_PASSWORD=fakepassword
+    image: axllent/mailpit:latest
+    restart: always
     ports:
-      - '1025:1025' # smtp server
-      - '8025:8025' # web ui
+      - '1025:1025'
+      - '8025:8025'
     networks:
       - app-network
 
