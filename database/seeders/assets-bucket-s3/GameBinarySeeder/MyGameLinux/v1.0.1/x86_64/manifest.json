@@ -1,0 +1,395 @@
+{
+  "version": "v1.0.1",
+  "files": [
+    {
+      "name": ".DS_Store",
+      "hash": "9648b0b153f7b7f221a57e7e6bbbb3d3cab34c6ffd8f0644ae14dac8560103d7",
+      "size": 8196
+    },
+    {
+      "name": "app-icon.png",
+      "hash": "47fba936dd5ffd6a46b90484649db19b1d89871597adf8e88a116cc924db1548",
+      "size": 77001
+    },
+    {
+      "name": "libSDL3.so",
+      "hash": "678126640f8328f98ae984c725dd5af1db83df030d878a3e69c2ecf04fbfca7f",
+      "size": 4229448
+    },
+    {
+      "name": "libSDL3.so.0",
+      "hash": "678126640f8328f98ae984c725dd5af1db83df030d878a3e69c2ecf04fbfca7f",
+      "size": 4229448
+    },
+    {
+      "name": "libSDL3.so.0.5.0",
+      "hash": "678126640f8328f98ae984c725dd5af1db83df030d878a3e69c2ecf04fbfca7f",
+      "size": 4229448
+    },
+    {
+      "name": "libSDL3_image.so",
+      "hash": "99f5b9eec72101ae5729cdd7d3efc3b214481822ba8577e463e12a4ce16b8a23",
+      "size": 204272
+    },
+    {
+      "name": "libSDL3_image.so.0",
+      "hash": "99f5b9eec72101ae5729cdd7d3efc3b214481822ba8577e463e12a4ce16b8a23",
+      "size": 204272
+    },
+    {
+      "name": "libSDL3_image.so.0.5.0",
+      "hash": "99f5b9eec72101ae5729cdd7d3efc3b214481822ba8577e463e12a4ce16b8a23",
+      "size": 204272
+    },
+    {
+      "name": "libSDL3_mixer.so",
+      "hash": "907bec87565534f0a40fb4148393d61d6118525447d02e0b596df3718e9adcae",
+      "size": 135064
+    },
+    {
+      "name": "libSDL3_mixer.so.0",
+      "hash": "907bec87565534f0a40fb4148393d61d6118525447d02e0b596df3718e9adcae",
+      "size": 135064
+    },
+    {
+      "name": "libSDL3_mixer.so.0.3.0",
+      "hash": "907bec87565534f0a40fb4148393d61d6118525447d02e0b596df3718e9adcae",
+      "size": 135064
+    },
+    {
+      "name": "libSDL3_ttf.so",
+      "hash": "7cf5a6a24025541f1699077a369e978031b48d94a9372efcf5ccbd7b173d3d62",
+      "size": 2759960
+    },
+    {
+      "name": "libSDL3_ttf.so.0",
+      "hash": "7cf5a6a24025541f1699077a369e978031b48d94a9372efcf5ccbd7b173d3d62",
+      "size": 2759960
+    },
+    {
+      "name": "libSDL3_ttf.so.0.3.0",
+      "hash": "7cf5a6a24025541f1699077a369e978031b48d94a9372efcf5ccbd7b173d3d62",
+      "size": 2759960
+    },
+    {
+      "name": "libogg.so",
+      "hash": "e49b5f25cd2a252f03864b05c1c237cdcdd4c57586177139426b8fb54afd0926",
+      "size": 47904
+    },
+    {
+      "name": "libogg.so.0",
+      "hash": "e49b5f25cd2a252f03864b05c1c237cdcdd4c57586177139426b8fb54afd0926",
+      "size": 47904
+    },
+    {
+      "name": "libogg.so.0.8.5",
+      "hash": "e49b5f25cd2a252f03864b05c1c237cdcdd4c57586177139426b8fb54afd0926",
+      "size": 47904
+    },
+    {
+      "name": "libonnxruntime.so",
+      "hash": "0d862c9d738939f410152a62e32542ead6eede9345b8292cbb34c50e6f3d33b1",
+      "size": 29823272
+    },
+    {
+      "name": "libonnxruntime.so.1",
+      "hash": "0d862c9d738939f410152a62e32542ead6eede9345b8292cbb34c50e6f3d33b1",
+      "size": 29823272
+    },
+    {
+      "name": "libonnxruntime.so.1.24.1",
+      "hash": "0d862c9d738939f410152a62e32542ead6eede9345b8292cbb34c50e6f3d33b1",
+      "size": 29823272
+    },
+    {
+      "name": "libopus.so",
+      "hash": "3e8877b14cfe5f078ddeafbf60a7ce332edb47917beed2c70fbfd3959c13f861",
+      "size": 566704
+    },
+    {
+      "name": "libopus.so.0",
+      "hash": "3e8877b14cfe5f078ddeafbf60a7ce332edb47917beed2c70fbfd3959c13f861",
+      "size": 566704
+    },
+    {
+      "name": "libopus.so.0.9.0",
+      "hash": "3e8877b14cfe5f078ddeafbf60a7ce332edb47917beed2c70fbfd3959c13f861",
+      "size": 566704
+    },
+    {
+      "name": "libopusfile.so",
+      "hash": "37013622ac0ff1e32f033cba433499bd6218fb4852849b97e1a00c8eb8b2db33",
+      "size": 66424
+    },
+    {
+      "name": "libopusfile.so.0",
+      "hash": "37013622ac0ff1e32f033cba433499bd6218fb4852849b97e1a00c8eb8b2db33",
+      "size": 66424
+    },
+    {
+      "name": "libopusfile.so.0.12",
+      "hash": "37013622ac0ff1e32f033cba433499bd6218fb4852849b97e1a00c8eb8b2db33",
+      "size": 66424
+    },
+    {
+      "name": "libpng16.so",
+      "hash": "a4f31938cbce7ed26e17dc8e8e2151b7d696da70b9ea9057729427b2ce73d663",
+      "size": 379440
+    },
+    {
+      "name": "libpng16.so.16",
+      "hash": "a4f31938cbce7ed26e17dc8e8e2151b7d696da70b9ea9057729427b2ce73d663",
+      "size": 379440
+    },
+    {
+      "name": "libpng16.so.16.56.0",
+      "hash": "a4f31938cbce7ed26e17dc8e8e2151b7d696da70b9ea9057729427b2ce73d663",
+      "size": 379440
+    },
+    {
+      "name": "libvorbis.so",
+      "hash": "39f689fe57b77c41c4a082f38879728b3efa05e7206c9d98568781caad89e91a",
+      "size": 255360
+    },
+    {
+      "name": "libvorbis.so.0",
+      "hash": "39f689fe57b77c41c4a082f38879728b3efa05e7206c9d98568781caad89e91a",
+      "size": 255360
+    },
+    {
+      "name": "libvorbis.so.0.4.9",
+      "hash": "39f689fe57b77c41c4a082f38879728b3efa05e7206c9d98568781caad89e91a",
+      "size": 255360
+    },
+    {
+      "name": "libvorbisfile.so",
+      "hash": "804953f1eb23f843255d2f05963e6208c748c8d20996a98eb155de5f83cb0cbc",
+      "size": 53224
+    },
+    {
+      "name": "libvorbisfile.so.3",
+      "hash": "804953f1eb23f843255d2f05963e6208c748c8d20996a98eb155de5f83cb0cbc",
+      "size": 53224
+    },
+    {
+      "name": "libvorbisfile.so.3.3.8",
+      "hash": "804953f1eb23f843255d2f05963e6208c748c8d20996a98eb155de5f83cb0cbc",
+      "size": 53224
+    },
+    {
+      "name": "rc2d-game-template",
+      "hash": "aa277387fc47b42a1528e3500c146b226aa7a02902671538852b533b02cbc800",
+      "size": 9562320
+    },
+    {
+      "name": "version.txt",
+      "hash": "80f0b0f86e5dbf2d2dd31ec28f703d1a9f30b27ca4883dba809a64c0478585d4",
+      "size": 22
+    },
+    {
+      "name": "assets/.DS_Store",
+      "hash": "26a5c1c6d15a8103e60f885d3e4b8bdb92cb54074e5bb27101859f2953f79c93",
+      "size": 8196
+    },
+    {
+      "name": "assets/atlas/elite24/elite24.json",
+      "hash": "3c49fb6c1ddaa9c916938ee6f767b3ab3ecab08e519cae893f95c873e8983df4",
+      "size": 1892
+    },
+    {
+      "name": "assets/atlas/elite24/elite24.png",
+      "hash": "c84f76d230328c8ab21ca34f2d6db9185903e26413ea7b048089d45bb2f75bca",
+      "size": 430752
+    },
+    {
+      "name": "assets/atlas/elite27/elite27.json",
+      "hash": "58a3068566a09d8c6d1928533f11cfb4cc853ed701cbce1092aec773326c0181",
+      "size": 1896
+    },
+    {
+      "name": "assets/atlas/elite27/elite27.png",
+      "hash": "11f32de35e1adf443f99947d2f7aa35c92b80c448ef059134262f833605dfd61",
+      "size": 1086941
+    },
+    {
+      "name": "assets/atlas/redcosar_lvl1/redcosar_lvl1.json",
+      "hash": "6f44b8f9feffc39e77da8e6ad464654ea7050bda60829c337f02ef005c2fe331",
+      "size": 1829
+    },
+    {
+      "name": "assets/atlas/redcosar_lvl1/redcosar_lvl1.png",
+      "hash": "db2433cd1a8245a81e125c73fef07e5d3f353e5fad8b5f0d8fc4b1268ef873eb",
+      "size": 42960
+    },
+    {
+      "name": "assets/data/version.txt",
+      "hash": "92521fc3cbd964bdc9f584a991b89fddaa5754ed1cc96d6d42445338669c1305",
+      "size": 5
+    },
+    {
+      "name": "assets/fonts/SIXTY.TTF",
+      "hash": "2828f2d97d3973fa00a9c90694ad9de2852f1d285a9a60825bffa052119cd3b7",
+      "size": 16824
+    },
+    {
+      "name": "assets/fonts/TradeWinds-Regular.ttf",
+      "hash": "b8d8ac0be4a262e8473b25b8b7f90d5909c8780648285b3edc44b5dff6341bb0",
+      "size": 85744
+    },
+    {
+      "name": "assets/images/CloudNoise.png",
+      "hash": "a4b80b457b1e607090b4e93b2caa25c8d9bdbc628cea15c7e1007708412ef904",
+      "size": 851795
+    },
+    {
+      "name": "assets/images/Matthias_HalloweenNoise.png",
+      "hash": "b006ec60106153c74def89523a01d252b830b318302560ea34b3d8e19a6dcbea",
+      "size": 91262
+    },
+    {
+      "name": "assets/images/background-login.png",
+      "hash": "c19101b01fd7ed847a1c6255d3be706f45803176c5c718378f27888c55960662",
+      "size": 1245373
+    },
+    {
+      "name": "assets/images/background-ui-ingame.png",
+      "hash": "0614b78db0fa4b4aad0581c3d2ed61d377ed877f720707974981ebe8e97ab6aa",
+      "size": 1516029
+    },
+    {
+      "name": "assets/images/barre-action-ingame.png",
+      "hash": "7390f60abda3000dc6cda3c1c503844fbd7ff6a06542fcb7148df2743a247e85",
+      "size": 162548
+    },
+    {
+      "name": "assets/images/button-centermap-ingame.png",
+      "hash": "4a2bec0e4f7331c25d01a777a2fa9184f999934c6deffc06a0c203e0ddf90389",
+      "size": 4841
+    },
+    {
+      "name": "assets/images/button-login.png",
+      "hash": "d2467ed1edef638beaf6c341c7ab0ba01d7f32e104268c5fb024cd5df20567b1",
+      "size": 154116
+    },
+    {
+      "name": "assets/images/input-email-login.png",
+      "hash": "02c7cb7d4b28e5d43f47d0fb10105163f476e77ea050fb95670390faa5fd74a8",
+      "size": 37869
+    },
+    {
+      "name": "assets/images/input-password-login.png",
+      "hash": "3eb6d06269c384dd30678260d4f152b9aacd64ab30dd807d5377113256a8bb11",
+      "size": 38014
+    },
+    {
+      "name": "assets/images/logost-login.png",
+      "hash": "dc5e067036dc1bacf7af3597c03b676d4f24314f09ef12746be2e8bc258292ff",
+      "size": 204174
+    },
+    {
+      "name": "assets/images/minimap.png",
+      "hash": "289bc6f8bd0ec06de1103d9722ec18aa4e920f0790a84ae48a2e1e471ad00cf5",
+      "size": 17274
+    },
+    {
+      "name": "assets/images/tile-caustic.png",
+      "hash": "9312ac534ccfe661f052e751693da00ff33fe477ffa1db6595d370e7ccdc1342",
+      "size": 23073
+    },
+    {
+      "name": "assets/images/tile-ilo1.png",
+      "hash": "33590a1b9c219c0ceab029a0811f2af02d9b47f2936df057d533f7d1a5a7de7d",
+      "size": 348027
+    },
+    {
+      "name": "assets/images/tile-water.png",
+      "hash": "e3ccf9d11221c52cfb006e73d7d7e2e7c64b598d0590576d4e2284e2930c3a8b",
+      "size": 26118
+    },
+    {
+      "name": "assets/images/tile-water2.png",
+      "hash": "6081c30a567eba8276675279d785481a7f0c868b7c8f6b7ef6297465628b1f2d",
+      "size": 38599
+    },
+    {
+      "name": "assets/images/tile-watercaustic.png",
+      "hash": "af78b2c3330b8744ab33b5ea389e3e10f22374f490334cdf52676374af563a16",
+      "size": 20929
+    },
+    {
+      "name": "assets/sounds/sound1.mp3",
+      "hash": "d0219d33a590177a200e9a1418f3d843ae3f1298478557ab3f18212f1feff5ab",
+      "size": 291015
+    },
+    {
+      "name": "assets/sounds/sound_menu.mp3",
+      "hash": "cc1e65d0118b1b3a4339b8bc4ca4f10be41f6eb27322d05cbf7e8181612f1be9",
+      "size": 2402566
+    },
+    {
+      "name": "assets/videos/SplashScreen_Studio_1080p.mp4",
+      "hash": "0563fd3d09d3c36874514b2a4bcb20bdf50b132cbc95a328865c09e32f23bc3e",
+      "size": 3172259
+    },
+    {
+      "name": "assets/videos/SplashScreen_Studio_1080p22 copie.mp4",
+      "hash": "0563fd3d09d3c36874514b2a4bcb20bdf50b132cbc95a328865c09e32f23bc3e",
+      "size": 3172259
+    },
+    {
+      "name": "assets/videos/SplashScreen_Studio_1080p22.mp4",
+      "hash": "0563fd3d09d3c36874514b2a4bcb20bdf50b132cbc95a328865c09e32f23bc3e",
+      "size": 3172259
+    },
+    {
+      "name": "shaders/compiled/dxil/fogofwar.fragment.dxil",
+      "hash": "2d12158bbcdbe749235e801814717dea8c2898a2993cf6e2336931b0ea426786",
+      "size": 4308
+    },
+    {
+      "name": "shaders/compiled/dxil/water.fragment.dxil",
+      "hash": "bde0361f91358c4fcb72d87d819c94ba06b5ae7c19bc825b6b0fc2e92ae72fbc",
+      "size": 5008
+    },
+    {
+      "name": "shaders/compiled/msl/fogofwar.fragment.msl",
+      "hash": "4e2923fe690dc5cf5923818609c895631d7cc916b0e74638665bcf69088cbc93",
+      "size": 734
+    },
+    {
+      "name": "shaders/compiled/msl/water.fragment.msl",
+      "hash": "d61d8d7af121afafe5261693720fbcc5c5004702e84f0472686a58a7d4ffe513",
+      "size": 1759
+    },
+    {
+      "name": "shaders/compiled/pssl/fogofwar.fragment.hlsl",
+      "hash": "b47eafd816e9926272f70a8b970405db35724bff9b63931b0ab06ea16d9f9de2",
+      "size": 969
+    },
+    {
+      "name": "shaders/compiled/pssl/water.fragment.hlsl",
+      "hash": "853b605379d92d8ccf28ccf3e47281679522488965e57f39625747c36d0c2e9d",
+      "size": 2104
+    },
+    {
+      "name": "shaders/compiled/spirv/fogofwar.fragment.spv",
+      "hash": "1b5163142254d8ec9aae7f31b4ebf65e342e4ef1fded17b88c2fb900d5144675",
+      "size": 1628
+    },
+    {
+      "name": "shaders/compiled/spirv/water.fragment.spv",
+      "hash": "4a2c2325e14b110f90ac5609bcf190bb516475f3ca81ae52176468720c32046e",
+      "size": 3128
+    },
+    {
+      "name": "shaders/reflection/fogofwar.fragment.json",
+      "hash": "960397c2c0575db197c6b165046e21bc5e430019c58fd47fb63e6244951da4dd",
+      "size": 241
+    },
+    {
+      "name": "shaders/reflection/water.fragment.json",
+      "hash": "bb675314dc3854af2ac1eba5c37ad3860cbfb971871170fd520cc6a160216efc",
+      "size": 303
+    }
+  ]
+}
