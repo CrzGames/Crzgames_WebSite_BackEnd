@@ -1,6 +1,6 @@
 services:
-  adonis_backend:
-    container_name: adonis_backend
+  adonis_crzgames:
+    container_name: adonis_crzgames
     restart: always
     image: crzgames/website-backend:develop
     build:
@@ -15,7 +15,7 @@ services:
     ports:
       - '3556:3556'
     depends_on:
-      database_mariadb:
+      database_mariadb_crzgames:
         condition: service_healthy
       minio-s3:
         condition: service_healthy
@@ -70,8 +70,8 @@ services:
     networks:
       - app-network
 
-  database_mariadb:
-    container_name: database_mariadb
+  database_mariadb_crzgames:
+    container_name: database_mariadb_crzgames
     image: mariadb:latest
     restart: always
     environment:
@@ -92,24 +92,24 @@ services:
     networks:
       - app-network
 
-  phpmyadmin:
-    container_name: phpmyadmin
+  phpmyadmin_crzgames:
+    container_name: phpmyadmin_crzgames
     image: phpmyadmin/phpmyadmin
     restart: always
     environment:
-      PMA_HOST: database_mariadb
+      PMA_HOST: database_mariadb_crzgames
       PMA_USER: root
       PMA_PASSWORD: root
     ports:
       - '8080:80'
     depends_on:
-      database_mariadb:
+      database_mariadb_crzgames:
         condition: service_healthy
     networks:
       - app-network
 
-  mailhog:
-    container_name: mailhog
+  mailpit:
+    container_name: mailpit
     image: axllent/mailpit:latest
     restart: always
     ports:
@@ -118,8 +118,8 @@ services:
     networks:
       - app-network
 
-  redis:
-    container_name: redis
+  database_redis_crzgames:
+    container_name: database_redis_crzgames
     image: redis:8.6
     restart: always
     ports:
@@ -131,14 +131,14 @@ services:
     networks:
       - app-network
 
-  redisinsight:
-    container_name: redisinsight
+  redisinsight_crzgames:
+    container_name: redisinsight_crzgames
     image: redis/redisinsight:latest
     restart: always
     ports:
       - '5600:5540'
     depends_on:
-      - redis
+      - database_redis_crzgames
     volumes:
       - redisinsight_data:/data
     networks:
