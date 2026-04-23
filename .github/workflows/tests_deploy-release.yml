@@ -56,7 +56,7 @@ jobs:
           docker-compose down
 
       - name: Deploy PR (main) for new Release
-        uses: googleapis/release-please-action@v4
+        uses: googleapis/release-please-action@v5
         with:
           release-type: node
           target-branch: main
